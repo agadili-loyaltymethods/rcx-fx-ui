@@ -1,0 +1,3673 @@
+{
+    "commonProperties": {
+        "ellipsisMaxLength": 30,
+        "gridViewEllipses": 10,
+        "dropDownEllipsis":{
+            "dropDownMaxLength": 15,
+            "multiSelectedMaxLength": 3,
+            "singleSelectedMaxLength":12,
+            "matTooltipShowDelay": 700
+        }
+    },
+    "rcxIgnoreFields": {
+        "commonFields": ["batchId", "org", "program", "targetProgram", "createdAt", "createdBy", "updatedAt", "updatedBy",
+            "nonce", "isCancelled", "mergePendingFlag", "unMergePendingFlag"],
+        "Activity": ["bestOffers", "currentRule", "data", "location", "ruleMatch",
+            "locationId", "mergeIds", "oplogTS", "originalMemberID", "originalTxnId", "partner", "result", "status", "utcOffset"],
+        "Member": ["enrollIncentive","lastActivityDate","purses","tiers", "badges", "streaks"],
+        "LoyaltyID": ["memberId", "accrueTo", "status"]
+    },
+    "routePermission": {
+
+    },
+    "navSection": {
+        "profileName": "John Doe",
+        "profileRole": "Super Admin",
+        "menuItems": [
+            {
+                "routerLink": "/dashboard",
+                "icon": "dashboard",
+                "name": "Dashboard"
+            },
+            {
+                "routerLink": "/templates",
+                "icon": "templates",
+                "name": "Templates"
+            },
+            {
+                "routerLink": "/partners",
+                "icon": "partners",
+                "name": "Partners"
+            },
+            {
+                "routerLink": "/connections",
+                "icon": "connection",
+                "name": "Connections"
+            },
+            {
+                "routerLink": "/integrations",
+                "icon": "run-history",
+                "name": "Integrations"
+            },
+            {
+                "routerLink": "/run-history",
+                "icon": "run-history",
+                "name": "Run History"
+            }
+        ]
+    },
+    "user-profile": {
+        "gridView": [
+            {
+                "title": "User Details",
+                "fields": [
+                    {
+                        "field": [
+                            {
+                                "name": "Username",
+                                "position": "left-box",
+                                "value": "firstName"
+                            }
+                        ]
+                    },
+                    {
+                        "field": [
+                            {
+                                "name": "Email",
+                                "position": "left-box",
+                                "value": "email"
+                            }
+                        ]
+                    },
+                    {
+                        "field": [
+                            {
+                                "name": "Last Access",
+                                "position": "left-box",
+                                "value": "lastAccess"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "templates": {
+        "Title": "Templates",
+        "createButton": "Create New",
+        "searchPlaceholder": "Search by Template Name or Description",
+        "resetFiltersButton": "Reset Filters",
+        "listView": {
+            "selectRow": true,
+            "selectRowHandler": "populateIntegrations",
+            "filterOptions": {
+                "partner": {
+                    "field": "partner?.name",
+                    "label": "Partner",
+                    "placeholder": "Select Partner",
+                    "searchplaceholder": "Search"
+                },
+                "rcxProcess": {
+                    "field": "rcxProcess",
+                    "label": "RCX Process",
+                    "placeholder": "Select RCX Process",
+                    "searchplaceholder": "Search"
+                },
+                "status": {
+                    "field": "status",
+                    "label": "Status",
+                    "placeholder": "Select Status",
+                    "searchplaceholder": "Search"
+                },
+                "modifiedBy": {
+                    "field": "updatedBy?.login",
+                    "label": "Last Updated By",
+                    "placeholder": "Select Updated By",
+                    "searchplaceholder": "Search"
+                }
+            },
+
+
+            "data": [
+                {
+                    "type": "select",
+                    "name": "select",
+                    "label": "Select"
+                },
+                {
+                    "name": "name",
+                    "label": "Name",
+                    "type": "text",
+                    "default": "-",
+                    "style": "name-color",
+                    "routerLink": "/templates/detail",
+                    "stateProperty": "properties",
+                    "source": "templates"
+                },
+                {
+                    "name": "description",
+                    "label": "Description",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "rcxProcess",
+                    "label": "RCX Process",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "partner.name",
+                    "label": "Partner",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "updatedBy.login",
+                    "subField": "updatedAt",
+                    "subFieldPipe": "dateTimeFormat",
+                    "style": "block max-content-width small-text",
+                    "label": "Last Updated By",
+                    "type": "nameWithTS",
+                    "default": "-"
+                },
+                {
+                    "name": "status",
+                    "label": "Status",
+                    "type": "text",
+                    "default": "-",
+                    "style": "status",
+                    "applyStyleWith": "status",
+                    "styleField": "status"
+                },
+                {
+                    "label": "Actions",
+                    "type": "actions",
+                    "name": "__actions",
+                    "sortDisabled": true,
+                    "conditionalDisp": true
+                }
+            ],
+            "actions": [
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "copy",
+                    "clickHandler": "copy",
+                    "toolTip": "Copy",
+                    
+                    "permissionCond": {"FX_IntegrationTemplate": ["create"]}
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "edit",
+                    "clickHandler": "edit",
+                    "toolTip": "Edit",
+                    
+                    "permissionCond": {"FX_IntegrationTemplate": ["update"]}
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "trash",
+                    "clickHandler": "delete",
+                    "toolTip": "Delete",
+                    
+                    "permissionCond": {"FX_IntegrationTemplate": ["delete"]}
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "export",
+                    "clickHandler": "export",
+                    "toolTip": "Export"
+                }
+            ],
+            "paginationOptions": {
+                "length": 100,
+                "pageSize": 10,
+                "pageSizeOptions": [
+                    5,
+                    10,
+                    20
+                ]
+            },
+            "integrations": {
+                "data": [
+                    {
+                        "name": "name",
+                        "label": "Name",
+                        "type": "text",
+                        "routerLink": "/integrations",
+                        "style": "name-color",
+                        "default": "-",
+                        "stateProperty": "properties",
+                        "source": "templates"
+                    },
+                    {
+                        "name": "description",
+                        "label": "Description",
+                        "type": "text",
+                        "default": "-"
+                    },
+                    {
+                        "name": "status",
+                        "label": "Status",
+                        "type": "text",
+                        "default": "-",
+                        "style": "status",
+                        "applyStyleWith": "status",
+                        "styleField": "status"
+                    }
+                ]
+            },
+            "queryOptions": {
+                "sort": {
+                    "updatedAt":  -1
+                }
+            },
+            "refresh": true            
+        },
+        "gridView": {
+            "filterOptions": {
+              "status": {
+                "label": "Status",
+                "placeholder": "Filter by Status"
+              },
+              "rcxProcess": {
+                "label": "RCX Process",
+                "placeholder": "Filter by RCX Process"
+              },
+              "partner.name": {
+                "label": "Partner",
+                "placeholder": "Filter by Partner"
+              }
+            },
+            "data": [
+                {
+                  "section": "section1",
+                  "fields": [
+                    {
+                        "name": "name",
+                        "label": "Name",
+                        "type": "text",
+                        "default": "-",
+                        "style": "name-color",
+                        "routerLink": "/templates/detail",
+                        "stateProperty": "properties",
+                        "source": "templates"
+                    }                   
+                  ],
+                  "singleRow": false
+                },
+                {
+                    "section": "section2",
+                    "fields": [
+                      {
+                        "name": "updatedBy.login",
+                        "label": "Last Updated By",
+                        "time": "updatedAt",
+                        "type": "text",
+                        "displayType": "updateInfo",
+                        "default": "-"
+                      }
+                    ],
+                    "singleRow": false
+                  },
+                {
+                  "section": "section3",
+                  "fields": [
+                    {
+                        "name": "rcxProcess",
+                        "label": "RCX Process",
+                        "type": "text",
+                        "default":"-"
+                    },
+                    {
+                      "name": "partner.name",
+                      "label": "Partner",
+                      "type": "text",
+                      "default": "-"
+                    }
+                  ],
+                  "singleRow": true
+                },
+                {
+                  "section": "section4",
+                  "fields": [
+                    {
+                      "name": "description",
+                      "label": "Description",
+                      "type": "text",
+                      "default": "-",
+                      "displayType": "noLabel"
+                    }
+                  ],
+                  "singleRow": false
+                },
+                {
+                  "label": "Actions",
+                  "type": "actions",
+                  "name": "__actions",
+                  "sortDisabled": true,
+                  "conditionalDisp": true
+                }
+              ],
+            "actions": [
+              {
+                "name": "Copy",
+                "label": "Actions",
+                "icon": "true",
+                "iconname": "copy",
+                "clickHandler": "copy",
+                "toolTip": "Copy"
+              },
+              {
+                "name": "Edit",
+                "label": "Actions",
+                "icon": "true",
+                "iconname": "edit",
+                "clickHandler": "edit",
+                "toolTip": "Edit"
+              },
+              {
+                "name": "Delete",
+                "label": "Actions",
+                "icon": "true",
+                "iconname": "trash",
+                "clickHandler": "delete",
+                "toolTip": "Delete"
+              }
+            ],
+            "paginationOptions": {
+              "length": 100,
+              "pageSize": 6,
+              "pageSizeOptions": [6, 12, 18]
+            }
+        },
+        "formView": {
+            "invalidDateTypeFormat":{
+                "Activity": ["MM/DD/YYYY"]
+            },
+            "toolTip": {
+                "matTooltipShowDelay": "700",
+                "copyfield": "copy",
+                "deletefield": "delete", 
+                "ellipsis": {
+                    "ellipsisMaxLength": 15
+                }
+            },         
+            "data": {
+                "templateProperties": {
+                    "breadCrum":"Template Properties",
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Name",
+                                    "field": "name",
+                                    "type": "text",
+                                    "required": true,
+                                    "autofocus": true,
+                                    "maxLength": 100
+                                },
+                                {
+                                    "label": "RCX Process",
+                                    "field": "rcxProcess",
+                                    "type": "select",
+                                    "selectData": "RCXProcess",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true,
+                                    "showLabel": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Partner",
+                                    "field": "partner",
+                                    "type": "select-search",
+                                    "selectData": "partners",
+                                    "formControl": "partnerFormControl",
+                                    "selectLabel": "name",
+                                    "selectValue": "_id",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Description",
+                                    "field": "description",
+                                    "type": "text",
+                                    "maxLength": 255
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "inputFileProperties": {
+                    "breadCrum":"Input File Properties",
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Format",
+                                    "field": "format",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Fixed",
+                                            "value": "Fixed"
+                                        },
+                                        {
+                                            "key": "Delimited",
+                                            "value": "Delimited"
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "label": "Delimiter",
+                                    "field": "delimiter",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "format",
+                                    "dispCondValue": "Delimited",
+                                    "maxLength": 1,
+                                    "required": true
+                                },
+                                {
+                                    "label": "Quote Strings",
+                                    "field": "quoteStrings",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "'",
+                                            "value": "'"
+                                        },
+                                        {
+                                            "key": "None",
+                                            "value": "None"
+                                        },
+                                        {
+                                            "key": "\"",
+                                            "value": "\""
+                                        }
+                                    ],
+                                    "dispCondPar": "data",
+                                    "dispCondField": "format",
+                                    "dispCondValue": "Delimited"
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Header",
+                                    "field": "header",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "label": "Header Regex",
+                                    "field": "headerRegex",
+                                    "autofocus": true,
+                                    "type": "text",
+                                    "maxLength": 500
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Body",
+                                    "field": "body",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "label": "Body Regex",
+                                    "field": "bodyRegex",
+                                    "type": "text",
+                                    "maxLength": 500
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Footer",
+                                    "field": "footer",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "label": "Footer Regex",
+                                    "field": "footerRegex",
+                                    "type": "text",
+                                    "maxLength": 500
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "inputHeaderProperties": {
+                    "breadCrum":"Input File / Header / ",
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Field Name",
+                                    "field": "fieldName",
+                                    "type": "text",
+                                    "autofocus": true,
+                                    "required": true,
+                                    "selectAllOnClick": true,
+                                    "maxLength": 50
+                                },
+                                {
+                                    "label": "Fixed Length",
+                                    "field": "fixedLength",
+                                    "type": "text",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "dispCondPar": "properties",
+                                    "dispCondField": "inputFileLayout.fileProperties.format",
+                                    "dispCondValue": "Fixed",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Data Type",
+                                    "field": "dataType",
+                                    "type": "select",
+                                    "selectData": "DataType",
+                                    "selectionChange": "resetFormat",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true,
+                                    "showLabel": true
+                                },
+                                {
+                                    "label": "Number of decimals",
+                                    "field": "format",
+                                    "required": true,
+                                    "regExp": "^[0-9]+$",
+                                    "type": "number",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Number"
+                                },
+                                {
+                                    "label": "Format",
+                                    "field": "format",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "String",
+                                    "maxLength": 500
+                                },
+                                {
+                                    "label": "Date Format",
+                                    "field": "format",
+                                    "type": "select",
+                                    "required": true,
+                                    "labelicon": true,
+                                    "iconName": "info",
+                                    "clickHandler": "openDialog",
+                                    "selectData": "DateFormatType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Date",
+                                    "showLabel": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Required",
+                                    "field": "required",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "label": "Default Value",
+                                    "field": "defaultValue",
+                                    "type": "text",
+                                    "maxLength": 500
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Minimum Length",
+                                    "field": "minLength",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "String",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Maximum Length",
+                                    "field": "maxLength",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "String",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Minimum Value",
+                                    "field": "minValue",
+                                    "regExp": "^[-+]?\\d+$",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Number",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Maximum Value",
+                                    "field": "maxValue",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Number",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Comments",
+                                    "field": "comments",
+                                    "type": "text",
+                                    "class": "fullWidth-box",
+                                    "maxLength": 500
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "inputBodyProperties": {
+                    "breadCrum":"Input File / Body / ",
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Field Name",
+                                    "field": "fieldName",
+                                    "type": "text",
+                                    "required": true,
+                                    "selectAllOnClick": true,
+                                    "autofocus": true,
+                                    "maxLength": 50
+                                },
+                                {
+                                    "label": "Fixed Length",
+                                    "field": "fixedLength",
+                                    "type": "text",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "dispCondPar": "properties",
+                                    "dispCondField": "inputFileLayout.fileProperties.format",
+                                    "dispCondValue": "Fixed",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "RCX Field",
+                                    "field": "rcxField",
+                                    "type": "inputSearch",
+                                    "icon": "doc-search",
+                                    "clickHandler": "openRCXFieldDialog",
+                                    "required": false
+                                },
+                                {
+                                    "label": "Fixed Array Length",
+                                    "field": "rcxFieldArrLen",
+                                    "type": "number",
+                                    "required": true,
+                                    "regex":"^[0-9]+$",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "parentType",
+                                    "dispCondValue": "array",
+                                    "changeHandler": "checkIntegrity" 
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Data Type",
+                                    "field": "dataType",
+                                    "type": "select",
+                                    "selectData": "DataType",
+                                    "selectionChange": "resetFormat",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true,
+                                    "showLabel": true
+                                },
+                                {
+                                    "label": "Number of decimals",
+                                    "field": "format",
+                                    "required": true,
+                                    "regExp": "^[0-9]+$",
+                                    "type": "number",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Number"
+                                },
+                                {
+                                    "label": "Format",
+                                    "field": "format",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "String",
+                                    "maxLength": 500
+                                },
+                                {
+                                    "label": "Date Format",
+                                    "field": "format",
+                                    "type": "select",
+                                    "required": true,
+                                    "labelicon": true,
+                                    "iconName": "info",
+                                    "clickHandler": "openDialog",
+                                    "selectData": "DateFormatType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Date",
+                                    "showLabel": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Required",
+                                    "field": "required",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true,
+                                    "class": "quarter-width-box"
+                                },
+                                {
+                                    "label": "From File",
+                                    "field": "fromFile",
+                                    "disableBasedOn": "arrField",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true,
+                                    "class": "quarter-width-box"
+                                },
+                                {
+                                    "label": "Default Value",
+                                    "field": "defaultValue",
+                                    "disableBasedOn": "sysDate",
+                                    "type": "text",
+                                    "maxLength": 500
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Minimum Length",
+                                    "field": "minLength",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "String",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Maximum Length",
+                                    "field": "maxLength",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "String",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Minimum Value",
+                                    "field": "minValue",
+                                    "regExp": "^[-+]?\\d+$",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Number",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Maximum Value",
+                                    "field": "maxValue",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Number",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Editable",
+                                    "field": "editable",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "label": "Auto-Fixable",
+                                    "field": "autoFixable",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "label": "SysDate",
+                                    "field": "sysDate",
+                                    "type": "radio",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Date",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true,
+                                    "disableBasedOn": "defaultValue"
+                                },
+                                {
+                                    "label": "UUID",
+                                    "field": "uuid",
+                                    "type": "radio",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "String",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true,
+                                    "disableBasedOn": "defaultValue",
+                                    "selectionChange": "resetFixedLenth"
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Unique Key Flag",
+                                    "field": "uniqueKeyFlag",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Transform",
+                                    "field": "transform",
+                                    "type": "select",
+                                    "selectData": "TransformType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "disableBasedOn": "arrField",
+                                    "selectionChange": "resetTransform",
+                                    "handleSelectionChange": true,
+                                    "showLabel": true,
+                                    "showButton": true,
+                                    "btnName":"buttonName",
+                                    "displayCondField": "transform",
+                                    "fieldsToDelete": ["transformExprField", "transformExpr"],
+                                    "displayCondValue": ["JoinTransform", "ArithmeticTransform", "MappingTransform"],
+                                    "btnSvg": "plus",
+                                    "clickHandler": "openTreeViewModal",
+                                    "context": "dataType"
+                                },
+                                {
+                                    "label": "Comments",
+                                    "field": "comments",
+                                    "type": "text",
+                                    "maxLength": 500
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Transform Expression",
+                                    "field": "transformExprField",
+                                    "type": "text",
+                                    "required": false,
+                                    "dynamicToolTip": true,
+                                    "disabled": true,
+                                    "disabledOnEdit": true,
+                                    "dispCondPar": "data",
+                                    "dispCondField": "transform",
+                                    "dispCondValue": {"transform":{"in": ["JoinTransform", "ArithmeticTransform"]}}
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Transform Expression",
+                                    "field": "transformExpr",
+                                    "type": "select",
+                                    "disabledOnEdit": false,
+                                    "required": false,
+                                    "labelicon": true,
+                                    "iconName": "info",
+                                    "clickHandler": "openDialog",
+                                    "selectData": "DateFormatType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "transform",
+                                    "dispCondValue": "DateTransform",
+                                    "showLabel": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "inputFooterProperties": {
+                    "breadCrum":"Input File / Footer / ",
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Field Name",
+                                    "field": "fieldName",
+                                    "type": "text",
+                                    "required": true,
+                                    "selectAllOnClick": true,
+                                    "autofocus": true,
+                                    "maxLength": 50
+                                },
+                                {
+                                    "label": "Fixed Length",
+                                    "field": "fixedLength",
+                                    "type": "text",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "dispCondPar": "properties",
+                                    "dispCondField": "inputFileLayout.fileProperties.format",
+                                    "dispCondValue": "Fixed",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Data Type",
+                                    "field": "dataType",
+                                    "type": "select",
+                                    "selectData": "DataType",
+                                    "selectionChange": "resetFormat",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true,
+                                    "showLabel": true
+                                },
+                                {
+                                    "label": "Number of decimals",
+                                    "field": "format",
+                                    "required": true,
+                                    "regExp": "^[0-9]+$",
+                                    "type": "number",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Number"
+                                },
+                                {
+                                    "label": "Format",
+                                    "field": "format",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "String",
+                                    "maxLength": 500
+                                },
+                                {
+                                    "label": "Date Format",
+                                    "field": "format",
+                                    "type": "select",
+                                    "required": true,
+                                    "labelicon": true,
+                                    "iconName": "info",
+                                    "clickHandler": "openDialog",
+                                    "selectData": "DateFormatType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Date",
+                                    "showLabel": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Required",
+                                    "field": "required",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "label": "Default Value",
+                                    "field": "defaultValue",
+                                    "type": "text",
+                                    "maxLength": 500
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Minimum Length",
+                                    "field": "minLength",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "String",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Maximum Length",
+                                    "field": "maxLength",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "String",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Minimum Value",
+                                    "field": "minValue",
+                                    "regExp": "^[-+]?\\d+$",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Number",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Maximum Value",
+                                    "field": "maxValue",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Number",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Comments",
+                                    "field": "comments",
+                                    "type": "text",
+                                    "maxLength": 500
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "responseFileProperties": {
+                    "breadCrum":"Response File Properties",
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Format",
+                                    "field": "format",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Fixed",
+                                            "value": "Fixed"
+                                        },
+                                        {
+                                            "key": "Delimited",
+                                            "value": "Delimited"
+                                        }
+                                    ],
+                                    "required": true
+                                },
+                                {
+                                    "label": "Delimiter",
+                                    "field": "delimiter",
+                                    "type": "text",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "format",
+                                    "dispCondValue": "Delimited",
+                                    "maxLength": 1,
+                                    "required": true                                  
+                                },
+                                {
+                                    "label": "Quote Strings",
+                                    "field": "quoteStrings",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "'",
+                                            "value": "'"
+                                        },
+                                        {
+                                            "key": "None",
+                                            "value": "None"
+                                        },
+                                        {
+                                            "key": "\"",
+                                            "value": "\""
+                                        }
+                                    ],
+                                    "dispCondPar": "data",
+                                    "dispCondField": "format",
+                                    "dispCondValue": "Delimited"
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Generate Header",
+                                    "field": "header",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Generate Body",
+                                    "field": "body",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Generate Footer",
+                                    "field": "footer",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "responseHeaderProperties": {
+                    "breadCrum":"Response File / Header / ",
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Field Name",
+                                    "field": "fieldName",
+                                    "type": "text",
+                                    "required": true,
+                                    "selectAllOnClick": true,
+                                    "autofocus": true,
+                                    "maxLength": 50
+                                },
+                                {
+                                    "label": "Fixed Length",
+                                    "field": "fixedLength",
+                                    "type": "text",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "dispCondPar": "properties",
+                                    "dispCondField": "responseFileLayout.fileProperties.format",
+                                    "dispCondValue": "Fixed",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Data Type",
+                                    "field": "dataType",
+                                    "type": "select",
+                                    "selectData": "DataType",
+                                    "selectionChange": "resetFormat",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Number of decimals",
+                                    "field": "format",
+                                    "required": true,
+                                    "regExp": "^[0-9]+$",
+                                    "type": "number",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Number"
+                                },
+                                {
+                                    "label": "Date Format",
+                                    "field": "format",
+                                    "type": "select",
+                                    "required": true,
+                                    "labelicon": true,
+                                    "iconName": "info",
+                                    "clickHandler": "openDialog",
+                                    "selectData": "DateFormatType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Date"
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Value",
+                                    "field": "value",
+                                    "type": "select",
+                                    "selectData": "valueOptions",
+                                    "selectionChange": "handleFieldNameUpdate",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Constant",
+                                    "field": "constant",
+                                    "type": "text",
+                                    "required": true,
+                                    "dispCondPar": "data",
+                                    "dispCondField": "value",
+                                    "dispCondValue": "Constant",
+                                    "maxLength": 500
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Aggregate",
+                                    "field": "aggregate",
+                                    "type": "select",
+                                    "selectData": "MathFuncs",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "responseBodyProperties": {
+                    "breadCrum":"Response File / Body / ",
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Field Name",
+                                    "field": "fieldName",
+                                    "type": "text",
+                                    "required": true,
+                                    "selectAllOnClick": true,
+                                    "autofocus": true,
+                                    "maxLength": 50
+                                },
+                                {
+                                    "label": "Fixed Length",
+                                    "field": "fixedLength",
+                                    "type": "text",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "dispCondPar": "properties",
+                                    "dispCondField": "responseFileLayout.fileProperties.format",
+                                    "dispCondValue": "Fixed",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Data Type",
+                                    "field": "dataType",
+                                    "type": "select",
+                                    "selectData": "DataType",
+                                    "selectionChange": "resetFormat",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Number of decimals",
+                                    "field": "format",
+                                    "required": true,
+                                    "regExp": "^[0-9]+$",
+                                    "type": "number",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Number"
+                                },
+                                {
+                                    "label": "Date Format",
+                                    "field": "format",
+                                    "type": "select",
+                                    "required": true,
+                                    "labelicon": true,
+                                    "iconName": "info",
+                                    "clickHandler": "openDialog",
+                                    "selectData": "DateFormatType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Date"
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Value",
+                                    "field": "value",
+                                    "type": "select",
+                                    "selectData": "valueOptions",
+                                    "selectionChange": "handleFieldNameUpdate",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Constant",
+                                    "field": "constant",
+                                    "type": "text",
+                                    "required": true,
+                                    "dispCondPar": "data",
+                                    "dispCondField": "value",
+                                    "dispCondValue": "Constant",
+                                    "maxLength": 500
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Transform",
+                                    "field": "transform",
+                                    "type": "text",
+                                    "maxLength": 500
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "responseFooterProperties": {
+                    "breadCrum":"Response File / Footer / ",
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Field Name",
+                                    "field": "fieldName",
+                                    "type": "text",
+                                    "required": true,
+                                    "selectAllOnClick": true,
+                                    "autofocus": true,
+                                    "maxLength": 50
+                                },
+                                {
+                                    "label": "Fixed Length",
+                                    "field": "fixedLength",
+                                    "type": "text",
+                                    "regExp": "^[1-9]\\d*$",
+                                    "dispCondPar": "properties",
+                                    "dispCondField": "responseFileLayout.fileProperties.format",
+                                    "dispCondValue": "Fixed",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Data Type",
+                                    "field": "dataType",
+                                    "type": "select",
+                                    "selectData": "DataType",
+                                    "selectionChange": "resetFormat",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Number of decimals",
+                                    "field": "format",
+                                    "required": true,
+                                    "dispCondPar": "data",
+                                    "regExp": "^[0-9]+$",
+                                    "type": "number",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Number"
+                                },
+                                {
+                                    "label": "Date Format",
+                                    "field": "format",
+                                    "type": "select",
+                                    "required": true,
+                                    "labelicon": true,
+                                    "iconName": "info",
+                                    "clickHandler": "openDialog",
+                                    "selectData": "DateFormatType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "dataType",
+                                    "dispCondValue": "Date",
+                                    "showLabel": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Value",
+                                    "field": "value",
+                                    "type": "select",
+                                    "selectData": "valueOptions",
+                                    "selectionChange": "handleFieldNameUpdate",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Constant",
+                                    "field": "constant",
+                                    "type": "text",
+                                    "required": true,
+                                    "dispCondPar": "data",
+                                    "dispCondField": "value",
+                                    "dispCondValue": "Constant",
+                                    "maxLength": 500
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Aggregate",
+                                    "field": "aggregate",
+                                    "type": "select",
+                                    "selectData": "MathFuncs",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "partners": {
+        "Title": "Partner",
+        "createButton": "Create New",
+        "searchPlaceholder": "Search by Partner Name",
+        "resetFiltersButton": "Reset Filters",
+        "listView": {
+            "selectRow": true,
+            "selectRowHandler": "getUsers",
+            "filterOptions": {
+                "partnerName": {
+                    "field": "name",
+                    "label": "Partner",
+                    "placeholder": "Select Partner",
+                    "searchplaceholder": "Search"
+                },
+                "partnerType": {
+                    "field": "partnerType",
+                    "label": "Partner Type",
+                    "placeholder": "Select Partner Type",
+                    "searchplaceholder": "Search"
+                },
+                "lastUpdatedBy": {
+                    "field": "updatedBy.login",
+                    "label": "Last Updated By",
+                    "placeholder": "Select Updated By",
+                    "searchplaceholder": "Search"
+                }
+            },
+            "data": [
+                {
+                    "name": "name",
+                    "label": "Partner Name",
+                    "showHostingPartner": true,
+                    "type": "text",
+                    "default": "-",
+                    "style": "name-color",
+                    "routerLink": "/partners/detail",
+                    "ellipsisMaxLength": 50
+                },
+                {
+                    "name": "partnerType",
+                    "label": "Partner Type",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "phone",
+                    "label": "Support Number",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "email",
+                    "label": "Support Email",
+                    "type": "text",
+                    "copy": true,
+                    "style": "name-color",
+                    "default": "-"
+                },
+                {
+                    "name": "updatedBy.login",
+                    "subField": "updatedAt",
+                    "subFieldPipe": "dateTimeFormat",
+                    "style": "block max-content-width small-text",
+                    "label": "Last Updated By",
+                    "type": "nameWithTS",
+                    "default": "-"
+                },
+                {
+                    "label": "Actions",
+                    "type": "actions",
+                    "name": "__actions",
+                    "sortDisabled": true,
+                    "conditionalDisp": true
+                }
+            ],
+            "actions": [
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "edit",
+                    "clickHandler": "edit",
+                    "toolTip": "Edit",
+                    
+                    "permissionCond": {"FX_Partner": ["update"]}
+                },{
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "trash",
+                    "clickHandler": "delete",
+                    "toolTip": "Delete",
+                    
+                    "permissionCond": {"FX_Partner": ["delete"]}
+                }
+            ],
+            "paginationOptions": {
+                "length": 100,
+                "pageSize": 10,
+                "pageSizeOptions": [
+                    5,
+                    10,
+                    20
+                ]
+            },
+            "queryOptions": {
+                "sort": {
+                    "_id":  -1
+                }
+            },
+            "refresh": true 
+        },
+        "formView": {
+            "data": {
+                "Partnerdata": {
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Partner Name",
+                                    "field": "name",
+                                    "type": "text",
+                                    "maxLength": 250,
+                                    "required": true,
+                                    "autofocus": true
+                                },
+                                {
+                                    "label": "Partner Type",
+                                    "field": "partnerType",
+                                    "type": "select-search",
+                                    "selectData": "PartnerType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "formControl": "partnerFormControl",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Code",
+                                    "field": "code",
+                                    "type": "text",
+                                    "required": true,
+                                    "maxLength": 50
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Support Number",
+                                    "field": "phone",
+                                    "type": "text",
+                                    "maxLength": 50,
+                                    "regExp": "^[A-Za-z0-9 ()+.-]*$",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Support Email",
+                                    "field": "email",
+                                    "type": "text",
+                                    "email": true,
+                                    "required": true
+                                },
+                                {
+                                    "label": "Timezone",
+                                    "field": "timezone",
+                                    "type": "select-search",
+                                    "selectData": "timeZone",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "formControl": "timeZoneFormControl",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Program",
+                                    "field": "program",
+                                    "type": "select",
+                                    "selectData": "program",
+                                    "selectLabel": "name",
+                                    "selectValue": "_id",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Status",
+                                    "field": "status",
+                                    "type": "select",
+                                    "selectData": "PartnerStat",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true,
+                                    "showLabel": true
+                                },
+                                {
+                                    "label": "Hosting Partner",
+                                    "field": "isHostingPartner",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "dbToUIFieldMappings": {
+                "code": "Code",
+                "phone": "Support Number",
+                "name": "Partner Name",
+                "status": "Status",
+                "partnerType": "Partner Type",
+                "email": "Support Email",
+                "timezone": "Timezone",
+                "program": "Program",
+                "isHostingPartner": "Hosting Partner"
+            }
+        }
+    },
+    "users": {
+        "Title": "User",
+        "createButton": "Create New",
+        "searchPlaceholder": "Search by User Name",
+        "resetFiltersButton": "Reset Filters",
+        "listView": {
+            "data": [
+                {
+                    "name": "login",
+                    "label": "User Name",
+                    "type": "text",
+                    "default": "-",
+                    "routerLink": "/users/detail",
+                    "style": "name-color"
+                },
+                {
+                    "name": "email",
+                    "label": "Support Email",
+                    "type": "text",
+                    "copy": true,
+                    "style": "name-color",
+                    "default": "-"
+                },
+                {
+                    "name": "partner.name",
+                    "label": "Partner Name",
+                    "type": "text",
+                    "default": "-",
+                    "style": "name-color"
+                },
+                {
+                    "name": "updatedBy.login",
+                    "subField": "updatedAt",
+                    "subFieldPipe": "dateTimeFormat",
+                    "style": "block max-content-width small-text",
+                    "label": "Last Updated By",
+                    "type": "nameWithTS",
+                    "default": "-"
+                },
+                {
+                    "label": "Actions",
+                    "type": "actions",
+                    "name": "__actions",
+                    "sortDisabled": true,
+                    "conditionalDisp": true
+                }
+            ],
+            "actions": [
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "edit",
+                    "clickHandler": "editUser",
+                    "toolTip": "Edit",
+                    "permissionCond": {"User": ["update"]}
+                },{
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "trash",
+                    "clickHandler": "deleteUser",
+                    "toolTip": "Delete",
+                    "permissionCond": {"User": ["delete"]}
+                }
+            ],
+            "paginationOptions": {
+                "length": 100,
+                "pageSize": 10,
+                "pageSizeOptions": [
+                    5,
+                    10,
+                    20
+                ]
+            }
+        },
+        "formView": {
+            "data": {
+                "userdata": {
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Name",
+                                    "field": "login",
+                                    "type": "text",
+                                    "required": true,
+                                    "autofocus": true,
+                                    "toolTip": "Name can contain only alphabets, numbers and special characters like @, ., +, -, _.\nNo spaces are allowed.\nThe length of the name should be 5 to 255 character.",
+                                    "minLength": 5,
+                                    "maxLength": 255,
+                                    "regExp": "^[^/]+$",
+                                    "disabledOnEdit": true
+                                },
+                                {
+                                    "label": "Email",
+                                    "field": "email",
+                                    "type": "text",
+                                    "required": true,
+                                    "email": true,
+                                    "disabledOnEdit": true
+                                },
+                                {
+                                    "label": "Role",
+                                    "field": "role",
+                                    "type": "select",
+                                    "selectData": "selectRoles",
+                                    "selectionChange": "onRoleChange",
+                                    "selectLabel": "role",
+                                    "selectValue": "role",
+                                    "required": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "dbToUIFieldMappings": {
+                "login": "Name",
+                "email": "Email",
+                "org": "IGNORE",
+                "role": "Role"
+            },
+            "componentInitialization": {
+                "asyncFuncs": ["checkCurrentRole"]
+            }
+        },
+        "permissionListView": {
+            "data": [
+                {
+                    "name": "resource",
+                    "label": "Resource Name",
+                    "type": "text",
+                    "ellipsis": false
+                },
+                {
+                    "name": "create",
+                    "label": "Create",
+                    "type": "fieldSelect",
+                    "disable": true
+                },
+                {
+                    "name": "read",
+                    "label": "Read",
+                    "type": "fieldSelect",
+                    "disable": true
+                },
+                {
+                    "name": "update",
+                    "label": "Update",
+                    "type": "fieldSelect",
+                    "disable": true
+                },
+                {
+                    "name": "delete",
+                    "label": "Delete",
+                    "type": "fieldSelect",
+                    "disable": true
+                }
+            ]
+        }
+    },
+    "connections": {
+        "Title": "Connections",
+        "createButton": "Create New",
+        "searchPlaceholder": "Search by Name",
+        "resetFiltersButton": "Reset Filters",
+        "listView": {
+            "selectRow": true,
+            "selectRowHandler": "populateIntegrations",
+            "filterOptions": {
+                "partner": {
+                    "field": "partner?.name",
+                    "label": "Partner",
+                    "placeholder": "Select Partner",
+                    "searchplaceholder": "Search"
+                },
+                "connectionType": {
+                    "field": "connectionType",
+                    "label": "Connection Type",
+                    "placeholder": "Select Connection Type",
+                    "searchplaceholder": "Search"
+                },
+                "connectionTestStatus": {
+                    "field": "tested",
+                    "label": "Connection Test Status",
+                    "placeholder": "Select Status",
+                    "searchplaceholder": "Search",
+                    "options": "connectionTestOptions"
+                },
+                "modifiedBy": {
+                    "field": "updatedBy?.login",
+                    "label": "Last Updated By",
+                    "placeholder": "Select Updated By",
+                    "searchplaceholder": "Search"
+                }
+            },
+            "data": [
+                {
+                    "name": "name",
+                    "label": "Name",
+                    "type": "text",
+                    "default": "-",
+                    "style": "name-color",
+                    "routerLink": "/connections/detail"
+                },
+                {
+                    "name": "description",
+                    "label": "Description",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "connectionType",
+                    "label": "Type",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "partner.name",
+                    "label": "Partner",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "tested",
+                    "label": "Status",
+                    "type": "text",
+                    "default": "-",
+                    "valueFormat": {
+                        "true": "Valid",
+                        "false": "Invalid"
+                    }
+                },
+                {
+                    "name": "lastTestedAt",
+                    "label": "Last Tested At",
+                    "type": "text",
+                    "pipe": "dateTimeFormat",
+                    "style": "block max-content-width small-text",
+                    "default": "-",
+                    "ellipsis": false
+                },
+                {
+                    "name": "updatedBy.login",
+                    "subField": "updatedAt",
+                    "subFieldPipe": "dateTimeFormat",
+                    "style": "block max-content-width small-text",
+                    "label": "Last Updated By",
+                    "type": "nameWithTS",
+                    "default": "-"
+                },
+                {
+                    "label": "Actions",
+                    "type": "actions",
+                    "name": "__actions",
+                    "sortDisabled": true,
+                    "conditionalDisp": true
+                }
+            ],
+            "actions": [
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "edit",
+                    "clickHandler": "edit",
+                    "toolTip": "Edit",
+                    
+                    "permissionCond": {"FX_Connection": ["update"]}
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "trash",
+                    "clickHandler": "delete",
+                    "toolTip": "Delete",
+                    
+                    "permissionCond": {"FX_Connection": ["delete"]}
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "test-black",
+                    "iconColor": "grey",
+                    "clickHandler": "test",
+                    "toolTip": "Test",
+                    "matTooltipShowDelay":"700"
+                }
+            ],
+            "paginationOptions": {
+                "length": 100,
+                "pageSize": 10,
+                "pageSizeOptions": [
+                    5,
+                    10,
+                    20
+                ]
+            },
+            "refresh": true,
+            "queryOptions": {
+                "sort": {
+                    "_id":  -1
+                }
+            }
+        },
+        "formView": {
+            "data": {
+                "Connectiondata": {
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Connection Name",
+                                    "field": "name",
+                                    "type": "text",
+                                    "required": true,
+                                    "autofocus": true,
+                                    "maxLength": 50
+                                },
+                                {
+                                    "label": "Partner",
+                                    "field": "partner",
+                                    "type": "select-search",
+                                    "selectData": "partners",
+                                    "formControl": "partnerFormControl",
+                                    "selectLabel": "name",
+                                    "selectValue": "_id",
+                                    "required": true,
+                                    "matTooltipShowDelay": "700",
+                                    "matTooltipMaxLength": "26"
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Description",
+                                    "field": "description",
+                                    "type": "text",
+                                    "required": true,
+                                    "class": "one-third-box",
+                                    "maxLength": 255
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Connection Type",
+                                    "field": "connectionType",
+                                    "type": "select",
+                                    "selectData": "ConnectionType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true,
+                                    "disabledOnEdit": true,
+                                    "maxLength": 255,
+                                    "showLabel": true
+                                },
+                                {
+                                    "label": "URL",
+                                    "field": "url",
+                                    "type": "text",
+                                    "required": true,
+                                    "maxLength": 500
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Username",
+                                    "field": "userName",
+                                    "type": "text",
+                                    "required": true,
+                                    "dispCondPar": "data",
+                                    "dispCondField": "connectionType",
+                                    "dispCondValue": "SFTP"
+                                },
+                                {
+                                    "label": "Authentication Type",
+                                    "field": "authenticationType",
+                                    "type": "select",
+                                    "selectData": "AuthenticationType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true,
+                                    "dispCondPar": "data",
+                                    "dispCondField": "connectionType",
+                                    "dispCondValue": "SFTP"
+                                },
+                                {
+                                    "label": "Key File",
+                                    "field": "keyFile",
+                                    "type": "fileUpload",
+                                    "required": true,
+                                    "dispCondPar": "data",
+                                    "onFileSelected": "onFileSelected",
+                                    "dispCondField": ["connectionType","authenticationType"],
+                                    "dispCondValue": {"connectionType":"SFTP","authenticationType": "Key File"}
+                                },
+                                {
+                                    "label": "Password",
+                                    "field": "password",
+                                    "type": "password",
+                                    "required": true,
+                                    "dispCondPar": "data",
+                                    "isSecret": true,
+                                    "placeHolder": "******",
+                                    "dispCondField": ["connectionType","authenticationType"],
+                                    "dispCondValue": {"connectionType":"SFTP","authenticationType": "Password"}
+                                }
+                               
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Access Key ID",
+                                    "field": "accessKeyId",
+                                    "type": "text",
+                                    "required": true,
+                                    "dispCondPar": "data",
+                                    "dispCondField": "connectionType",
+                                    "dispCondValue": "S3"
+                                },
+                                {
+                                    "label": "Secret Access Key",
+                                    "field": "secretAccessKey",
+                                    "type": "password",
+                                    "onFileSelected": "onFileSelected",
+                                    "required": true,
+                                    "dispCondPar": "data",
+                                    "dispCondField": "connectionType",
+                                    "dispCondValue": "S3",
+                                    "placeHolder": "******",
+                                    "isSecret": true
+                                }
+                               
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Region",
+                                    "field": "region",
+                                    "type": "select",
+                                    "selectData": "AWSRegion",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true,
+                                    "dispCondPar": "data",
+                                    "dispCondField": "connectionType",
+                                    "dispCondValue": "S3"
+                                },
+                                {
+                                    "label": "Passphrase",
+                                    "field": "keyPassphrase",
+                                    "type": "password",
+                                    "dispCondPar": "data",
+                                    "isSecret": true,
+                                    "placeHolder": "******",
+                                    "dispCondField": ["connectionType","authenticationType"],
+                                    "dispCondValue": {"connectionType":"SFTP","authenticationType": "Key File"}
+                                }
+                               
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Encryption",
+                                    "field": "encryptionEnabled",
+                                    "type": "switch",
+                                    "toggle": "handleChange",
+                                    "hideLabel": true,
+                                    "icon": "lock",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Encryption Algorithm",
+                                    "field": "encryptionAlgorithm",
+                                    "type": "select",
+                                    "selectData": "EncryptionAlgorithmType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "required": true,
+                                    "disableCondPar": "data",
+                                    "disableCondField": "encryptionEnabled",
+                                    "disableCondValue": true,
+                                    "maxLength": 50,
+                                    "showLabel": true
+                                },
+                                {
+                                    "label": "Encryption Key",
+                                    "field": "encryptionKey",
+                                    "type": "fileUpload",
+                                    "disableCondPar": "data",
+                                    "disableCondField": "encryptionEnabled",
+                                    "disableCondValue": true,
+                                    "onFileSelected": "onFileSelected",
+                                    "dispCondPar": "data",
+                                    "dispCondField": ["encryptionAlgorithm"],
+                                    "dispCondValue": {"encryptionAlgorithm":"GPG"}
+                                },
+                                {
+                                    "label": "Passphrase",
+                                    "field": "encryptPassphrase",
+                                    "type": "password",
+                                    "required": true,
+                                    "dispCondPar": "data",
+                                    "disableCondPar": "data",
+                                    "disableCondField": "encryptionEnabled",
+                                    "isSecret": true,
+                                    "placeHolder": "******",
+                                    "disableCondValue": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Compression",
+                                    "field": "compressionEnabled",
+                                    "type": "switch",
+                                    "toggle": "handleChange",
+                                    "icon": "compress",
+                                    "hideLabel": true,
+                                    "required": true
+                                }
+                               
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Compression Algorithm",
+                                    "field": "compressionAlgorithm",
+                                    "type": "select",
+                                    "required": true,
+                                    "selectData": "CompressionAlgorithmType",
+                                    "selectLabel": "label",
+                                    "selectValue": "value",
+                                    "disableCondPar": "data",
+                                    "disableCondField": "compressionEnabled",
+                                    "disableCondValue": true,
+                                    "maxLength": 50,
+                                    "showLabel": true
+                                },
+                                {
+                                    "label": "Compression Level",
+                                    "field": "compressionLevel",
+                                    "type": "number",
+                                    "required": true,
+                                    "disableCondPar": "data",
+                                    "disableCondField": "compressionEnabled",
+                                    "disableCondValue": true,
+                                    "regExp": "^[0-9]+$"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "dbToUIFieldMappings": {
+                "name": "Connection Name",
+                "partner": "Partner",
+                "description": "Description",
+                "connectionType": "Connection Type",
+                "url": "URL",
+                "userName": "Username",
+                "authenticationType": "Authentication Type",
+                "keyFile": "Key File",
+                "password": "Password",
+                "accessKeyId": "Access Key ID",
+                "secretAccessKey": "Secret Access Key",
+                "region": "Region",
+                "encryptionAlgorithm": "Encryption Algorithm",
+                "encryptionKey": "Encryption Key",
+                "compressionAlgorithm": "Compression Algorithm",
+                "compressionLevel": "Compression Level"
+            }
+        }
+    },
+    "run-history": {
+        "Title": "Run History",
+        "createButton": "Create New",
+        "searchPlaceholder": "Search by Integration, File Name or Run Id",
+        "resetFiltersButton": "Reset Filters",
+        "listView": {
+            "filterOptions": {
+                "PartnerName": {
+                  "field": "partner?.name",
+                  "label": "Partner",
+                  "placeholder": "Select Partner",
+                  "searchplaceholder": "Search"
+                },
+                "integrationName": {
+                  "field": "integrationId?.name",
+                  "label": "Integration",
+                  "placeholder": "Select Integration",
+                  "searchplaceholder": "Search"
+                },
+                "runId": {
+                    "field": "runId",
+                    "label": "Run Id",
+                    "placeholder": "Select Run Id",
+                    "searchplaceholder": "Search"
+                }
+            },
+            "data": [
+                {
+                    "name": "integrationId.name",
+                    "label": "Integration Name",
+                    "type": "text",
+                    "default": "-",
+                    "style": "block min-width-200"
+                },
+                {
+                    "name": "runId",
+                    "label": "Run Id",
+                    "type": "text",
+                    "default": "-",
+                    "style": "block min-width-100"
+                },
+                {
+                    "name": "rcxProcessLabel",
+                    "label": "RCX Process",
+                    "type": "text",
+                    "default": "-",
+                    "style": "block min-width-150"
+                },
+                {
+                    "name": "status",
+                    "label": "Status",
+                    "type": "text",
+                    "default": "-",
+                    "style": "status",
+                    "applyStyleWith": "status",
+                    "styleField": "status"
+                },
+                {
+                    "name": "startTime",
+                    "label": "Start",
+                    "type": "text",
+                    "pipe": "dateTimeFormat",
+                    "style": "block max-content-width small-text",
+                    "default": "-",
+                    "ellipsis": false
+                },
+                {
+                    "name": "endTime",
+                    "label": "End",
+                    "type": "text",
+                    "pipe": "dateTimeFormat",
+                    "style": "block max-content-width small-text",
+                    "default": "-",
+                    "ellipsis": false
+                },
+                {
+                    "name": "duration",
+                    "label": "Duration",
+                    "type": "text",
+                    "pipe": "duration",
+                    "default": "-"
+                },
+                {
+                    "name": "succeeded",
+                    "label": "Succeeded",
+                    "type": "text",
+                    "pipe": "radix",
+                    "default": "-"
+                },
+                {
+                    "name": "failed",
+                    "label": "Failed",
+                    "type": "text",
+                    "pipe": "radix",
+                    "default": "-"
+                },
+                {
+                    "type": "actions",
+                    "label": "Actions",
+                    "name": "__actions",
+                    "default": "-"
+                }
+            ],
+            "actions": [
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "file",
+                    "toolTip": "Logs",
+                    "clickHandler": "log",
+                    "matTooltipShowDelay":"700"
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "info-dark",
+                    "toolTip": "Details",
+                    "clickHandler": "info",
+                    "matTooltipShowDelay":"700"
+                }
+            ],
+            "paginationOptions": {
+                "length": 100,
+                "pageSize": 10,
+                "pageSizeOptions": [
+                    5,
+                    10,
+                    20
+                ]
+            },
+            "queryOptions":{
+                "sort": {
+                    "_id": -1
+                }
+            },
+            "refresh": true 
+        },
+        "dialogView": {
+            "data": [
+                {
+                    "name": "integrationId.name",
+                    "label": "Name",
+                    "type": "text"
+                },
+                {
+                    "name": "runId",
+                    "label": "Run ID",
+                    "type": "text"
+                },
+                {
+                    "name": "inputFile",
+                    "label": "Input File Name",
+                    "type": "file",
+                    "dispCondField": ["status"],
+                    "dispCondValue": {"status": ["Succeeded", "Failed"]}
+                },
+                {
+                    "name": "responseFile",
+                    "label": "Response File Name",
+                    "type": "file",
+                    "dispCondField": ["status"],
+                    "dispCondValue": {"status": ["Succeeded", "Failed"]}
+                }
+            ]
+        }
+    },
+    "dashboard": {
+        "listView": {
+            "data": [
+                {
+                    "name": "runId",
+                    "label": "Run Id",
+                    "type": "text",
+                    "default": "-",
+                    "style": "name-color",
+                    "clickHandler": "gotoRunHistory"
+                },
+                {
+                    "name": "integrationId.name",
+                    "label": "Name",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "status",
+                    "label": "Status",
+                    "type": "text",
+                    "default": "-",
+                    "style": "status",
+                    "applyStyleWith": "status",
+                    "styleField": "status"
+                },
+                {
+                    "name": "startTime",
+                    "label": "Start",
+                    "type": "text",
+                    "pipe": "dateTimeFormat",
+                    "style": "block max-content-width small-text",
+                    "default": "-"
+                },
+                {
+                    "name": "endTime",
+                    "label": "End",
+                    "type": "text",
+                    "pipe": "dateTimeFormat",
+                    "style": "block max-content-width small-text",
+                    "default": "-"
+                },
+                {
+                    "name": "duration",
+                    "label": "Duration",
+                    "type": "text",
+                    "pipe": "duration",
+                    "default": "-"
+                }
+            ]
+        },
+        "statusCards": {
+            "cards": [
+                {
+                    "name": "failedRunsCount",
+                    "label": "Failed Runs",
+                    "diffField": "failedRunsDiff"
+                },
+                {
+                    "name": "succeededRunsCount",
+                    "label": "Success Runs",
+                    "diffField": "succeededRunsDiff"
+                },
+                {
+                    "name": "failedIntsCount",
+                    "label": "Failed Integrations",
+                    "diffField": "failedIntsDiff"
+                },
+                {
+                    "name": "succeededIntsCount",
+                    "label": "Success Integrations",
+                    "diffField": "succeededIntsDiff"
+                }
+            ]
+        }
+    },
+    "integrations": {
+        "Title": "Integration",
+        "createButton": "Create New",
+        "searchPlaceholder": "Search by Integration Name or Description",
+        "resetFiltersButton": "Reset Filters",
+        "listView": {
+            "filterOptions": {
+                "partner": {
+                    "field": "partner?.name",
+                    "label": "Partner",
+                    "placeholder": "Select Partner",
+                    "searchplaceholder": "Search"
+                },
+                "rcxProcess": {
+                    "field": "template?.rcxProcess",
+                    "label": "RCX Process",
+                    "placeholder": "Select RCX Process",
+                    "searchplaceholder": "Search"
+                },
+                "templateName": {
+                    "field": "template?.name",
+                    "label": "Template",
+                    "placeholder": "Select Template",
+                    "searchplaceholder": "Search"
+                },
+                "status": {
+                    "field": "status",
+                    "label": "Status",
+                    "placeholder": "Select Status",
+                    "searchplaceholder": "Search"
+                }
+            },
+            "data": [
+                {
+                    "name": "name",
+                    "label": "Name",
+                    "type": "text",
+                    "default": "-",
+                    "style": "name-color",
+                    "routerLink": "/integrations/detail",
+                    "stateProperty": "properties",
+                    "source": "integrations",
+                    "modifySource": true
+                },
+                {
+                    "name": "description",
+                    "label": "Description",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "template.rcxProcess",
+                    "label": "RCX Process",
+                    "type": "text",
+                    "default": "-",
+                    "displayPages": ["integrations"]
+                },
+                {
+                    "name": "partner.name",
+                    "label": "Partner",
+                    "type": "text",
+                    "default": "-",
+                    "displayPages": ["integrations"]
+                },
+                {
+                    "name": "template.name",
+                    "label": "Template Name",
+                    "type": "text",
+                    "default": "-",
+                    "style": "name-color",
+                    "subdoc": "template",
+                    "routerLink": "/templates/detail",
+                    "stateProperty": "properties",
+                    "source": "integrations",
+                    "displayPages": ["integrations","connections"]
+                },
+                {
+                    "name": "status",
+                    "label": "Status",
+                    "type": "text",
+                    "default": "-",
+                    "style": "status",
+                    "applyStyleWith": "status",
+                    "styleField": "status",
+                    "subField": "publishError",
+                    "toolTip" : {
+                        "value": "Publish Failed"
+                    }
+                },
+                {
+                    "label": "Actions",
+                    "type": "actions",
+                    "name": "__actions",
+                    "sortDisabled": true,
+                    "conditionalDisp": true
+                }
+            ],
+            "actions": [
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "copy",
+                    "clickHandler": "copyIntegration",
+                    "toolTip": "Copy",
+                    
+                    "permissionCond": {"FX_Integration": ["create"]}
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "edit",
+                    "clickHandler": "editIntegration",
+                    "toolTip": "Edit",
+                    "dispCondField": ["status"],
+                    "dispCondValue": {"status":{"in": ["Revision", "Publish Failed"]}},                    
+                    "permissionCond": {"FX_Integration": ["update"]}
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "trash",
+                    "clickHandler":"deleteIntegration",
+                    "toolTip": "Delete",
+                    "dispCondField": ["status"],
+                    "dispCondValue": {"status":{"in": ["Revision", "Publish Failed"]}},
+                    "permissionCond": {"FX_Integration": ["delete"]}
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "upload-1",
+                    "clickHandler":"publishIntegration",
+                    "toolTip": "Publish",
+                    "dispCondField": ["status"],
+                    "dispCondValue": {"status":{"in": ["Revision", "Publish Failed"]}},
+                    "permissionCond": {"FX_PublishIntegration": ["create"]}
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "play-circle",
+                    "clickHandler":"runOnceIntegration",
+                    "dispCondField": ["status"],
+                    "dispCondValue": {"status":{"in": ["Published", "Paused"]}},
+                    "toolTip": "Run Once",
+                    
+                    "permissionCond": {"FX_RunOnceIntegration": ["create"]}
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "pause-circle",
+                    "clickHandler":"pauseIntegration",
+                    "dispCondField": "status",
+                    "dispCondValue": "Published",
+                    "toolTip": "Pause",
+                    
+                    "permissionCond": {"FX_PauseIntegration": ["create"]}
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "clock-refresh",
+                    "clickHandler":"resumeIntegration",
+                    "dispCondField": "status",
+                    "dispCondValue": "Paused",
+                    "toolTip": "Resume",
+                    
+                    "permissionCond": {"FX_ResumeIntegration": ["create"]}
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "cancel",
+                    "clickHandler":"unpublishIntegration",
+                    "dispCondField": "status",
+                    "dispCondValue": "Paused",
+                    "toolTip": "Unpublish",
+                    
+                    "permissionCond": {"FX_UnPublishIntegration": ["create"]}
+                }
+            ],
+            "paginationOptions": {
+                "length": 100,
+                "pageSize": 10,
+                "pageSizeOptions": [
+                    5,
+                    10,
+                    20
+                ]
+            },
+            "queryOptions": {
+                "sort": {
+                    "updatedAt":  -1
+                }
+            },
+            "refresh": true 
+        },
+        "gridView": {
+            "filterOptions": {
+                "runId": {
+                    "label": "runid",
+                    "placeholder": "Run Id"
+                }
+            },
+            "data": [
+                {
+                  "section": "section1",
+                  "fields": [
+                    {
+                        "name": "name",
+                        "label": "Name",
+                        "type": "text",
+                        "default": "-",
+                        "style": "name-color",
+                        "routerLink": "/integrations/detail",
+                        "stateProperty": "properties",
+                        "source": "integrations"
+                    }
+                  ],
+                  "singleRow": false
+                },
+                {
+                  "section": "section2",
+                  "fields": [
+                    {
+                        "name": "template.rcxProcess",
+                        "label": "RCX Process",
+                        "type": "text",
+                        "default":"-"
+                    },                    
+                    {
+                        "name": "template.name",
+                        "label": "Template Name",
+                        "type": "text",
+                        "default": "-",
+                        "style": "name-color",
+                        "subdoc": "template",
+                        "routerLink": "/templates/detail",
+                        "stateProperty": "properties",
+                        "source": "integrations"
+                    },
+                    {
+                        "name": "partner.name",
+                        "label": "Partner",
+                        "type": "text",
+                        "default": "-"
+                    }
+                  ],
+                  "singleRow": true
+                },                
+                {
+                  "section": "section3",
+                  "fields": [
+                    {
+                      "name": "description",
+                      "label": "Description",
+                      "type": "text",
+                      "default": "-",
+                      "displayType": "noLabel"
+                    }
+                  ],
+                  "singleRow": false
+                },
+                {
+                  "label": "Actions",
+                  "type": "actions",
+                  "name": "__actions",
+                  "sortDisabled": true,
+                  "conditionalDisp": true
+                }
+              ],
+            "actions": [
+                {
+                    "name": "Copy",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "copy",
+                    "clickHandler": "copyIntegration",
+                    "toolTip": "Copy"
+                },
+                {
+                    "name": "Edit",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "edit",
+                    "clickHandler": "editIntegration",
+                    "toolTip": "Edit",
+                    "dispCondField": ["status"],
+                    "dispCondValue": {"status":{"in": ["Revision", "Publish Failed"]}},                    
+                    "permissionCond": {"FX_Integration": ["update"]}
+                },
+                {
+                    "name": "Delete",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "trash",
+                    "clickHandler": "deleteIntegration",
+                    "toolTip": "Delete",
+                    "dispCondField": ["status"],
+                    "dispCondValue": {"status":{"in": ["Revision", "Publish Failed"]}},
+                    "permissionCond": {"FX_Integration": ["delete"]}
+                },               
+                {
+                    "name": "Publish",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "upload-1",
+                    "clickHandler":"publishIntegration",
+                    "toolTip": "Publish",
+                    "dispCondField": ["status"],
+                    "dispCondValue": {"status":{"in": ["Revision", "Publish Failed"]}},
+                    "permissionCond": {"FX_PublishIntegration": ["create"]}
+                },
+                {
+                    "name": "Run Once",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "play-circle",
+                    "clickHandler":"runOnceIntegration",
+                    "dispCondField": ["status"],
+                    "dispCondValue": {"status":{"in": ["Published", "Paused"]}},
+                    "toolTip": "Run Once",
+                    
+                    "permissionCond": {"FX_RunOnceIntegration": ["create"]}
+                },
+                {
+                    "name": "Pause",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "pause-circle",
+                    "clickHandler":"pauseIntegration",
+                    "dispCondField": "status",
+                    "dispCondValue": "Published",
+                    "toolTip": "Pause",
+                    
+                    "permissionCond": {"FX_PauseIntegration": ["create"]}
+                },
+                {
+                    "name": "Resume",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "clock-refresh",
+                    "clickHandler":"resumeIntegration",
+                    "dispCondField": "status",
+                    "dispCondValue": "Paused",
+                    "toolTip": "Resume",
+                    
+                    "permissionCond": {"FX_ResumeIntegration": ["create"]}
+                },
+                {
+                    "name": "Unpublish",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "cancel",
+                    "clickHandler":"unpublishIntegration",
+                    "dispCondField": "status",
+                    "dispCondValue": "Paused",
+                    "toolTip": "Unpublish",
+                    
+                    "permissionCond": {"FX_UnPublishIntegration": ["create"]}
+                }
+            ],
+            "paginationOptions": {
+                "length": 100,
+                "pageSize": 6,
+                "pageSizeOptions": [
+                    6,
+                    12,
+                    18
+                ]
+            }
+        },
+        "formView": {
+            "data": {
+                "integrationProperties": {
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Integration Name",
+                                    "field": "name",
+                                    "type": "text",
+                                    "required": true,
+                                    "autofocus": true,
+                                    "maxLength": 100
+                                },
+                                {
+                                    "label": "Partner",
+                                    "field": "partner",
+                                    "type": "select-search",
+                                    "selectData": "Partners",
+                                    "formControl": "partnerFormControl",
+                                    "selectionChange": "PartnerChange",
+                                    "selectLabel": "name",
+                                    "selectValue": "_id",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Template",
+                                    "field": "template",
+                                    "type": "select",
+                                    "selectData": "templates",
+                                    "selectLabel": "name",
+                                    "selectValue": "_id",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Description",
+                                    "field": "description",
+                                    "type": "text",
+                                    "class": "fullWidth-box",
+                                    "maxLength": 255
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "intInputProperties": {
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Input Connection",
+                                    "field": "connection",
+                                    "type": "select",
+                                    "selectData": "connections",
+                                    "selectLabel": "name",
+                                    "selectValue": "_id",
+                                    "required": true
+                                },
+                                {
+                                    "label": "Input Must Exist",
+                                    "field": "inputMustExist",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Max Retries",
+                                    "field": "maxRetries",
+                                    "type": "number",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "inputMustExist",
+                                    "dispCondValue": true,
+                                    "required": true
+                                },
+                                {
+                                    "label": "Retry Interval Seconds",
+                                    "field": "retryIntervalSeconds",
+                                    "type": "number",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "inputMustExist",
+                                    "dispCondValue": true,
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Input Path",
+                                    "field": "path",
+                                    "type": "text",
+                                    "required": true,
+                                    "maxLength": 500,
+                                    "class": "fullWidth-box"
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Input Archive Path",
+                                    "field": "archivePath",
+                                    "type": "text",
+                                    "required": true,
+                                    "maxLength": 500,
+                                    "class": "fullWidth-box"
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Input File Pattern",
+                                    "field": "filePattern",
+                                    "type": "text",
+                                    "required": true,
+                                    "maxLength": 500,
+                                    "class": "fullWidth-box"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "intResponseProperties": {
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Response Connection",
+                                    "field": "connection",
+                                    "type": "select",
+                                    "selectData": "connections",
+                                    "selectLabel": "name",
+                                    "selectValue": "_id",
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Response Path",
+                                    "field": "path",
+                                    "type": "text",
+                                    "required": true,
+                                    "maxLength": 500,
+                                    "class": "fullWidth-box"
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Response Archive Path",
+                                    "field": "archivePath",
+                                    "type": "text",
+                                    "required": true,
+                                    "maxLength": 500,
+                                    "class": "fullWidth-box"
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Response File Pattern",
+                                    "field": "filePattern",
+                                    "type": "text",
+                                    "required": true,
+                                    "maxLength": 500,
+                                    "class": "fullWidth-box"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "intSchedulingProperties": {
+                    "dataFields": [
+                        {
+                            "fields": [
+                                {
+                                    "label": "Effective Date/Time",
+                                    "field": "effectiveDate",
+                                    "type": "dateTime",
+                                    "pipe": "dateTimeFormat",
+                                    "required": true,
+                                    "minDate":true
+                                },
+                                {
+                                    "label": "Repeating",
+                                    "field": "repeating",
+                                    "type": "radio",
+                                    "value": [
+                                        {
+                                            "key": "Yes",
+                                            "value": true
+                                        },
+                                        {
+                                            "key": "No",
+                                            "value": false
+                                        }
+                                    ],
+                                    "required": true
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Frequency",
+                                    "field": "frequency",
+                                    "type": "select",
+                                    "selectData": "FrequencyType",
+                                    "selectLabel": "label",
+                                    "maxLength": 50,
+                                    "selectValue": "value",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "repeating",
+                                    "dispCondValue": true,
+                                    "required": true
+                                },
+                                {
+                                    "label": "Repeat Interval",
+                                    "field": "repeatInterval",
+                                    "type": "number",
+                                    "regex": "^[1-9]\\d*$",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "repeating",
+                                    "dispCondValue": true,
+                                    "required": true
+                                },
+                                {
+                                    "field": "Preview Schedule",
+                                    "type": "button",
+                                    "dispCondPar": "data",
+                                    "dispCondField": "repeating",
+                                    "dispCondValue": true,
+                                    "hideLabel": true,
+                                    "showOnView": true,
+                                    "clickHandler": "previewSchedule",
+                                    "showBasedOn": ["effectiveDate","repeatInterval","frequency"]
+                                }
+                            ]
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "label": "Control Rate/Min",
+                                    "field": "controlRate",
+                                    "required": true,
+                                    "type": "number",
+                                    "regex": "^[1-9]\\d*$",
+                                    "configCheck": true,
+                                    "max": "MAX_CONTROL_RATE"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }      
+    },
+    "dependencies": {
+        "listView": {
+            "data": [
+                {
+                    "name": "name",
+                    "label": "Dependency Name",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "type",
+                    "label": "Dependency Type",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "list",
+                    "label": "Integration Dependencies",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "label": "Actions",
+                    "type": "actions",
+                    "name": "__actions",
+                    "sortDisabled": true,
+                    "conditionalDisp": true
+                }
+            ],
+            "actions": [
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "edit",
+                    "clickHandler": "edit",
+                    "toolTip": "Edit"
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "trash",
+                    "clickHandler":"delete",
+                    "toolTip": "Delete"
+                }
+            ],
+            "paginationOptions": {
+                "length": 100,
+                "pageSize": 10,
+                "pageSizeOptions": [
+                    5,
+                    10,
+                    20
+                ]
+            }
+        }
+    },
+    "alerts": {
+        "listView": {
+            "data": [
+                {
+                    "name": "name",
+                    "label": "Alert Name",
+                    "type": "text",
+                    "default": "-",
+                    "required": true,
+                    "maxLength": 50
+                },
+                {
+                    "name": "type",
+                    "label": "Alert Type",
+                    "type": "text",
+                    "default": "-",
+                    "required": true,
+                    "maxLength": 50
+                },
+                {
+                    "name": "email",
+                    "label": "Notification Email Address",
+                    "type": "text",
+                    "default": "-",
+                    "required": true,
+                    "email": true,
+                    "maxLength": 500
+                },
+                {
+                    "label": "Actions",
+                    "type": "actions",
+                    "name": "__actions",
+                    "sortDisabled": true,
+                    "conditionalDisp": true,
+                    "required": true
+                }
+            ],
+            "actions": [
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "edit",
+                    "clickHandler": "edit",
+                    "toolTip": "Edit"
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "trash",
+                    "clickHandler":"delete",
+                    "toolTip": "Delete"
+                }
+            ],
+            "paginationOptions": {
+                "length": 100,
+                "pageSize": 10,
+                "pageSizeOptions": [
+                    5,
+                    10,
+                    20
+                ]
+            }
+        }
+    },
+    "error-code-mapping": {
+        "listView": {
+            "data": [
+                {
+                    "name": "rcxErrorCode",
+                    "label": "RCX Error Code",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "errorCodeDes",
+                    "label": "Error Code Description",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "partnerErrorCode",
+                    "label": "Partner Error Code",
+                    "type": "text",
+                    "default": "-",
+                    "autofocus": true
+                },
+                {
+                    "label": "Actions",
+                    "type": "actions",
+                    "name": "__actions",
+                    "sortDisabled": true,
+                    "conditionalDisp": true
+                }
+            ],
+            "actions": [
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "edit",
+                    "clickHandler": "edit",
+                    "toolTip": "Edit"
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "trash",
+                    "clickHandler":"delete",
+                    "toolTip": "Delete"
+                }
+            ],
+            "paginationOptions": {
+                "length": 100,
+                "pageSize": 10,
+                "pageSizeOptions": [
+                    5,
+                    10,
+                    20
+                ]
+            }
+        }
+    },
+    "integration-parameters": {
+        "listView": {
+            "data": [
+                {
+                    "name": "name",
+                    "label": "Parameter Name",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "type",
+                    "label": "Parameter Type",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "name": "value",
+                    "label": "Parameter Value",
+                    "applyPipeCond": {
+                        "key": "type",
+                        "value": "Date"
+                    },
+                    "pipe": "dateTimeFormat",
+                    "style": "block max-content-width small-text",
+                    "type": "text",
+                    "default": "-"
+                },
+                {
+                    "label": "Actions",
+                    "type": "actions",
+                    "name": "__actions",
+                    "sortDisabled": true,
+                    "conditionalDisp": true
+                }
+            ],
+            "actions": [
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "edit",
+                    "clickHandler": "edit",
+                    "toolTip": "Edit"
+                },
+                {
+                    "name": "actions",
+                    "label": "Actions",
+                    "icon": "true",
+                    "iconname": "trash",
+                    "clickHandler":"delete",
+                    "toolTip": "Delete"
+                }
+            ],
+            "paginationOptions": {
+                "length": 100,
+                "pageSize": 10,
+                "pageSizeOptions": [
+                    5,
+                    10,
+                    20
+                ]
+            }
+        }
+    }
+
+}
