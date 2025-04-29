@@ -1,0 +1,46 @@
+<div class="responsive-table vertical-scroll">
+  <table
+    class="row custom-table"
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    matSortActive="runId"
+    matSortDirection="desc">
+    <!-- Add table columns and define their data sources -->
+    <ng-container *ngFor="let item of displayedColumns" matColumnDef="{{item}}">
+      <th
+        mat-header-cell
+        mat-sort-header
+        *matHeaderCellDef
+        class="table-header">
+        {{ getHeaderName(item) }}
+      </th>
+      <td mat-cell *matCellDef="let element" class="table-row">
+        <ng-container *ngIf="item === 'duration'">
+          {{ element[item] }}
+        </ng-container>
+        <ng-container *ngIf="item === 'integration_name'">
+          {{ element[item] }}
+        </ng-container>
+        <ng-container *ngIf="item === 'run_id'">
+          <a (click)="showDetail()" class="name-color">{{ element[item] }}</a>
+        </ng-container>
+        <div
+          class="status {{ getClassName(element[item]) }}"
+          *ngIf="item === 'status'">
+          {{ element[item] }}
+        </div>
+        <div *ngIf="item === 'start' || item === 'end'">
+          {{ element[item].date }}
+          <div style="display: flex; gap: 3px">
+            <div>{{ element[item].hours }}</div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Define table columns -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

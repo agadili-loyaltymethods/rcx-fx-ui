@@ -1,0 +1,118 @@
+<div class="templates">
+  <mat-card class="header-title">
+    <div class="row">
+      <div class="title">Templates</div>
+      <div class="create-button">
+        <button
+          *ngIf="utilsService.checkPerms({FX_IntegrationTemplate:['create']})"
+          class="theme-button active-btn"
+          (click)="importTemplate()"
+          mat-flat-button
+          color="primary"
+          aria-label="Import Template">
+          <mat-icon svgIcon="import"></mat-icon>Import
+        </button>
+        <button
+          *ngIf="utilsService.checkPerms({Job:['read']})"
+          class="theme-button active-btn"
+          (click)="templateImportStatus()"
+          mat-flat-button
+          color="primary"
+          aria-label="Import Template Status">
+          <mat-icon svgIcon="info-white"></mat-icon>Import Status
+        </button>
+        <button
+          *ngIf="utilsService.checkPerms({FX_IntegrationTemplate:['create']})"
+          class="theme-button active-btn"
+          (click)="createTemplate()"
+          mat-flat-button
+          color="primary"
+          aria-label="Create Template">
+          <mat-icon svgIcon="plus" class="icon-small"></mat-icon>Create New
+        </button>
+      </div>
+    </div>
+  </mat-card>
+  <!-- <mat-divider></mat-divider> -->
+  <div class="panel">
+    <mat-card>
+      <div class="table-filter-section">
+        <div class="row search-section">
+          <!-- <app-status-filter></app-status-filter> -->
+          <div class="right-elements">
+            <mat-form-field appearance="outline">
+              <mat-icon
+                matPrefix
+                svgIcon="magnifier"
+                class="icon-small"></mat-icon>
+              <input
+                matInput
+                type="search"
+                placeholder="Search by Template Name or Description"
+                (input)="onChange({ input: $event.target.value })"
+                [(ngModel)]="searchValue" />
+            </mat-form-field>
+            <div class="tab-wrap list-grid-wrap">
+              <mat-button-toggle-group>
+                <mat-button-toggle
+                  class="toggles"
+                  checked="{{showListView}}"
+                  (click)="viewList()">
+                  <mat-icon
+                    svgIcon="listactive"
+                    class="pointer myIcon"></mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle
+                  class="toggles"
+                  checked="{{!showListView}}"
+                  (click)="viewGrid()">
+                  <mat-icon svgIcon="grid" class="pointer myIcon"></mat-icon>
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
+        </div>
+        <div class="row filter-section">
+          <div class="filter-options">
+            <app-drop-down-with-search
+              *ngFor="let item of cfgOpt | keyvalue: originalOrder"
+              [placeHolder]="item.value.placeholder"
+              [placeHolderSearchBox]="item.value.searchplaceholder"
+              [label]="item.value.label"
+              [multiple]="true"
+              [selectBoxOptions]="config[item.value.label]"
+              [selectedValue]="getSelectedValue(config[item.value.label], item.value.field)"
+              [fieldName]="item.value.field"
+              (valueChange)="onChange($event, item.value.field)">
+            </app-drop-down-with-search>
+          </div>
+          <div class="filter-reset">
+            <button
+              mat-stroked-button
+              *ngIf="refresh"
+              class="refresh"
+              (click)="getRefreshData()">
+              <mat-icon svgIcon="refresh" class="refresh-icon"></mat-icon>
+            </button>
+            <button mat-stroked-button (click)="resetFilters()">
+              Reset Filters
+            </button>
+            <button mat-stroked-button *ngIf="requiredData?.selectedData?.length" (click)="export(requiredData?.selectedData)">
+              Export
+            </button>
+          </div>
+        </div>
+      </div>
+      <app-template-list
+        *ngIf="showListView"
+        [config]="config"
+        [handler]="getDataHandler"
+        [requiredData]="requiredData"
+        [data]="data"></app-template-list>
+      <app-template-grid
+        *ngIf="!showListView"
+        [handler]="getDataHandler"
+        [data]="data"></app-template-grid>
+    </mat-card>
+  </div>
+</div>

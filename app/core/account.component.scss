@@ -1,0 +1,43 @@
+.account-disabled {
+    border-radius: 10px;
+    border: 5px #EA5455;
+    background: #EA5455;
+    color: black;
+    padding: 2px;
+    font-size: 12px;
+}
+
+.mat-drawer-container
+{
+    // position:inherit !important;
+    .mat-drawer
+
+    {
+    width:auto !important;
+    max-width: 220px !important;
+    }
+}
+
+mat-nav-list
+{
+    .chevron-button
+    {
+        cursor: pointer;
+        transition: 300ms ease-in-out;
+        transform: rotate(0deg);
+        right:0;
+        float:left;
+    }
+
+    .chevron-button.rotated
+    {
+        transform: rotate(180deg);
+        color:#fff !important;
+        background-color: #0b4a87 !important;
+    }
+}
+
+.mat-list-icon {
+    border-radius: 50%;
+    padding: 4px;
+}

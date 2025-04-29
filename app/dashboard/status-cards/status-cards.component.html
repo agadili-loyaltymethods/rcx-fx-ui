@@ -1,0 +1,26 @@
+<div class="deshbox-wrap">
+  <div class="deshbox" *ngFor="let card of config.cards">
+    <div class="title">{{ card.label }}</div>
+    <div class="data-wrap">
+      <div class="value">
+        {{ statusData[card.name] }}<span
+          class="percentage"
+          [ngClass]="{
+            low: statusData[card.diffField] < 0,
+            high: statusData[card.diffField] >= 0
+          }">
+          <mat-icon
+            svgIcon="{{ statusData[card.diffField] < 0 ? 'dash-low' : 'dash-high' }}"
+            class="dash-aerrow"></mat-icon
+          >{{ statusData[card.diffField] > 0 ? statusData[card.diffField] :
+          statusData[card.diffField] * -1 }}
+        </span>
+      </div>
+      <div class="left-arrow">
+        <mat-icon
+          svgIcon="dash-arrow-left"
+          (click)="redirectToRunHistory(card)"></mat-icon>
+      </div>
+    </div>
+  </div>
+</div>

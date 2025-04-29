@@ -1,0 +1,27 @@
+<mat-toolbar class="toolbar">
+  <div class="cursor-pointer">
+    <mat-label mat-button [matMenuTriggerFor]="beforeMenu" class="profile-wrap">
+      <span class="profile-img-text">{{profileImgText}}</span>
+      <div class="profile-name">
+        {{orgName}}<br /><span class="profile-order">{{loggedAs}}</span>
+      </div>
+      <mat-icon class="icon" svgIcon="down-arrow"></mat-icon>
+    </mat-label>
+    <mat-menu #beforeMenu="matMenu" xPosition="before" class="profile-menu">
+      <button
+        mat-menu-item
+        routerLink="/user-profile"
+        color="primary"
+        class="profile-menu-list">
+        <mat-icon svgIcon="profile-icon" class="icon"></mat-icon> My Profile
+      </button>
+      <button
+        mat-menu-item
+        color="primary"
+        class="profile-menu-list"
+        (click)="logout()">
+        <mat-icon svgIcon="logout-icon" class="icon"></mat-icon>Logout
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

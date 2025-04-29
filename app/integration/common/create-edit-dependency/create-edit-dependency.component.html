@@ -1,0 +1,84 @@
+<div class="integration-modal">
+  <div class="modal-title">
+    <div class="title">Create/Edit Dependency</div>
+    <div class="close-icon" mat-dialog-close>
+      <mat-icon svgIcon="close"></mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="modal-content">
+    <form class="integrationcontainer-wrap" [formGroup]="formGroup">
+      <div class="input-container">
+        <div class="label-container">
+          <label class="input-label">Dependency Name *</label>
+        </div>
+        <mat-form-field appearance="outline">
+          <input
+            formControlName="dependencyName"
+            type="text"
+            matInput
+            placeholder="Enter Dependency Name"
+            value="Dependency123"
+            [(ngModel)]="newDependency.name" />
+          <mat-error *ngIf="formGroup.get('dependencyName').errors?.required">
+            Please enter dependency name.
+          </mat-error>
+          <mat-error *ngIf="formGroup.get('dependencyName').errors?.maxlength">
+            Dependency name can not exceed
+            {{formGroup.get('dependencyName').errors?.maxlength.requiredLength}}
+            characters length
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="input-container">
+        <div class="label-container">
+          <label class="input-label">Dependency Type *</label>
+        </div>
+        <mat-form-field appearance="outline" class="select-container">
+          <mat-select
+            formControlName="dependencyType"
+            placeholder="Select Dependency type"
+            [(ngModel)]="newDependency.type">
+            <mat-option
+              *ngFor="let option of data.handlers.getEnumsByType('DependencyType')"
+              [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('dependencyType').errors?.required">
+            Please select dependency type.
+          </mat-error>
+          <mat-error *ngIf="formGroup.get('dependencyType').errors?.maxlength">
+            Dependency type can not exceed
+            {{formGroup.get('dependencyType').errors?.maxlength.requiredLength}}
+            characters length
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="input-container">
+        <div class="label-container">
+          <label class="input-label">Integration Dependencies</label>
+        </div>
+        <app-drop-down-with-search
+          placeHolder="Search by Integration"
+          placeHolderSearchBox="Search by Integration"
+          [selectBoxOptions]="data.integrations"
+          [selectedValue]="newDependency.list.slice()"
+          [multiple]="true"
+          (valueChange)="onDependencyListChange($event)"></app-drop-down-with-search>
+      </div>
+    </form>
+  </div>
+  <div mat-dialog-actions class="modal-buttons">
+    <div class="right-elements">
+      <button class="btn outline-btn" mat-dialog-close>Cancel</button>
+      <button
+        class="btn primary-btn"
+        [disabled]="formGroup.invalid"
+        (click)="onSave()">
+        Ok
+      </button>
+    </div>
+  </div>
+</div>

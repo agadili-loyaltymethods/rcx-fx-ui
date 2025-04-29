@@ -1,0 +1,49 @@
+<div class="executionfield-modal" fxLayout="column" fxLayoutGap="10px">
+  <div class="modal-title">
+    <div class="title">Execution Log</div>
+    <div class="close-icon" mat-dialog-close>
+      <mat-icon svgIcon="close"></mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="modal-content">
+    <div class="executioncontainer-wrap" fxLayout="column" fxFlexFill>
+      <div class="search-wrap search-input-container">
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix svgIcon="magnifier" class="icon-small"></mat-icon>
+          <input
+            matInput
+            type="search"
+            placeholder="Search"
+            [(ngModel)]="searchTerm"
+            (input)="onSearchInputChange()"
+            (keypress)="onSearchInputKeyPress($event)" />
+          <div class="search-info" matSuffix>
+            <span *ngIf="searchResults.length > 0"
+              >{{ currentResultIndex + 1 }}/{{ searchResults.length }}</span
+            >
+          </div>
+        </mat-form-field>
+        <button
+          mat-stroked-button
+          class="refresh"
+          (click)="getLogs()"
+          style="display: block; margin-left: 0.5vw">
+          <mat-icon svgIcon="refresh" class="refresh-icon"></mat-icon>
+        </button>
+      </div>
+      <div class="list-wrap code-wrap">
+        <div
+          class="modal-textarea resizable"
+          [innerHTML]="highlightedLog || log || ''"></div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="modal-buttons">
+    <div class="right-elements">
+      <button class="btn outline-btn icon" (click)="downloadFile()">
+        <mat-icon svgIcon="download"></mat-icon> Download Log
+      </button>
+      <button class="btn primary-btn" mat-dialog-close>Ok</button>
+    </div>
+  </div>
+</div>

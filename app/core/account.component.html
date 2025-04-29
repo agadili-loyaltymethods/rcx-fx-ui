@@ -1,0 +1,75 @@
+<div class="account-wrapper" fxFlexFill *ngIf="isAllowed('main-ui')">
+  <div fxLayout="column" fxLayoutGap="20px" class="container p-0" fxFlexFill>
+    <mat-nav-list
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      class="breadcrumb p-10 m-0">
+      <mat-icon
+        mat-list-icon
+        class="chevron-button"
+        (click)="isExpanded = !isExpanded"
+        [ngClass]="{'rotated':isExpanded}"
+        >menu</mat-icon
+      >
+      <a mat-list-item class="w-auto"
+        ><small class="text-primary">Feedx</small></a
+      >
+      <span class="mdi mdi-chevron-right mdi-24px"></span>
+    </mat-nav-list>
+    <mat-divider class="account-top-border mb-0"></mat-divider>
+    <div class="account-body position-relative">
+      <!-- <div fxFlex="17%" class="account-left-wrapper">  -->
+      <mat-drawer-container
+        class="account-left-wrapper"
+        style="position: initial">
+        <mat-drawer
+          #drawer
+          mode="side"
+          opened="true"
+          id="scroll-style"></mat-drawer>
+        <mat-nav-list>
+          <a
+            *ngIf="isAllowed('points-summary')"
+            [routerLink]="[{ outlets: { memberInfo: ['points-summary', memberId] } }]"
+            routerLinkActive="active"
+            mat-list-item>
+            <span class="mdi mdi-star mdi-18px" fxFlex="30px"></span>
+            <span fxFlex class="mat-body" *ngIf="isExpanded">Dashboard</span>
+          </a>
+
+          <a
+            *ngIf="isAllowed('coupons')"
+            [routerLink]="[{ outlets: { memberInfo: ['coupons', memberId] } }]"
+            routerLinkActive="active"
+            mat-list-item>
+            <span class="mdi mdi-ticket-percent mdi-18px" fxFlex="30px"></span>
+            <span fxFlex class="mat-body" *ngIf="isExpanded">Templates</span>
+          </a>
+          <a
+            *ngIf="isAllowed('purchase-history')"
+            [routerLink]="[{ outlets: { memberInfo: ['purchase-history', memberId] } }]"
+            routerLinkActive="active"
+            mat-list-item>
+            <span class="mdi mdi-history mdi-18px" fxFlex="30px"></span>
+            <span fxFlex class="mat-body" *ngIf="isExpanded">Integration</span>
+          </a>
+          <a
+            *ngIf="isAllowed('adjustment-history')"
+            [routerLink]="[{ outlets: { memberInfo: ['adjustment-history', memberId] } }]"
+            routerLinkActive="active"
+            mat-list-item>
+            <span class="mdi mdi-timetable mdi-18px" fxFlex="30px"></span>
+            <span fxFlex class="mat-body" *ngIf="isExpanded"
+              >File History
+            </span>
+          </a>
+        </mat-nav-list>
+      </mat-drawer-container>
+      <!-- </div> -->
+      <mat-divider [vertical]="true" class="position-absolute"></mat-divider>
+      <div fxFlex class="account-right-wrapper pl-10 pr-0 overflow-auto">
+        <router-outlet name="memberInfo"></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

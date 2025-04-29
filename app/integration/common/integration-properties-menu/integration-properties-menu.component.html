@@ -1,0 +1,88 @@
+<div class="integration-button-left-container grey-background">
+  <button
+    mat-button-outline
+    class="btn-properties"
+    [ngClass]="{ 'button-active': activeMenuProperties === 'integration_properties' }"
+    (click)="onClickOnMenuSelection('integration_properties')">
+    <mat-icon matPrefix svgIcon="file" class="integratelist-icon"></mat-icon>
+    <mat-label class="label-child">Integration Properties</mat-label>
+  </button>
+</div>
+<div class="integration-button-left-container list-btn-counter">
+  <button
+    mat-button-outline
+    class="btn-properties btn-margin"
+    [ngClass]="{ 'button-active': activeMenuProperties === 'input_properties' }"
+    (click)="onClickOnMenuSelection('input_properties')"
+    [disabled]="!properties.partner">
+    <mat-icon
+      matPrefix
+      svgIcon="arrows-right"
+      class="integratelist-icon"></mat-icon>
+    <mat-label class="label-child">Input Properties</mat-label>
+  </button>
+  <button
+    mat-button-outline
+    class="btn-properties btn-margin"
+    [ngClass]="{ 'button-active': activeMenuProperties === 'response_properties' }"
+    (click)="onClickOnMenuSelection('response_properties')"
+    [disabled]="!properties.partner">
+    <mat-icon
+      matPrefix
+      svgIcon="arrows-left"
+      class="integratelist-icon"></mat-icon>
+    <mat-label class="label-child">Response Properties</mat-label>
+  </button>
+  <button
+    mat-button-outline
+    class="btn-properties btn-margin"
+    [ngClass]="{ 'button-active': activeMenuProperties === 'integration_parameters' }"
+    (click)="onClickOnMenuSelection('integration_parameters')">
+    <mat-icon
+      matPrefix
+      svgIcon="parameters"
+      class="integratelist-icon"></mat-icon>
+    <mat-label class="label-child">Integration Parameters</mat-label>
+  </button>
+  <button
+    mat-button-outline
+    class="btn-properties btn-margin"
+    [ngClass]="{ 'button-active': activeMenuProperties === 'scheduling_properties' }"
+    (click)="onClickOnMenuSelection('scheduling_properties')">
+    <mat-icon
+      matPrefix
+      svgIcon="clock-refresh"
+      class="integratelist-icon"></mat-icon>
+    <mat-label class="label-child">Scheduling</mat-label>
+  </button>
+  <button
+    mat-button-outline
+    class="btn-properties btn-margin"
+    [ngClass]="{ 'button-active': activeMenuProperties === 'alerts_properties' }"
+    (click)="onClickOnMenuSelection('alerts_properties')">
+    <mat-icon matPrefix svgIcon="bell" class="integratelist-icon"></mat-icon>
+    <mat-label class="label-child">Alerts</mat-label>
+  </button>
+  <button
+    mat-button-outline
+    class="btn-properties btn-margin"
+    [ngClass]="{ 'button-active': activeMenuProperties === 'dependencies_properties' }"
+    (click)="onClickOnMenuSelection('dependencies_properties')">
+    <mat-icon
+      matPrefix
+      svgIcon="dependency"
+      class="integratelist-icon"></mat-icon>
+    <mat-label class="label-child">Dependencies</mat-label>
+  </button>
+  <button
+    mat-button-outline
+    class="btn-properties btn-margin"
+    [ngClass]="{ 'button-active': activeMenuProperties === 'error_code_mapping_properties' }"
+    (click)="onClickOnMenuSelection('error_code_mapping_properties')">
+    <mat-icon
+      matPrefix
+      svgIcon="alert-circle"
+      class="integratelist-icon"></mat-icon>
+    <mat-label class="label-child">Error Code Mapping</mat-label>
+  </button>
+</div>

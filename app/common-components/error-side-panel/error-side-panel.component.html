@@ -1,0 +1,78 @@
+<div class="drawer-sidenav">
+  <div *ngIf="!showFiller" class="sidenav-wrap">
+    <div class="box-wrap">
+      <div class="box-digit">{{errors.length}}</div>
+      <div class="box-error">Errors</div>
+    </div>
+    <!-- <div class="box-wrap warning">
+      <div class="box-digit">15</div>
+      <div class="box-error">Warnings</div>
+    </div> -->
+  </div>
+  <div *ngIf="showFiller" class="sidenav-wrap">
+    <div class="bigslider-wrap">
+      <div class="title-wrap">
+        <div>Errors and Warnings</div>
+        <div class="close-icon" (click)="drawer.toggle()">
+          <mat-icon svgIcon="close"></mat-icon>
+        </div>
+      </div>
+      <div class="scroll-wrap">
+        <div class="tag-wrap"><b>{{errors.length}}</b> Errors</div>
+        <div class="content-box" *ngFor="let item of errors">
+          <!-- <div class="title"><b>12</b>Type not matches</div> -->
+          <div class="desc">{{item}}</div>
+        </div>
+        <!-- <div class="content-box">
+          <div class="title"><b>7</b>Name of Error Here</div>
+          <div class="desc">
+            This is some content that explains what the error is that has
+            occured
+          </div>
+        </div>
+        <div class="content-box">
+          <div class="title"><b>2</b>Name of Error Here</div>
+          <div class="desc">
+            The type of content that you've put in specific fields doesn't match
+            the expected kind of content from the system
+          </div>
+        </div>
+
+        <div class="tag-wrap warning-tag"><b>15</b> Warnings</div>
+        <div class="content-box">
+          <div class="title warning-title">
+            <b>9</b>Field Count Mismatch between Header and Body
+          </div>
+          <div class="desc">
+            The type of content that you've put in specific fields doesn't match
+            the expected kind of content from the system
+          </div>
+        </div>
+        <div class="content-box">
+          <div class="title warning-title">
+            Field Header.Untitled #4 was left with default values
+          </div>
+          <div class="desc">
+            This is some content that explains what the error is that has
+            occurred
+          </div>
+        </div>
+        <div class="content-box">
+          <div class="title warning-title">
+            <b>7</b>Field Header.Untitled #1 was left with default values
+          </div>
+          <div class="desc">
+            The type of content that you've put in specific fields doesn't match
+            the expected kind of content from the system
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="closbtn-wrap" [ngClass]="{ 'strick-width': showFiller }">
+    <button (click)="showFiller = !showFiller" mat-flat-button class="cols-btn">
+      <mat-icon *ngIf="showFiller" svgIcon="chevron-left-double"></mat-icon>
+      <mat-icon *ngIf="!showFiller" svgIcon="slider-arrow"></mat-icon>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,141 @@
+<div class="delete-modal">
+  <div *ngIf="!data.getInput">
+    <div class="modal-title">
+      <div class="title"><strong>{{data.schema}}</strong></div>
+      <div class="close-icon" [mat-dialog-close]="false">
+        <mat-icon svgIcon="close"></mat-icon>
+      </div>
+    </div>
+    <div
+      mat-dialog-content
+      *ngIf="!data.type"
+      [innerHTML]="data.content"
+      class="modal-content">
+      {{data.content}}
+    </div>
+    <div *ngIf="data.listView" class="modal-content">
+      <ng-container *ngFor="let list of data.arrayList">
+        <div style="margin-left: 15px">
+          <span *ngIf="list !== '...'">&bull;</span> {{ list }}
+        </div>
+      </ng-container>
+    </div>
+
+    <div *ngIf="data.formView" class="modal-content">
+      <div class="row" *ngFor="let row of data.data">
+          <div class="form-data" *ngFor="let field of row">
+            <div class="field">
+              {{ field.field }}
+            </div>
+            <div [style]='field.css'>
+              {{ field.value }}
+            </div>
+          </div>
+      </div>
+    </div>
+    
+
+    <div
+      *ngIf="data.type === 'errorDialog'"
+      mat-dialog-content
+      class="modal-content">
+      <div *ngFor="let option of data.content" class="error-text">
+        <span class="bold-text"
+          >Error {{option.value?.statusCode}}: {{option.value?.errorCode}}
+        </span>
+        <br />
+        {{option.value?.connection}}
+      </div>
+    </div>
+    <div
+      *ngIf="data.type === 'successDialog'"
+      mat-dialog-content
+      class="modal-content">
+      {{data.message}}
+    </div>
+    <div mat-dialog-actions class="modal-buttons">
+      <div class="right-elements">
+        <button
+          *ngIf="!data.disableCancelButton"
+          [mat-dialog-close]="false"
+          class="btn line-btn">
+          {{data.cancelButton}}
+        </button>
+        <button cdk-focus-initial
+          class="btn delete-btn"
+          [mat-dialog-close]="true"
+          (click)="confirmation()">
+          {{data.confirmButton}}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="data.getInput">
+    <div class="modal-title">
+      <div class="title">{{data.header}}</div>
+      <div class="close-icon" mat-dialog-close>
+        <mat-icon svgIcon="close"></mat-icon>
+      </div>
+    </div>
+    <div mat-dialog-content class="modal-content">
+      <div class="input-container">
+        <div *ngIf="data.inputType === 'text'">
+          <div class="label-container">
+            <label class="input-label">Name *</label>
+          </div>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="Enter Name" [(ngModel)]="inputData" />
+          </mat-form-field>
+        </div>
+        <div *ngIf="data.inputType === 'file'">
+          <mat-form-field appearance="outline" class="select-container">
+            <div class="verticle-align" (click)="imgFileInputs.click()">
+              <input
+                matInput
+                placeholder="{{data.placeHolder}}"
+                type="text"
+                #fileNameInput />
+              <mat-icon matSuffix svgIcon="upload-icon"> </mat-icon>
+            </div>
+            <input
+              hidden
+              type="file"
+              (change)="onFileSelected($event, fileNameInput)"
+              #imgFileInputs />
+          </mat-form-field>
+          <div *ngIf="data.slideToggle && fileSelected">
+            <mat-slide-toggle labelPosition="before" class="switch" color="primary" [(ngModel)]="isToggleActive">{{data.slideToggleContent}}</mat-slide-toggle>
+          </div>
+        </div>
+        <div *ngIf="data.inputType === 'switch'">
+          <div
+            *ngIf="data.textBlock"
+            class="modal-text"
+            [innerHTML]="data.textBlock"></div>
+          <mat-radio-group
+            color="primary"
+            aria-label="Select an option"
+            [(ngModel)]="data.data.hardDelete">
+            <div *ngFor="let value of data.content">
+              <mat-radio-button [value]="value.value" style="margin-left: 10px"
+                >{{value.key}}</mat-radio-button
+              >
+            </div>
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions class="modal-buttons">
+      <div class="right-elements">
+        <button mat-dialog-close class="btn line-btn">Cancel</button>
+        <button cdk-focus-initial
+          [ngClass]="getButtonClass()"
+          mat-dialog-close
+          (click)="confirmationWithData()"
+          [disabled]="!inputData && data.dialogType === 'testFile'">
+          {{confirmationButton}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

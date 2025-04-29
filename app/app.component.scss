@@ -1,0 +1,201 @@
+.menu-container {
+  margin-top: 64px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  .menu-name {
+    position: absolute;
+    padding-top: 0px;
+    margin-left: 34px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #1d2939;
+  }
+  .mat-icon {
+    height: 18px;
+    width: 20px;
+    &.myIcon {
+      color: #e28a30;
+    }
+  }
+  .mdc-list-item {
+    &:hover::before {
+      background: #f17007;
+    }
+  }
+}
+.hammenu {
+  cursor: pointer;
+  border: 1px solid #eaecf0;
+  border-radius: 50%;
+  padding: 4px;
+  color: #98a2b3;
+}
+// sidebar menu css
+.mat-drawer {
+  mat-nav-list {
+    width: 55px;
+    overflow: hidden;
+    transition: width 0.3s;
+    h4 {
+      opacity: 1;
+      display: inline-flex;
+    }
+  }
+}
+.menuhandle {
+  mat-nav-list {
+    width: 218px;
+    .menu-text {
+      display: inline-flex;
+      opacity: 1;
+      // margin-left:auto  ;
+      vertical-align: middle;
+      transition: all 0.1s ease-in 0.2s;
+    }
+  }
+}
+
+mat-list-item {
+  margin: 15px 0px;
+  border-left: 4px solid transparent;
+}
+mat-icon {
+  display: inline-flex;
+}
+
+.mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+[class^="mat-list-"] {
+  &:active {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 4px; /* Adjust the width of the vertical bar as needed */
+    background-color: blue;
+  }
+  &:focus,
+  .mat-list-text {
+    background: none !important;
+  }
+}
+
+[mat-menu-item].is-active,
+[mat-list-item].is-active {
+  background: hsla(0, 0%, 100%, 0.1) !important;
+}
+// .mat-mdc-list-item-interactive.is-active {
+//     background-color: #3F51B5 !important; /* Note: You could also use a custom theme */
+//   }
+
+.router-link-active.active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 4px; /* Adjust the width of the vertical bar as needed */
+  background-color: blue; /* Adjust the color of the vertical bar as needed */
+}
+
+.active-list-item {
+  border-left: 4px solid #e28a30 !important;
+  color: #e28a30;
+  display: flex;
+  align-items: center;
+  background: #fef9f5;
+  height: calc(25% + 10px);
+  &:focus,
+  &:hover{
+    background: #fef9f5 !important;
+  }
+}
+
+.mat-expansion-panel:not([class*="mat-elevation-z"]) {
+  box-shadow: none !important;
+}
+
+.profile-dropdown {
+  .mat-expansion-panel-body {
+    padding: 10px 15px;
+  }
+}
+
+.toolbar {
+  .pointer {
+    cursor: pointer;
+    cursor: pointer;
+    border: 1px solid #eaecf0;
+    border-radius: 50%;
+    padding: 4px;
+    color: #98a2b3;
+  }
+  .logo {
+    margin-left: 15px;
+    position: relative;
+    top: -2px;
+  }
+  .flexExpand {
+    flex: 1 1 auto;
+  }
+  .profile-wrap {
+    display: flex;
+    align-items: center;
+    .profile-img {
+      width: 36px;
+      height: 36px;
+    }
+    .profile-img-text{
+      border-radius: 50%;
+      background: #F2F4F7;
+      font-size: 14px;
+      color: #1D2939;
+      text-transform: capitalize;
+      line-height: 38px;
+      padding: 0px 10px;
+      margin-right: 8px;
+    }
+    .profile-name {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 18px;
+      color: #1d2939;
+      margin: 0px 10px;
+      .profile-order {
+        font-weight: 400;
+        font-size: 14px;
+        color: #1d2939;
+      }
+    }
+    .icon {
+      height: 12px;
+      width: 15px;
+      border-radius: 0px;
+      margin-left: 5px;
+    }
+  }
+}
+.profile-menu-list {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1d2939;
+  padding-right: 86px;
+  .icon {
+    width: 20px;
+  }
+}
+
+.drawerWidth {
+  margin-left: 56px !important;
+  transition: all .4s ease;
+}

@@ -1,0 +1,159 @@
+app-partner {
+    .header-title {
+      box-shadow: none;
+      border-bottom: 1px solid #eaecf0;
+      .title {
+        float: left;
+        font-size: 24px;
+        font-weight: 600;
+        padding: 28px 24px;
+        color: #1d2939;
+      }
+      .create-button {
+        float: right;
+        padding: 24px;
+      }
+    }
+  
+    .panel {
+      padding: 32px 24px;
+      background-color: #f9fafb;
+      .mat-mdc-card {
+        box-shadow: none;
+        border: 1px solid #eaecf0;
+      }
+      // for up tp 1920 screen size container is set center of
+      // max-width: 1920px;
+      // margin: 0 auto;
+      .search-section {
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .mat-mdc-form-field-bottom-align::before {
+          height: 0px;
+          display: block;
+        }
+        .right-elements {
+          display: flex;
+          width: 100%;
+          justify-content: flex-end;
+          mat-form-field {
+            max-width: 370px;
+          }
+          .mat-button-toggle-checked {
+            background-color: #f6fbff !important;
+            border: 1px solid #99c8f7 !important;
+            border-radius: 4px 0px 0px 4px;
+            color: #0f61b3;
+          }
+          .mat-mdc-form-field-icon-prefix {
+            padding: 0px;
+            .mat-icon {
+              padding: 9px 7px 9px 12px !important;
+              color: #98a2b3;
+            }
+          }
+        }
+        .mat-button-toggle-label-content {
+          line-height: 38px !important;
+        }
+      }
+    }
+    .tab-wrap {
+      .mat-button-toggle-label-content {
+        line-height: 38px !important;
+      }
+      .mat-button-toggle-group-appearance-standard {
+        border-radius: 5px;
+      }
+      .mat-button-toggle-checked {
+        background-color: #f6fbff !important;
+        border: 1px solid #99c8f7 !important;
+        border-radius: 4px 4px 4px 4px;
+        color: #0f61b3;
+        &:first-child {
+          border-radius: 4px 0px 0px 4px;
+        }
+        &:last-child {
+          border-radius: 0px 4px 4px 0px;
+        }
+        .mat-button-toggle-label-content {
+          color: #0f61b3;
+        }
+      }
+      .mat-button-toggle-focus-overlay {
+        opacity: 0;
+        background: transparent;
+      }
+  
+      .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+        .mdc-notched-outline__leading,
+      .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+        .mdc-notched-outline__notch,
+      .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+        .mdc-notched-outline__trailing {
+        border-color: #d0d5dd;
+      }
+  
+      .mat-button-toggle-label-content {
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        color: #475467;
+      }
+    }
+  
+    table {
+      width: 100%;
+    }
+  
+    th.mat-sort-header-sorted {
+      color: black;
+    }
+  
+    .left-elements {
+      float: left;
+    }
+  
+    .filter-section {
+      clear: both;
+      padding: 20px 17px;
+      border-top: 1px solid #EAECF0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #eaecf0;
+      .filter-options {
+        flex: 0.9;
+      }
+      .mat-mdc-form-field-bottom-align::before {
+        height: 0px;
+        display: block;
+      }
+    }
+  
+    .resetButton {
+      height: 26px !important;
+      width: 45px;
+      outline-width: 1px;
+      border: 1px;
+      border-radius: 2px;
+    }
+  
+    // .button-size {
+    //   height: 40px;
+    //   width: 50px;
+    // }
+    // This is oly for this component
+    .filter-section {
+      mat-form-field {
+        width: 20%;
+        margin-right: 15px;
+        &.small-dropdown {
+          width: 18%
+        }
+      }
+    }
+  }
+  

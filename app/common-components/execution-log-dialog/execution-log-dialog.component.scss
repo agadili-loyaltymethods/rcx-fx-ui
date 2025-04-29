@@ -1,0 +1,149 @@
+confirmation-dialog {
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eaecf0;
+}
+
+.executionfield-modal {
+  padding: 0px 24px;
+
+  .mat-mdc-dialog-actions {
+    justify-content: flex-end;
+    padding: 10px 0px 24px 0px;
+  }
+
+  .modal-content {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: #1d2939;
+    padding: 20px 0px;
+    overflow: hidden;
+  }
+
+  .right-elements {
+    display: flex;
+
+    .btn {
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 20px;
+      height: 40px;
+      cursor: pointer;
+
+      &.primary-btn {
+        background-color: #0b4a87;
+        color: #ffffff;
+        border: 1px solid #0b4a87;
+        min-width: 85px;
+
+        &:focus-visible {
+          outline: none !important;
+        }
+      }
+
+      &.outline-btn {
+        background-color: #ffffff;
+        color: #344054;
+        border: 1px solid #d0d5dd;
+        margin-right: 12px;
+
+        &.icon {
+          display: flex;
+          align-items: center;
+        }
+
+        .mat-icon {
+          margin-right: 10px;
+          width: 24px;
+          height: 24px;
+        }
+
+        &:focus-visible {
+          outline: none !important;
+        }
+      }
+    }
+  }
+
+  .executioncontainer-wrap {
+    border: 1px solid #eaecf0;
+    border-radius: 4px;
+
+    .search-wrap {
+      display: flex;
+      padding: 15px 15px 15px 55%;
+
+      ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+
+      &.search-input-container {
+        .mat-icon {
+          padding: 9px 7px 9px 12px !important;
+          color: #98a2b3;
+        }
+
+        input {
+          padding-top: 0 !important;
+        }
+      }
+    }
+
+    .list-wrap {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      color: #1d2939;
+      border-top: 1px solid #eaecf0;
+      width: 100%;
+      height: 100%;
+
+      &.code-wrap {
+        overflow: hidden;
+        background: #f9fafb;
+
+        .modal-textarea {
+          white-space: pre-wrap;
+          min-height: 200px;
+          max-height: 200px;
+          overflow-y: auto;
+
+          .highlight {
+            background-color: yellow !important;
+            font-weight: bold !important;
+          }
+        }
+
+        .resizable {
+          resize: both;
+          min-width: 100%;
+          max-width: 100%;
+          max-height: 52vh;
+          scrollbar-gutter: stable both-edges;
+        }
+      }
+    }
+  }
+
+  pre {
+    font-family: "Inter", sans-serif !important;
+  }
+
+  code {
+    color: #667085;
+    white-space: pre;
+    margin: 0;
+  }
+
+  .search-info {
+    margin: 0 10px;
+    font-size: 13px;
+    color: #808080;
+  }
+
+  .mat-mdc-outlined-button:not(:disabled) {
+    height: 43px;
+  }
+}

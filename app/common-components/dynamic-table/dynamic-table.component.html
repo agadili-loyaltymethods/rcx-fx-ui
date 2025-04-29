@@ -1,0 +1,132 @@
+<div class="responsive-table">
+  <table
+    class="row custom-table"
+    (matSortChange)="changeOrder()"
+    mat-table
+    matSort
+    [dataSource]="dataSource"
+    matSortActive="{{ defaultActiveSort }}"
+    matSortDirection="desc">
+    <ng-container *ngFor="let item of uicfg" [matColumnDef]="getColumn(item)">
+      <ng-container *ngIf="item.label !== 'Actions' && item.label !== 'Select'; else actionsHeader">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="table-header">
+          {{ item.label }}
+        </th>
+      </ng-container>
+      <ng-template #actionsHeader>
+        <div *ngIf="item.label === 'Actions'">
+          <th mat-header-cell *matHeaderCellDef class="table-header">
+            {{ item.label }}
+          </th>
+        </div>
+        <div *ngIf="item.label === 'Select'">
+          <th mat-header-cell *matHeaderCellDef class="table-header">
+            <mat-checkbox (change)="multipleToggleSelection(!multiSelect)"
+            [checked]="multiSelect">
+            </mat-checkbox>
+          </th>
+        </div>
+      </ng-template>
+      <td
+        mat-cell
+        *matCellDef="let element;let i = index"
+        class="table-row"
+        [class.hosting-row]="element.isHostingPartner && item.showHostingPartner">
+        <div *ngIf="item.type === 'nameWithTS'">
+          {{ getFieldValue(element, item) }}
+          <div class="text-icon align-middle">
+            <div><mat-icon svgIcon="clock" class="icon-size"></mat-icon></div>
+            <div [class]="getClassName(item, element)">
+              {{ getFieldValue(element, item, true) }}
+            </div>
+          </div>
+        </div>
+        <div *ngIf="item.type === 'actions'">
+          <div class="one-row-icon" class="d-flex align-middle">
+            <ng-container *ngFor="let action of rowActions">
+              <div [matTooltip]="action.toolTip || action.iconname">
+                <button
+                  mat-icon-button
+                  class="d-flex"
+                  [disabled]="!displayConditionBased(action, element) || isView"
+                  (click)="actionHandler($event, action, element, i)">
+                  <mat-icon
+                    class="active-action"
+                    [svgIcon]="action.iconname"></mat-icon>
+                </button>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div *ngIf="item.type === 'select'">
+          <mat-checkbox
+            (change)="toggleSelection(element)"
+            [checked]="isSelected(element)"></mat-checkbox>
+        </div>
+        <div *ngIf="item.type === 'fieldSelect'">
+          <mat-checkbox
+            [disabled]="item.disable"
+            [checked]="!!getFieldValue(element, item, false)"></mat-checkbox>
+        </div>
+        <div *ngIf="item.type === 'boolean'">
+          <mat-checkbox
+            [checked]="getFieldValue(element, item)"
+            disabled></mat-checkbox>
+        </div>
+        <div
+          *ngIf="!['actions', 'nameWithTS', 'boolean', 'fieldSelect'].includes(item.type)">
+          <span
+            (click)="onRowClick(element, item)"
+            [class]="getClassName(item, element)"
+            matTooltip
+            matTooltipClass="custom-tooltip"
+            IsEllipsisActive
+            hoverData="{{ item.toolTip && getFieldValue(element, item) === item.toolTip.value && getFieldValue(element, item, true) !== item.default && getFieldValue(element, item, true)}}"
+            ellipsisMaxLength="{{item.ellipsisMaxLength || config.commonProperties && config.commonProperties.ellipsisMaxLength}}"
+            showEllipsis="{{item.ellipsis}}"
+            >{{ getFieldValue(element, item)}}
+            <span
+              class="hosting-subtext"
+              *ngIf="element.isHostingPartner && item.showHostingPartner"
+              ><br />(Hosting Partner)</span
+            >
+            <span
+              *ngIf="item.copy === true && getFieldValue(element, item) != item.default"
+              class="copy-icon"
+              matTooltip="Copy email to clipboard"
+              matTooltipClass="cust-tooltip"
+              (click)="copyToClipboard($event, getFieldValue(element, item))">
+              <mat-icon svgIcon="copy" class="icon-size"></mat-icon>
+            </span>
+          </span>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="primaryColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: primaryColumns"
+      (click)="selectRow(row)"
+      [class.selected]="isSelectedRow(row)"></tr>
+  </table>
+  <small
+  *ngIf="data && !data.length"
+    style="display: flex; justify-content: center; font-size: 15px"
+    class="font-italic mt-30 mb-30">
+    No results found!
+  </small>
+</div>
+<div class="pagination" *ngIf="showPagination">
+  <mat-paginator
+    #paginator
+    [length]="100"
+    [pageIndex]="0"
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 20]"
+    aria-label="next">
+  </mat-paginator>
+</div>

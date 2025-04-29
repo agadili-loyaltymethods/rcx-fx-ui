@@ -1,0 +1,116 @@
+<div class="partner-details">
+  <div class="headerContainer">
+    <div class="circle" [routerLink]="['/partners']">
+      <mat-icon svgIcon="back">arrow_back</mat-icon>
+    </div>
+    <span>
+      <div class="screen-label">Partners / <span>Details</span></div>
+      <div class="label">{{data.name}}</div>
+    </span>
+    <span class="element-spacer"></span>
+    <button
+      class="theme-button active-btn"
+      mat-flat-button
+      aria-label="Edit Partner"
+      routerLinkActive="button-active"
+      routerLink="/partners/create">
+      <mat-icon svgIcon="edit-white"></mat-icon>Edit
+    </button>
+  </div>
+
+  <div class="childContainer">
+    <div class="inner-headerContainer">
+      <div class="left-elements">
+        <div class="right-child">
+          <div class="temp-properties-name">Partner Details</div>
+          <div class="buttonBorder"></div>
+        </div>
+      </div>
+      <div class="right-elements">
+        <div class="rightText">
+          <div class="updatestatus">
+            <p class="uname">Last Updated By</p>
+          </div>
+          <div class="rightBottomText">
+            <div>
+              <p class="name">{{data.updatedBy.login}}</p>
+            </div>
+            <div>
+              <mat-icon svgIcon="clock-circle"></mat-icon>
+            </div>
+            <div>
+              <p class="date">{{data.updatedAt}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main-container bottom-radius-none">
+      <div class="full-width">
+        <div class="one-line">
+          <div class="left-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Partner Name </label>
+              </div>
+              <label class="input-value">{{data.name}}</label>
+            </div>
+          </div>
+          <div class="middle-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Partner Type </label>
+              </div>
+              <label class="input-value">{{data.partnerType}}</label>
+            </div>
+          </div>
+          <div class="right-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Code</label>
+              </div>
+              <label class="input-value">{{data.code}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="one-line">
+          <div class="left-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Support Number</label>
+              </div>
+              <label class="input-value">{{data.phone}}</label>
+            </div>
+          </div>
+          <div class="middle-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Support Email</label>
+              </div>
+              <label class="input-value">{{data.email}}</label>
+            </div>
+          </div>
+          <div class="right-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Timezone</label>
+              </div>
+              <label class="input-value">{{data.Timezone}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="one-line">
+          <div class="left-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Hosting Partner</label>
+              </div>
+              <label class="input-value"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-delete-button></app-delete-button>
+  </div>
+</div>

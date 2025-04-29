@@ -1,0 +1,85 @@
+<mat-card class="header-title">
+  <div class="row">
+    <div class="title">Dashboard</div>
+  </div>
+</mat-card>
+
+<div class="panel">
+  <mat-card>
+    <div class="row pannel-section">
+      <div class="tab-wrap dashbord-tab">
+        <mat-button-toggle-group
+          class="left-elements button-size"
+          [(ngModel)]="filterDuration"
+          (change)="getData()">
+          <mat-button-toggle class="toggles" value="day" (click)="daysFilter('day')"
+            >Last 24 Hours</mat-button-toggle
+          >
+          <mat-button-toggle class="toggles" value="week" (click)="daysFilter('week')"
+            >Last 7 Days</mat-button-toggle
+          >
+          <mat-button-toggle class="toggles" value="month" (click)="daysFilter('month')"
+            >Last 1 Month</mat-button-toggle
+          >
+        </mat-button-toggle-group>
+      </div>
+      <app-status-cards
+        [runsCount]="runsCount"
+        [integrationsCount]="integrationsCount"
+        [dateRange]="dateRange"
+        [filterDuration]="filterDuration">
+      </app-status-cards>
+      <div class="dash-tabletilewrap">
+        <div class="title">Recent Operations</div>
+        <div class="map-list-iconwrap tab-wrap">
+          <mat-button-toggle-group [(ngModel)]="viewStyle">
+            <mat-button-toggle class="toggles" value="table" (click)="viewData(true)">
+              <mat-icon svgIcon="listactive" class="pointer myIcon"></mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle class="toggles" value="chart" (click)="viewData(false)">
+              <mat-icon svgIcon="graph" class="pointer graphicon"></mat-icon>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+      <div class="dash-tablewrap" *ngIf="viewStyle === 'table'">
+        <div class="title-wrap">
+          <div class="title">Failed</div>
+          <div class="view-link" (click)="viewAll('Failed')">View All</div>
+        </div>
+        <div class="table">
+          <app-dynamic-table
+            *ngIf="config && failedData.length"
+            [config]="config"
+            [data]="failedData"
+            [handlers]="handlers"
+            [showPagination]="false">
+          </app-dynamic-table>
+        </div>
+      </div>
+      <div class="dash-tablewrap" *ngIf="viewStyle === 'table'">
+        <div class="title-wrap">
+          <div class="title">Processing and Succeeded</div>
+          <div class="view-link" (click)="viewAll('Succeeded')">View All</div>
+        </div>
+        <div class="table">
+          <app-dynamic-table
+            *ngIf="config && succeededData.length"
+            [config]="config"
+            [data]="succeededData"
+            [handlers]="handlers"
+            [showPagination]="false">
+          </app-dynamic-table>
+        </div>
+      </div>
+      <div class="dash-tablewrap" *ngIf="viewStyle === 'chart'">
+        <div>
+          <app-integration-operations-chart
+            [totalData]="totalCurrData"
+            [filterDuration]="filterDuration">
+          </app-integration-operations-chart>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

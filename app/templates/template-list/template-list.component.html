@@ -1,0 +1,21 @@
+<div class="responsive-table">
+  <app-dynamic-table
+    *ngIf="config"
+    [config]="config"
+    [data]="data"
+    [requiredData]="requiredData"
+    [handlers]="handlers">
+  </app-dynamic-table>
+</div>
+<mat-card class="header-title">
+  <div class="row">
+    <div class="title">Integrations</div>
+  </div>
+</mat-card>
+<app-integration-list
+  *ngIf="config"
+  [config]="config.integrations"
+  [parentData]="requiredData?.selectedRow"
+  [data]="secondaryData"
+  [handler]="handlers">
+</app-integration-list>

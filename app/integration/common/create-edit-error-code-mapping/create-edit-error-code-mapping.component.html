@@ -1,0 +1,77 @@
+<div class="integration-modal">
+  <div class="modal-title">
+    <div class="title">Create/Edit Error Code Mapping</div>
+    <div class="close-icon" mat-dialog-close>
+      <mat-icon svgIcon="close"></mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="modal-content">
+    <form class="integrationcontainer-wrap" [formGroup]="formGroup">
+      <div class="input-container">
+        <div class="label-container">
+          <label class="input-label">RCX Error Code *</label>
+        </div>
+        <mat-form-field appearance="outline" class="select-container">
+          <mat-select
+            formControlName="rcxErrorCode"
+            placeholder="Select RCX Error Code"
+            [(ngModel)]="newRcxErrorCode.rcxErrorCode"
+            (selectionChange)="onErrorCodeChange()">
+            <mat-option
+              *ngFor="let option of errorCodes"
+              [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('rcxErrorCode').errors?.required">
+            please select rcx error code.
+          </mat-error>
+          <mat-error *ngIf="formGroup.get('rcxErrorCode').errors?.maxlength">
+            RCX error code can not exceed
+            {{formGroup.get('rcxErrorCode').errors?.maxlength.requiredLength}}
+            characters length
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="errorcode-desc-wrap">
+        <div class="title">Error Code Description</div>
+        <div>{{description}}</div>
+      </div>
+
+      <div class="input-container">
+        <div class="label-container">
+          <label class="input-label">Partner Error Code *</label>
+        </div>
+        <mat-form-field appearance="outline">
+          <input
+            formControlName="partnerErrorCode"
+            type="text"
+            matInput
+            placeholder="Enter Partner Error Code"
+            [(ngModel)]="newRcxErrorCode.partnerErrorCode"
+            value="456" />
+          <mat-error *ngIf="formGroup.get('partnerErrorCode').errors?.required">
+            please enter partner error code.
+          </mat-error>
+          <mat-error
+            *ngIf="formGroup.get('partnerErrorCode').errors?.maxlength">
+            Partner error code can not exceed
+            {{formGroup.get('partnerErrorCode').errors?.maxlength.requiredLength}}
+            characters length
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div mat-dialog-actions class="modal-buttons">
+    <div class="right-elements">
+      <button class="btn outline-btn" mat-dialog-close>Cancel</button>
+      <button
+        class="btn primary-btn"
+        [disabled]="formGroup.invalid"
+        (click)="onSave()">
+        Ok
+      </button>
+    </div>
+  </div>
+</div>

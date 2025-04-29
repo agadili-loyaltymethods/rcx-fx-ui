@@ -1,0 +1,43 @@
+<div class="rcxfield-modal">
+  <div class="modal-title">
+    <div class="title">RCX Field Selection</div>
+    <div class="close-icon" mat-dialog-close>
+      <mat-icon svgIcon="close"></mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="modal-content">
+    <div class="rcxcontainer-wrap">
+      <div class="search-wrap search-input-container">
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix svgIcon="magnifier" class="icon-small"></mat-icon>
+          <input
+            matInput
+            type="search"
+            placeholder="Search"
+            (keyup)="filterData($event)" />
+        </mat-form-field>
+      </div>
+      <div class="list-name">{{rcxProcessLabel}}</div>
+      <div class="list-wrap">
+        <div
+          class="list-desc"
+          *ngFor="let option of filteredOptions"
+          (click)="selectField(option)">
+          <span class="icon" *ngIf="selectedField === option"
+            ><mat-icon svgIcon="check-arrow"></mat-icon
+          ></span>
+          <span [ngClass]="{'ml-30': selectedField !== option}">
+            {{option?.label + (option?.required ? '*' : '')}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="modal-buttons">
+    <div class="right-elements">
+      <button class="btn primary-btn" mat-dialog-close (click)="ok()">
+        Ok
+      </button>
+    </div>
+  </div>
+</div>

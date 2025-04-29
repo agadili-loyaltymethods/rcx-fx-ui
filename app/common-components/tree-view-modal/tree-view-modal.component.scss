@@ -1,0 +1,352 @@
+.tree-container {
+  width: 600px; /* Fixed width */
+  height: 550px; /* Fixed height */
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #aaaaaa;
+  border-radius: 5px;
+  background: #ffffff;
+  overflow: hidden; 
+}
+
+/* Header Section */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  font-size: larger;
+  min-height: 45 px;
+}
+
+.modal-header .title {
+  font-weight: 500;
+  font-size: 21px;
+  color: #333;
+  margin-left: 20px;
+}
+
+.close-icon {
+  cursor: pointer;
+}
+
+/* Body Section */
+.modal-body {
+  flex: 1;
+  overflow-y: auto; /* Add vertical scroll if content overflows */
+  padding: 16px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  background: #ffffff;  
+  margin-left: 20px;
+  margin-right:2px;
+}
+
+/* Scrollbar styling */
+.modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #cccccc;
+  border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #aaaaaa;
+}
+
+/* Footer Section */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  align-items: center;
+  padding: 12px 16px;
+  min-height: 27px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-submit-action {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #0b4a87;
+  border: 1px solid #0b4a87;
+  color: #fff;
+}
+
+.btn-cancel-action {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 40px;
+  background: #ffffff;
+  border: 1px solid #aaaaaa;
+  color: #333;
+}
+
+.btn-submit-action:disabled {
+  background-color: #F2F4F7 !important;
+  border: 0px;
+  color: #9AA4B2 !important;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.preview-button {
+  padding: 9px 14px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  margin: 0;
+  color: #fff;
+  background: #0b4a87;
+  border: 1px solid #0b4a87;
+  cursor: pointer;
+}
+
+.preview-button:disabled {
+  background-color: #F2F4F7 !important;
+  border: 0px;
+  color: #9AA4B2 !important;
+  cursor: auto;
+}
+
+
+.dropdown-button {
+  min-width: 20px;
+}
+
+
+.dropdown-button-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  height: 100%;
+}
+
+.dropdown-button-container ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+  
+.form-field {
+  flex: 1;
+  margin: 0;
+}
+
+.node-group {
+  display: flex;
+  flex-shrink: 1;
+  flex-basis: auto;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 315px;
+  height:50px;
+  align-items: center;
+}
+
+.node-group-map {
+  display: flex;
+  flex-shrink: 1;
+  flex-basis: auto;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100px !important;
+  align-items: center;
+}
+
+.string-mapping-node {
+  display: flex;
+  flex-shrink: 1;
+  flex-basis: auto;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: auto !important;
+  align-items: center;
+  height:50px;
+}
+
+.expand-edit-button {
+  width: 40px;
+}
+.expand-delete-button {
+  width: 48px;
+}
+
+.delete-action-icon, .edit-action-icon{
+  width: 18px;
+  height: 17px;
+  margin-left: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.edit-action-icon {
+  align-content: center;
+  margin-bottom: 6.4px;
+}
+
+.mat-tree-node {
+  display: flex;
+  height: 47px !important;
+  margin-bottom: 20px;
+}
+
+.expand-title {
+  width: 168px;
+  margin-bottom: 12px;
+  margin-top: 10px;
+  font-size: 15px;
+  overflow: hidden;
+}
+
+.expand-title-map {
+  width: auto;
+  min-width: 100px;
+  overflow: hidden;
+}
+
+.vector-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 7px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.error-box {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #f6b5bc;
+  color: #830000;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-message {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.string-mapping-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  padding: 4px;
+  margin-left: 5px;
+}
+
+.mapping-input-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+  width: 432px;
+}
+
+.string-mapping-arrow {
+  font-size: 20px;
+  color: #0b4a87;
+  margin: 0 8px;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+
+/* Material design overrides */
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled),
+::ng-deep .mat-mdc-form-field-focus-overlay {
+  background-color: white !important;
+}
+
+::ng-deep .mat-mdc-button > .mat-icon {
+  margin-left: 0;
+  margin-right: 0;
+  width: 2.125rem;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  border: 1px solid #0b4a87;
+  border-radius: 4px;
+  background-color: #ffffff;
+  padding: 4px;
+}
+
+::ng-deep .mat-select {
+  border: 1px solid #0b4a87;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.map-ellipsis-text {
+  display: inline-block;
+  max-width: 100px; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ellipsis-text {
+  display: inline-block;
+  max-width: 200px; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.close-error-button {
+  background: none;
+  border: none; 
+  cursor: pointer; 
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin-top: 2px;
+}
+
+.close-error-button mat-icon {
+  font-size: 26px; /* Size of the icon */
+  vertical-align: middle;
+  color: #8b0000;
+}
+.button-container-bottom {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.button-container-bottom button {
+  min-width: 40px;
+  height: 40px;
+  border-radius: 4px;
+}
+
+.preserve-whitespace {
+  white-space: pre;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 3px;
+  padding: 0 3px;
+}

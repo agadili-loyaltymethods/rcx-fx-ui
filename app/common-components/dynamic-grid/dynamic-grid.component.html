@@ -1,0 +1,124 @@
+<div class="card-container">
+  <div class="card-list">
+    <mat-card *ngFor="let row of currentPageData">
+      <mat-card-header>
+        <div class="header-content">
+          <button id="grid-status"
+          class="{{ getStatusClass(row.status) }}"
+          mat-stroked-button>
+            {{ row.status || 'no status' }}
+          </button>
+          <button
+            class="more-icon-container"
+            mat-icon-button
+            [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" xPosition="before">
+            <ng-container *ngFor="let action of config.actions">
+              <button
+                mat-menu-item
+                class="grid-menu"
+                [disabled]="!disableConditionBased(action,row)"
+                (click)="actionHandler(action, row)">
+                <mat-icon svgIcon="{{ action.iconname }}"></mat-icon>{{
+                action.name }}
+              </button>
+            </ng-container>
+          </mat-menu>
+        </div>
+        <ng-container *ngFor="let section of config.data">
+          <ng-container *ngFor="let field of section.fields">
+            <div
+              *ngIf="section.section === 'section1'"
+              class="{{ row[field.className] || 'template-name' }}"
+              matTooltip
+              matTooltipClass="custom-tooltip"
+              IsEllipsisActive
+              ellipsisMaxLength="{{config.commonProperties && config.commonProperties.ellipsisMaxLength}}"
+              showEllipsis="{{field.ellipsis}}"
+              (click)="onRowClick(row, field)">
+              {{ row[field.name] }}
+            </div>
+          </ng-container>
+        </ng-container>
+        <!-- <div class="divider"></div> -->
+      </mat-card-header>
+      <mat-card-content>
+        <ng-container *ngFor="let section of config.data; let last = last">
+          <div *ngIf="section.section !== 'section1'">
+            <div *ngIf="!last" class="divider-second"></div>
+            <div *ngIf="section.singleRow" class="one-row">
+              <ng-container *ngFor="let field of section.fields">
+                <div class="info-wraper">
+                  <div class="info-title">{{ field.label }}</div>
+                  <div
+                    [class]="getClassName(field, row) || 'info-value'"
+                    matTooltip
+                    matTooltipClass="custom-tooltip"
+                    IsEllipsisActive
+                    ellipsisMaxLength="{{config.commonProperties && config.commonProperties.gridViewEllipses}}"
+                    showEllipsis="{{field.ellipsis}}"
+                    (click)="onRowClick(row, field)">
+                    {{ getFieldValue(row, field) }}
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div *ngIf="!section.singleRow">
+              <ng-container *ngFor="let field of section.fields">
+                <ng-container [ngSwitch]="field.displayType">
+                  <div *ngSwitchDefault class="info-wraper">
+                    <div class="info-title">{{ field.label }}</div>
+                    <div class="info-value">
+                      {{ row[field.name] ? row[field.name] : field.default }}
+                    </div>
+                  </div>
+
+                  <div
+                    *ngSwitchCase="'noLabel'"
+                    class="description"
+                    matTooltip
+                    matTooltipClass="custom-tooltip"
+                    IsEllipsisActive
+                    ellipsisMaxLength="{{config.commonProperties && config.commonProperties.ellipsisMaxLength}}"
+                    showEllipsis="{{field.ellipsis}}">
+                    {{ row[field.name] ? row[field.name] : field.default }}
+                  </div>
+
+                  <div *ngSwitchCase="'updateInfo'" class="updated">
+                    <span>{{ field.label }}</span> {{ getFieldValue(row, field)
+                    }}
+                    <div class="timing">
+                      <div class="clock-style">
+                        <mat-icon svgIcon="clock-circle"></mat-icon>
+                      </div>
+                      {{ pipe(row[field.time], 'dateTimeFormat') }}
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <small
+   *ngIf="data && !data.length"
+    style="display: flex; justify-content: center; font-size: 15px"
+    class="font-italic mt-30 mb-30">
+    No results found!
+  </small>
+</div>
+
+<div class="pagination" *ngIf="showPagination">
+  <mat-paginator
+    #paginator
+    [pageIndex]="0"
+    [length]="dataSource.data.length"
+    [pageSize]="config.paginationOptions.pageSize"
+    [pageSizeOptions]="config.paginationOptions.pageSizeOptions"
+    aria-label="next">
+  </mat-paginator>
+</div>

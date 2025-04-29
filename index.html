@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>FeedXChange Portal</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet" />
+    <script type="text/javascript">
+      function getParam(name, url) {
+        if (!url) url = location.href;
+        name = name.replace(/[\[]/, '\\\[').replace(/[\]]/, '\\\]');
+        var regexS = '[\\?&]' + name + '=([^&#]*)';
+        var regex = new RegExp(regexS);
+        var results = regex.exec(url);
+        return results == null ? null : results[1];
+      }
+
+      let oktaEnabled = getParam('okta');
+      if (window.sessionStorage.length == 0 && oktaEnabled !== 'false') {
+        if (oktaEnabled !== null && oktaEnabled !== undefined) {
+          window.sessionStorage.setItem('oktaEnabled', oktaEnabled);
+        }
+        if (!location.hash.startsWith('#/reset-password')) {
+          window.location.replace('/int-login');
+        }
+      }
+    </script>
+  </head>
+  <body class="mat-typography">
+    <app-root></app-root>
+  </body>
+</html>

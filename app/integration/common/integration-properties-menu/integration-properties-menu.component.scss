@@ -1,0 +1,87 @@
+.integration-button-left-container {
+  &.grey-background {
+    border-bottom: 1px solid #d0d5dd;
+    background: #f9fafb;
+  }
+  &.list-btn-counter {
+    margin: 11px 0px;
+  }
+  .btn-properties {
+    &:disabled{
+      opacity: 0.5 !important;
+    }
+    width: 86%;
+    border: 1px solid #d0d5dd !important;
+    font-size: 12px;
+    font-weight: 600;
+    color: #344054 !important;
+    text-align: left;
+    padding: 12px 14px;
+    border-radius: 4px !important;
+    background-color: #ffffff;
+    margin: 16px;
+    cursor: pointer;
+    .mat-icon.integratelist-icon {
+      height: 14px;
+      width: 14px;
+      position: relative;
+      top: 2px;
+    }
+    &.leftsingle-btn-active {
+      border: 1px solid #5ea8f2 !important;
+      color: #0f61b3 !important;
+      mat-icon {
+        svg {
+          path {
+            stroke: #0f61b3;
+          }
+        }
+      }
+    }
+    &.btn-margin {
+      margin: 5px 16px;
+    }
+    mat-icon.list-icon {
+      height: 14px;
+      width: 14px;
+      position: relative;
+      top: 2px;
+      svg {
+        color: #344054 !important;
+        height: 14px;
+        width: 14px;
+        path {
+          stroke: red;
+        }
+      }
+    }
+
+    .label-child {
+      padding-top: 8px;
+      padding-left: 5px;
+    }
+  }
+
+  .button-active {
+    border: 1px solid #5ea8f2 !important;
+    color: #0f61b3 !important;
+    border-radius: 4px !important;
+    font-weight: 600;
+    font-size: 12px;
+    //height: calc(25% + 10px);
+    mat-icon {
+      svg {
+        path {
+          stroke: #0f61b3;
+        }
+      }
+    }
+    .expand-title {
+      color: #0f61b3;
+    }
+    .expand-button {
+      color: #0f61b3;
+    }
+  }
+
+}

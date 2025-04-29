@@ -1,0 +1,256 @@
+<div class="form">
+  <div *ngIf="configData.breadCrum || data.sequence" class="right-panel-header">
+    <div class="right-panel-left-content">
+      <div class="bread-crum" *ngIf="configData.breadCrum">
+        {{ configData.breadCrum }}<span> {{data.fieldName}}</span>
+      </div>
+      <div class="bread-crum-child" *ngIf="data.sequence">
+        Sequence {{data.sequence}}
+      </div>
+    </div>
+  </div>
+  <div class="right-panel-main-content">
+    <ng-container *ngIf="formGroup">
+      <form [formGroup]="formGroup">
+        <div *ngFor="let item of dataFields">
+          <div class="one-line">
+            <ng-container *ngFor="let item of item.fields">
+              <!-- Inputs needs to be implemented in phase 2 which all have hideInput true -->
+              <div
+                *ngIf="displayConditionBased(item) && formGroup.controls[item.field] && !item.hideInput"
+                [class]="item.class ? item.class : 'right-box' ">
+                <div class="input-container">
+                  <div class="label-container">
+                    <label *ngIf="!item.hideLabel" class="input-label"
+                      >{{ item.label}}
+                      <span *ngIf="shouldDisplayAsterisk(item)">*</span>
+                    </label>
+                    <mat-icon
+                      *ngIf="item.labelicon"
+                      class="info-icon"
+                      (click)="onClick(item)"
+                      [svgIcon]="item.iconName"></mat-icon>
+                  </div>
+                  <mat-form-field
+                    *ngIf="item.type === 'text' || item.type === 'password'"
+                    appearance="outline">
+                    <input
+                      matInput
+                      [formControlName]="item.field"
+                      [type]="item.type"
+                      [appAutoFocus]="item.autofocus"
+                      [matTooltip]="getTooltipText(item)"
+                      autocomplete="new-password"
+                      (focus)="clickHandler($event, item)"
+                      matTooltipClass="my-tooltip"
+                      [placeholder]="isEdit && item.placeHolder" />
+                    <mat-error
+                      *ngIf="formGroup.controls[item.field]?.errors?.required">
+                      Please enter {{item.label.toLowerCase()}}
+                    </mat-error>
+                    <mat-error
+                      *ngIf="!formGroup.controls[item.field]?.errors?.required && formGroup.controls[item.field]?.errors?.minlength">
+                      Entered value cannot be less than
+                      {{formGroup.controls[item.field]?.errors?.minlength.requiredLength}}
+                      characters length.
+                    </mat-error>
+                    <mat-error
+                      *ngIf="!formGroup.controls[item.field]?.errors?.required && formGroup.controls[item.field]?.errors?.maxlength">
+                      Entered value cannot exceed
+                      {{formGroup.controls[item.field]?.errors?.maxlength.requiredLength}}
+                      characters length.
+                    </mat-error>
+                    <mat-error
+                      *ngIf="formGroup.controls[item.field]?.errors && !formGroup.controls[item.field]?.errors?.required &&
+                      !formGroup.controls[item.field]?.errors?.minlength && !formGroup.controls[item.field]?.errors?.maxlength">
+                      Please enter valid {{item.label.toLowerCase()}}.
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field
+                    *ngIf="item.type === 'number'"
+                    appearance="outline">
+                    <input
+                      matInput
+                      [type]="item.type"
+                      [formControlName]="item.field"
+                      [appAutoFocus]="item.autofocus"
+                      (input)="onInputChange($event,item)"
+                      [matTooltip]="item.toolTip"
+                      matTooltipClass="my-tooltip" />
+                      <mat-error
+                      *ngIf="formGroup.controls[item.field]?.errors?.required">
+                      Please enter {{item.label.toLowerCase()}}
+                    </mat-error>
+                    <mat-error
+                      *ngIf="!formGroup.controls[item.field]?.errors?.required && 
+                      formGroup.controls[item.field]?.errors?.max">
+                      Entered value cannot exceed
+                      {{formGroup.controls[item.field]?.errors?.max.max}}.
+                    </mat-error>
+                  </mat-form-field>
+                  <div *ngIf="item.type === 'select'" class="dropdown-button-container">
+                    <mat-form-field appearance="outline">
+                      <mat-select
+                        (selectionChange)="selectionChange(item)"
+                        [formControlName]="item.field">
+                        <mat-option
+                        *ngFor="let option of sortData(item, filterDataByContext(requiredData[item.selectData], item))"
+                          [value]="item.selectValue ? option[item.selectValue] : option"
+                          (click)="handleChange(option, item)">
+                          {{ item.selectLabel ? option[item.selectLabel] :
+                          option }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error
+                        *ngIf="formGroup.controls[item.field]?.errors?.required">
+                        Please select {{item.label.toLowerCase()}}
+                      </mat-error>
+                    </mat-form-field>
+                    <button *ngIf="displayAddButton(item)"
+                    (click)="onClick(item)"
+                    class="preview-button dropdown-button" mat-stroked-button
+                    [disabled]="!showBasedOn(item.showBasedOn) || isView">
+                    <mat-icon [svgIcon]="iconType"></mat-icon>
+                    {{buttonTitle}}
+                    </button>
+                  </div>
+                  <div *ngIf="item.type === 'select-search'">
+                    <mat-form-field appearance="outline">
+                      <mat-select
+                        (selectionChange)="selectionChange(item)"
+                        [formControlName]="item.field">
+                        <mat-option>
+                          <ngx-mat-select-search
+                            [formControlName]="item.formControl"
+                            placeholderLabel="{{item.label}}"
+                            noEntriesFoundLabel="No Search Result Found"></ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option
+                          *ngFor="let option of sortData(item, requiredData[item.selectData])"
+                          [value]="item.selectValue ? option[item.selectValue] : option"
+                          IsEllipsisActive
+                          matTooltip="{{ item.selectLabel ? option[item.selectLabel] : option }}"
+                          [ellipsisMaxLength]="item.matTooltipMaxLength"
+                          ellipsisData="{{ item.selectLabel ? option[item.selectLabel] : option }}"
+                          [matTooltipShowDelay]="item.matTooltipShowDelay">
+                          {{ item.selectLabel ? option[item.selectLabel] :
+                          option }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error
+                        *ngIf="formGroup.controls[item.field]?.errors?.required">
+                        Please select {{item.label.toLowerCase()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <mat-radio-group
+                    *ngIf="item.type === 'radio'"
+                    color="primary"
+                    aria-label="Select an option"
+                    [formControlName]="item.field"
+                    (change)="selectionChange(item)">
+                    <div *ngFor="let value of item.value">
+                      <mat-radio-button [value]="value.value"
+                        >{{value.key}}</mat-radio-button
+                      >
+                    </div>
+                    <mat-error
+                      *ngIf="formGroup.controls[item.field]?.errors?.required && formGroup.controls[item.field]?.touched">
+                      Please select {{item.label.toLowerCase()}}
+                    </mat-error>
+                  </mat-radio-group>
+                  <div *ngIf="item.type === 'button'">
+                    <button
+                      (click)="onClick(item)"
+                      class="preview-button"
+                      [disabled]="!showBasedOn(item.showBasedOn)">
+                      {{item.field}}
+                    </button>
+                  </div>
+                  <mat-form-field
+                    *ngIf="item.type === 'inputSearch'"
+                    appearance="outline">
+                    <mat-icon
+                      matIconSuffix
+                      class="textbox-icon"
+                      (click)="onClick(item)"
+                      [svgIcon]="item.icon"></mat-icon>
+                    <input matInput [formControlName]="item.field" readonly />
+                    <mat-error
+                      >Please enter {{item.label.toLowerCase()}}</mat-error
+                    >
+                  </mat-form-field>
+                  <mat-form-field
+                    *ngIf="item.type === 'fileUpload'"
+                    appearance="outline"
+                    class="select-container">
+                    <mat-icon
+                      matSuffix
+                      svgIcon="upload-icon"
+                      class="upload-icon"
+                      (click)="imgFileInputs.click()"></mat-icon>
+                    <input
+                      matInput
+                      readonly
+                      placeholder="Upload Key File"
+                      class="pointer"
+                      [formControlName]="item.field"
+                      (click)="imgFileInputs.click()"
+                      type="password" />
+                    <input
+                      hidden
+                      type="file"
+                      (change)="onFileSelected($event, item)"
+                      #imgFileInputs />
+                    <mat-error
+                      >Please select {{item.label.toLowerCase()}}</mat-error
+                    >
+                  </mat-form-field>
+                  <div *ngIf="item.type === 'switch'">
+                    <div class="connection-aws-title">
+                      <mat-icon [svgIcon]="item.icon"></mat-icon>
+                      <span style="margin-right: 0.5vw">{{item.label}}</span>
+                      <mat-slide-toggle
+                        class="switch"
+                        color="primary"
+                        [formControlName]="item.field"
+                        (click)="handleChange('', item)">
+                      </mat-slide-toggle>
+                    </div>
+                  </div>
+                  <mat-form-field
+                    *ngIf="item.type === 'dateTime'"
+                    appearance="outline">
+                    <input
+                      matInput
+                      readonly
+                      [min]="getDate(item)"
+                      [max]="getMaxDate()"
+                      [value]="formGroup.controls[item.field]?.value"
+                      [formControlName]="item.field"
+                      [ngxMatDatetimePicker]="picker"
+                      (dateChange)="dateTimeChange($event, item)" />
+                    <mat-datepicker-toggle
+                      tabindex="-1"
+                      matSuffix
+                      [for]="picker">
+                      <mat-icon
+                        matDatepickerToggleIcon
+                        svgIcon="calendar"></mat-icon>
+                    </mat-datepicker-toggle>
+                    <ngx-mat-datetime-picker
+                      tabindex="-1"
+                      #picker></ngx-mat-datetime-picker>
+                    <mat-error
+                      >Please select {{item.label.toLowerCase()}}</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+</div>

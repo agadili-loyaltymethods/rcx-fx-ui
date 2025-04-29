@@ -1,0 +1,47 @@
+<div class="form">
+  <div class="right-panel-header">
+    <div class="right-panel-left-content">
+      <div class="bread-crum">
+        <p class="tproperties">Error Code Mapping</p>
+      </div>
+    </div>
+  </div>
+  <div class="right-panel-main-content">
+    <div class="dash-tablewrap">
+      <div class="title-wrap">
+        <div>
+          <mat-form-field appearance="outline" class="search-box width-370">
+            <mat-icon
+              matPrefix
+              svgIcon="magnifier"
+              class="icon-small"></mat-icon>
+            <input
+              matInput
+              type="search"
+              placeholder="Search by Error Code or Description"
+              (input)="onSearchInputValueChange($event)" />
+          </mat-form-field>
+        </div>
+        <button
+          class="theme-button active-btn"
+          mat-flat-button
+          aria-label="Create Alert"
+          (click)="openDialog()"
+          *ngIf="!isView">
+          <mat-icon svgIcon="plus" class="icon-small"></mat-icon>Create New
+        </button>
+      </div>
+      <div class="table">
+        <div class="responsive-table">
+          <app-dynamic-table
+            *ngIf="config"
+            [config]="config"
+            [data]="data"
+            [isView]="isView"
+            [handlers]="handler">
+          </app-dynamic-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

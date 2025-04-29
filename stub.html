@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <script lang="javascript">
+      let params = new URLSearchParams(window.location.search);
+      let error = params.get('error');
+      if (!error) {
+        sessionStorage.token = params.get('token');
+        sessionStorage.idtoken = params.get('idtoken');
+        sessionStorage.RCX_username = params.get('username');
+        sessionStorage.version = params.get('version');
+        sessionStorage.build = params.get('build');
+        sessionStorage.uiVersion = params.get('uiVersion');
+        sessionStorage.uiBuild = params.get('uiBuild');
+        sessionStorage.org = params.get('orgName');
+        sessionStorage.oktaEnabled = true;
+        window.location = '/';
+      } else {
+        localStorage.setItem('oktaError', error);
+        window.location = '/error.html';
+      }
+    </script>
+  </head>
+  <body>
+    <p>SSO Login Successful!</p>
+  </body>
+</html>

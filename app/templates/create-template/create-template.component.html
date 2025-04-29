@@ -1,0 +1,233 @@
+<div class="create-template">
+  <div class="headerContainer">
+    <div class="left-elements">
+      <div class="left-child">
+        <div class="back-circle">
+          <div
+            class="circle"
+            (click)="navigate()"
+            routerLinkActive="router-link-active">
+            <mat-icon class="back" svgIcon="back">arrow_back</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="right-child">
+        <div class="bread-crum">Templates</div>
+        <div
+          class="template-label"
+          matTooltip
+          matTooltip="above"
+          matTooltipClass="custom-tooltip"
+          IsEllipsisActive
+          ellipsisData="{{properties.name}}">
+          {{properties.name}}
+        </div>
+      </div>
+    </div>
+
+    <div class="right-elements">
+      <button
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Create Template"
+        (click)="testFile()"
+        [disabled]="(!isView && !formGroup.valid) || !properties || !properties._id">
+        <mat-icon svgIcon="share"></mat-icon>Test File
+      </button>
+      <button
+        *ngIf="!isView"
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Create Template"
+        [disabled]="!formGroup.valid"
+        (click)="validate()"
+        [disabled]="!properties || !properties._id">
+        <mat-icon svgIcon="check-circle"></mat-icon>Validate
+      </button>
+      <button
+        *ngIf="!isView"
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Create Template"
+        [disabled]="!formGroup.valid"
+        (click)="save()">
+        <mat-icon svgIcon="save"></mat-icon>Save
+      </button>
+      <button
+        *ngIf="!isView"
+        class="theme-button orange-btn"
+        mat-flat-button
+        aria-label="Create Template"
+        mat-stroked-button
+        [disabled]="!formGroup.valid"
+        (click)="publish()">
+        <mat-icon svgIcon="share"></mat-icon>Publish
+      </button>
+      <button
+        *ngIf="isView"
+        [disabled]="!utilsService.checkPerms({FX_IntegrationTemplate:['update']})"
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Create Template"
+        mat-stroked-button
+        (click)="edit()">
+        <mat-icon svgIcon="edit-white"></mat-icon>Edit
+      </button>
+    </div>
+  </div>
+
+  <mat-drawer-container class="drawer-container" autosize>
+    <!-- <div class="main-container"> -->
+    <div class="childContainer">
+      <div class="inner-headerContainer">
+        <div class="left-elements">
+          <div class="right-child">
+            <div class="temp-properties-name">Template Configuration</div>
+            <div class="buttonBorder">
+              <div>
+                <p [class]="getClassName()">{{properties.status}}</p>
+              </div>
+            </div>
+            <div *ngIf="!isView" class="buttonBorder">
+              <div>
+                <p [class]="getClassName()">Edit Mode</p>
+              </div>
+            </div>
+            <div *ngIf="isView" class="buttonBorder">
+              <div>
+                <p [class]="getClassName()">View Mode</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-elements" *ngIf="isEdit">
+          <div class="rightText">
+            <div class="updatestatus">
+              <p class="uname">Last Updated By</p>
+            </div>
+            <div class="rightBottomText">
+              <div>
+                <p class="name">{{properties?.updatedBy?.login}}</p>
+              </div>
+              <div>
+                <mat-icon svgIcon="clock-circle"></mat-icon>
+              </div>
+              <div>
+                <p class="date">{{getFormattedDate(properties?.updatedAt)}}</p>
+                <!-- <p class="date">09 Apr 2023,</p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-container bottom-radius-none">
+        <div class="left-panel">
+          <app-template-properties-tree-section
+            #templatePropertiesTreeSectionComponent
+            [onMenuClick]="menuCallback"
+            [updateNodeData]="updateNodeCallback"
+            [deleteByIndex]="deleteByIndex"
+            [properties]="properties"
+            [isView]="isView"
+            [isvalidForm]="formGroup.valid"
+            [handlers]="handlers"
+            (validateForm)="markAsTouched()"></app-template-properties-tree-section>
+        </div>
+        <div class="right-panel" [ngClass]="{'panel-open': drawer?.opened}">
+          <app-template-properties
+            *ngIf="showProperties === 'template-properties'"
+            [properties]="properties"
+            [partners]="partners"
+            [enumData]="enumData"
+            [handlers]="handlers"
+            (formStatus)="updateFormGroup($event)"></app-template-properties>
+          <app-input-file-properties
+            *ngIf="showProperties === 'input-file-file-properties'"
+            [properties]="properties"
+            [activeFieldDetails]="activeFieldDetails"
+            [data]="data"
+            [enumData]="enumData"
+            [handlers]="handlers"
+            (formStatus)="updateFormGroup($event, 'inputFileLayout.fileProperties')"></app-input-file-properties>
+          <app-input-header-properties
+            *ngIf="showProperties === 'input-file-header'"
+            [properties]="properties"
+            [activeFieldDetails]="activeFieldDetails"
+            [data]="data"
+            [enumData]="enumData"
+            [handlers]="handlers"
+            (formStatus)="updateFormGroup($event,'inputFileLayout.headerFieldDefs')"></app-input-header-properties>
+          <app-input-body-properties
+            *ngIf="showProperties === 'input-file-body'"
+            [properties]="properties"
+            [rcxSchemas]="rcxSchemas"
+            [data]="data"
+            [enumData]="enumData"
+            [handlers]="handlers"
+            (formStatus)="updateFormGroup($event,'inputFileLayout.bodyFieldDefs')"></app-input-body-properties>
+          <app-input-footer-properties
+            *ngIf="showProperties === 'input-file-footer'"
+            [properties]="properties"
+            [activeFieldDetails]="activeFieldDetails"
+            [data]="data"
+            [enumData]="enumData"
+            [handlers]="handlers"
+            (formStatus)="updateFormGroup($event,'inputFileLayout.footerFieldDefs')"></app-input-footer-properties>
+          <app-response-file-properties
+            *ngIf="showProperties === 'response-file-file-properties'"
+            [properties]="properties"
+            [activeFieldDetails]="activeFieldDetails"
+            [data]="data"
+            [handlers]="handlers"
+            (formStatus)="updateFormGroup($event, 'responseFileLayout.fileProperties')"></app-response-file-properties>
+          <app-response-header-properties
+            *ngIf="showProperties === 'response-file-header'"
+            [enumData]="enumData"
+            [properties]="properties"
+            [activeFieldDetails]="activeFieldDetails"
+            [data]="data"
+            [handlers]="handlers"
+            [valueFields]="valueFields"
+            (formStatus)="updateFormGroup($event, 'responseFileLayout.headerFieldDefs')"></app-response-header-properties>
+          <app-response-body-properties
+            *ngIf="showProperties === 'response-file-body'"
+            [enumData]="enumData"
+            [properties]="properties"
+            [activeFieldDetails]="activeFieldDetails"
+            [data]="data"
+            [handlers]="handlers"
+            [valueFields]="valueFields"
+            (formStatus)="updateFormGroup($event, 'responseFileLayout.bodyFieldDefs')"></app-response-body-properties>
+          <app-response-footer-properties
+            *ngIf="showProperties === 'response-file-footer'"
+            [enumData]="enumData"
+            [properties]="properties"
+            [activeFieldDetails]="activeFieldDetails"
+            [data]="data"
+            [handlers]="handlers"
+            [valueFields]="valueFields"
+            (formStatus)="updateFormGroup($event, 'responseFileLayout.footerFieldDefs')"></app-response-footer-properties>
+        </div>
+      </div>
+      <div class="delete-container">
+        <app-delete-button 
+          *ngIf="isEdit || isView" 
+          [disableButton]="!deletePermission"
+          (click)="delete()">
+          Delete Template</app-delete-button
+        >
+      </div>
+    </div>
+    <mat-drawer
+      #drawer
+      class="drawer-sidenav"
+      mode="side"
+      position="end"
+      (closed)="onDrawerClosed()">
+      <app-error-side-panel
+        [drawer]="drawer"
+        [errors]="errors"></app-error-side-panel>
+    </mat-drawer>
+  </mat-drawer-container>
+</div>

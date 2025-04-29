@@ -1,0 +1,112 @@
+<div class="edit-template">
+  <div class="headerContainer">
+    <div class="left-elements">
+      <div class="left-child">
+        <div class="back-circle">
+          <div
+            class="circle"
+            [routerLink]="['/templates/list']"
+            routerLinkActive="router-link-active">
+            <mat-icon class="back" svgIcon="back">arrow_back</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="right-child">
+        <div class="bread-crum">Templates / <span>New Template</span></div>
+        <div class="template-label">
+          Alaska Airlines Dynamic Loyalty Programs
+        </div>
+      </div>
+    </div>
+
+    <div class="right-elements">
+      <button
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Create Template">
+        <mat-icon svgIcon="check-circle"></mat-icon>Validate
+      </button>
+      <button
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Create Template">
+        <mat-icon svgIcon="save"></mat-icon>Save
+      </button>
+      <button
+        class="theme-button orange-btn"
+        mat-flat-button
+        aria-label="Create Template"
+        mat-stroked-button
+        (click)="openSnackBar()">
+        <mat-icon svgIcon="share"></mat-icon>Publish
+      </button>
+    </div>
+  </div>
+
+  <mat-drawer-container class="drawer-container" autosize>
+    <!-- <div class="main-container"> -->
+    <div class="childContainer">
+      <div class="inner-headerContainer">
+        <div class="left-elements">
+          <div class="right-child">
+            <div class="temp-properties-name">Template File Properties</div>
+            <div class="buttonBorder">
+              <button class="mat-raised-button-rev">
+                <p class="buttonText">Revision</p>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-elements">
+          <div class="rightText">
+            <div class="updatestatus">
+              <p class="uname">Last Updated By</p>
+            </div>
+            <div class="rightBottomText">
+              <div>
+                <p class="name">John Doe</p>
+              </div>
+              <div>
+                <mat-icon svgIcon="clock-circle"></mat-icon>
+              </div>
+              <div>
+                <p class="date">09 Apr 2023,</p>
+              </div>
+              <div>
+                <p class="time">8:15 am</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-container bottom-radius-none">
+        <div class="left-panel">
+          <app-template-properties-tree-section
+            [onMenuClick]="menuCallback"></app-template-properties-tree-section>
+        </div>
+        <div class="right-panel">
+          <app-template-properties
+            *ngIf="showProperties === 'template-properties'"></app-template-properties>
+          <app-input-file-properties
+            *ngIf="showProperties === 'input-file-file-properties'"></app-input-file-properties>
+          <app-input-header-properties
+            *ngIf="showProperties === 'input-file-header'"></app-input-header-properties>
+          <app-input-body-properties
+            *ngIf="showProperties === 'input-file-body'"></app-input-body-properties>
+          <app-input-footer-properties
+            *ngIf="showProperties === 'input-file-footer'"></app-input-footer-properties>
+          <app-response-file-properties
+            *ngIf="showProperties === 'response-file-file-properties'"></app-response-file-properties>
+          <app-response-header-properties
+            *ngIf="showProperties === 'response-file-header'"></app-response-header-properties>
+          <app-response-body-properties
+            *ngIf="showProperties === 'response-file-body'"></app-response-body-properties>
+          <app-response-footer-properties
+            *ngIf="showProperties === 'response-file-footer'"></app-response-footer-properties>
+        </div>
+      </div>
+      <app-delete-button></app-delete-button>
+    </div>
+  </mat-drawer-container>
+</div>

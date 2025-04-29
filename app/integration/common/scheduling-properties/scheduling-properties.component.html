@@ -1,0 +1,18 @@
+<div class="form">
+  <div class="right-panel-header">
+    <div class="right-panel-left-content">
+      <div class="bread-crum">
+        <p class="tproperties">Scheduling Properties</p>
+      </div>
+    </div>
+  </div>
+  <app-dynamic-form
+    *ngIf="config"
+    [data]="data"
+    [handlers]="handlers"
+    [config]="config"
+    [requiredData]="requiredData"
+    [title]="'intSchedulingProperties'"
+    (formStatus)="updateFormGroup($event)">
+  </app-dynamic-form>
+</div>

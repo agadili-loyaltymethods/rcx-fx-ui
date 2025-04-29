@@ -1,0 +1,13 @@
+<div class="form">
+  <app-dynamic-form
+    *ngIf="config"
+    [data]="data"
+    [handlers]="handlers"
+    [properties]="properties"
+    [activeFieldDetails]="activeFieldDetails"
+    [requiredData]="enumData"
+    [config]="config"
+    [title]="'inputHeaderProperties'"
+    (formStatus)="updateFormGroup($event)">
+  </app-dynamic-form>
+</div>

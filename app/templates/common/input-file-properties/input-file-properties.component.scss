@@ -1,0 +1,32 @@
+.right-panel-main-content {
+  padding: 14px 14px;
+  .one-line {
+    display: flex;
+    width: 100%;
+    .left-box {
+      width: 30%;
+    }
+    .middle-box {
+      width: 35%;
+    }
+    .end-box {
+      width: 35%;
+    }
+    .right-box {
+      width: 70%;
+    }
+  }
+}
+
+@media screen and (max-width: 1410px) {
+  .middle-box {
+    width: 31% !important;
+  }
+  .end-box {
+    width: 39% !important;
+    .input-container{
+      padding-right: 0px !important;
+      padding-left: 0px !important;
+    }
+  }
+}

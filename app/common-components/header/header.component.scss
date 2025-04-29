@@ -1,0 +1,64 @@
+.toolbar {
+  .pointer {
+    cursor: pointer;
+    cursor: pointer;
+    border: 1px solid #eaecf0;
+    border-radius: 50%;
+    padding: 4px;
+    color: #98a2b3;
+  }
+  .logo {
+    margin-left: 15px;
+    position: relative;
+    top: -2px;
+  }
+  .flexExpand {
+    flex: 1 1 auto;
+  }
+  .profile-wrap {
+    display: flex;
+    align-items: center;
+    .profile-img {
+      width: 36px;
+      height: 36px;
+    }
+    .profile-img-text{
+      border-radius: 50%;
+      background: #F2F4F7;
+      font-size: 14px; 
+      color: #1D2939;
+      text-transform: capitalize;
+      line-height: 38px;
+      padding: 0px 10px;
+      margin-right: 8px;
+    }
+    .profile-name {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 18px;
+      color: #1d2939;
+      margin:0px 10px;
+      .profile-order {
+        font-weight: 400;
+        font-size: 14px;
+        color: #1d2939;
+      }
+    }
+    .icon {
+      height: 12px;
+      width: 15px;
+      border-radius: 0px;
+      margin-left: 5px;
+    }
+  }
+}
+.profile-menu-list {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1d2939;
+  padding-right: 86px;
+  .icon{
+    width: 20px;
+  }
+}

@@ -1,0 +1,130 @@
+<div class="view-template">
+  <div class="headerContainer">
+    <div class="left-elements">
+      <div class="left-child">
+        <div class="back-circle">
+          <div
+            class="circle"
+            [routerLink]="['/templates/list']"
+            routerLinkActive="router-link-active">
+            <mat-icon class="back" svgIcon="back">arrow_back</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="right-child">
+        <div class="bread-crum">Templates / <span>New Template</span></div>
+        <div class="template-label">Loyalty Programs</div>
+      </div>
+    </div>
+
+    <div class="right-elements">
+      <button
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Edit Template"
+        routerLinkActive="button-active"
+        routerLink="/templates/edit">
+        <mat-icon svgIcon="edit-white"></mat-icon>Edit
+      </button>
+    </div>
+  </div>
+
+  <mat-drawer-container class="drawer-container" autosize>
+    <!-- <div class="main-container"> -->
+    <div class="childContainer">
+      <div class="inner-headerContainer">
+        <div class="left-elements">
+          <div class="right-child">
+            <div class="temp-properties-name">Template File Properties</div>
+            <div class="buttonBorder">
+              <button class="mat-raised-button-rev">
+                <p class="buttonText">Revision</p>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-elements">
+          <div class="rightText">
+            <div class="updatestatus">
+              <p class="uname">Last Updated By</p>
+            </div>
+            <div class="rightBottomText">
+              <div>
+                <p class="name">John Doe</p>
+              </div>
+              <div>
+                <mat-icon svgIcon="clock-circle"></mat-icon>
+              </div>
+              <div>
+                <p class="date">09 Apr 2023,</p>
+              </div>
+              <div>
+                <p class="time">8:15 am</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-container bottom-radius-none">
+        <div class="left-panel">
+          <app-template-properties-tree-section
+            [onMenuClick]="menuCallback"></app-template-properties-tree-section>
+        </div>
+        <div class="right-panel">
+          <div class="form">
+            <div class="right-panel-header">
+              <div class="right-panel-left-content">
+                <div class="bread-crum">
+                  Input File / Body / <span> 1</span>
+                </div>
+                <div class="bread-crum-child">Sequence #1</div>
+              </div>
+            </div>
+            <div class="right-panel-main-content">
+              <div class="one-line">
+                <div class="left-box">
+                  <div class="input-container">
+                    <div class="label-container">
+                      <label class="input-label">Name</label>
+                    </div>
+                    <label class="input-value">Hertz</label>
+                  </div>
+                </div>
+                <div class="right-box">
+                  <div class="input-container">
+                    <div class="label-container">
+                      <label class="input-label">RCX Process </label>
+                    </div>
+                    <label class="input-value">Enrollment</label>
+                  </div>
+                </div>
+              </div>
+              <div class="one-line">
+                <div class="left-box">
+                  <div class="input-container">
+                    <div class="label-container">
+                      <label class="input-label">Partner</label>
+                    </div>
+                    <label class="input-value"
+                      >This is my template name here</label
+                    >
+                  </div>
+                </div>
+                <div class="right-box">
+                  <div class="input-container">
+                    <div class="label-container">
+                      <label class="input-label">Description</label>
+                    </div>
+                    <label class="input-value">This is description here</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-delete-button></app-delete-button>
+    </div>
+  </mat-drawer-container>
+</div>

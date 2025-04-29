@@ -1,0 +1,112 @@
+<div class="integration-view-template">
+  <div class="headerContainer">
+    <div class="left-elements">
+      <div class="left-child">
+        <div class="back-circle">
+          <div
+            class="circle"
+            [routerLink]="['/integrations/list']"
+            routerLinkActive="router-link-active">
+            <mat-icon class="back" svgIcon="back">arrow_back</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="right-child">
+        <div class="bread-crum">
+          Integration / <span>Integration Details</span>
+        </div>
+        <div class="template-label">Integration 123</div>
+      </div>
+    </div>
+    <div class="right-elements">
+      <button
+        class="theme-button orange-btn"
+        mat-flat-button
+        aria-label="Create Template"
+        mat-stroked-button>
+        <mat-icon svgIcon="edit-white"></mat-icon>Edit
+      </button>
+    </div>
+  </div>
+  <mat-drawer-container class="drawer-container" autosize>
+    <!-- <div class="main-container"> -->
+    <div class="childContainer">
+      <app-form-header [headerData]="headerData"></app-form-header>
+      <div class="main-container bottom-radius-none">
+        <div class="left-panel integrate-left-panel">
+          <app-integration-properties-menu
+            [onMenuClick]="menuCallback"></app-integration-properties-menu>
+        </div>
+        <div class="right-panel integrate-right-panel">
+          <div>
+            <div class="form">
+              <div class="right-panel-header">
+                <div class="right-panel-left-content">
+                  <div class="bread-crum">
+                    <p class="tproperties">Integration Properties</p>
+                  </div>
+                </div>
+              </div>
+              <div class="right-panel-main-content">
+                <div class="one-line">
+                  <div class="left-box">
+                    <div class="input-container">
+                      <div class="label-container">
+                        <mat-label class="input-label">Name *</mat-label>
+                      </div>
+                      <mat-label class="input-value">Integration 123</mat-label>
+                    </div>
+                  </div>
+                  <div class="right-box">
+                    <div class="input-container">
+                      <div class="label-container">
+                        <label class="input-label">Partner *</label>
+                      </div>
+                      <mat-label class="input-value">Hertz</mat-label>
+                    </div>
+                  </div>
+                </div>
+                <div class="one-line">
+                  <div class="left-box">
+                    <div class="input-container">
+                      <div class="label-container">
+                        <mat-label class="input-label">Template *</mat-label>
+                      </div>
+                      <mat-label class="input-value">Template 123</mat-label>
+                    </div>
+                  </div>
+                </div>
+                <div class="one-line">
+                  <div class="full-box">
+                    <div class="input-container">
+                      <div class="label-container">
+                        <mat-label class="input-label">Description</mat-label>
+                      </div>
+                      <mat-label class="input-value"
+                        >This is Description for the integration</mat-label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="one-line">
+                  <div class="left-box">
+                    <div class="input-container">
+                      <div class="label-container">
+                        <mat-label class="input-label">Error Map *</mat-label>
+                      </div>
+                      <mat-label class="input-value">Error Map 1</mat-label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-delete-button></app-delete-button>
+    </div>
+    <mat-drawer #drawer mode="side" position="end">
+      <!-- <app-error-side-panel [drawer]="drawer"></app-error-side-panel> -->
+    </mat-drawer>
+  </mat-drawer-container>
+</div>

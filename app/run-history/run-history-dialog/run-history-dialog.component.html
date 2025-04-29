@@ -1,0 +1,60 @@
+<div class="integration-modal">
+  <div class="modal-title">
+    <div class="title">Integration Details</div>
+    <div class="close-icon" mat-dialog-close>
+      <mat-icon svgIcon="close"></mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="modal-content">
+    <div class="integrationcontainer-wrap">
+      <div class="one-line" *ngFor="let element of config.data">
+        <div class="left-box">
+          <div class="input-container">
+            <div class="label-container">
+              <label class="input-label">{{ element.label }} </label>
+            </div>
+            <label
+              class="input-value"
+              IsEllipsisActive
+              matTooltip
+              matTooltipPosition="above"
+              matTooltipClass="custom-tooltip"
+              ellipsisData="{{ getValue(element) }}"
+              >{{ getValue(element) }}</label
+            >
+          </div>
+        </div>
+        <div class="right-box" *ngIf="element.type === 'text'">
+          <button
+            mat-icon-button
+            (click)="copyValue(getValue(element),element)">
+            <mat-icon
+              class="cursor-pointer"
+              svgIcon="copy"></mat-icon>
+          </button>
+        </div>
+        <div class="right-box" *ngIf="element.type === 'file'">
+          <button
+            mat-icon-button
+            (click)="copyValue(getValue(element),element)"
+            [disabled]="!disCondBased(element)">
+            <mat-icon
+              class="active-action"
+              svgIcon="copy"></mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            [disabled]="!disCondBased(element)"
+            (click)="downloadFile(getValue(element),element)">
+            <mat-icon class="active-action" svgIcon="download"></mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="modal-buttons">
+    <div class="right-elements">
+      <button cdk-focus-initial class="btn primary-btn" mat-dialog-close>Ok</button>
+    </div>
+  </div>
+</div>

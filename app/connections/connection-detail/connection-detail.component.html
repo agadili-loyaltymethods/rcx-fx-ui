@@ -1,0 +1,168 @@
+<div class="connection-detail">
+  <div class="headerContainer">
+    <div class="left-elements">
+      <div class="left-child">
+        <div class="back-circle">
+          <div
+            class="circle"
+            [routerLink]="['/connections/list']"
+            routerLinkActive="router-link-active">
+            <mat-icon class="back" svgIcon="back">arrow_back</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="right-child">
+        <div class="bread-crum">Connections / <span>View Connection</span></div>
+        <div class="template-label">Connection Details</div>
+      </div>
+    </div>
+
+    <div class="right-elements">
+      <button
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Edit Template"
+        routerLinkActive="button-active"
+        routerLink="/connections/create">
+        <mat-icon svgIcon="edit-white"></mat-icon>Edit
+      </button>
+    </div>
+  </div>
+  <div class="childContainer">
+    <div class="inner-headerContainer">
+      <div class="left-elements">
+        <div class="right-child">
+          <div class="temp-properties-name">Connection Details</div>
+        </div>
+      </div>
+    </div>
+    <div class="main-container bottom-radius-none">
+      <div class="full-width">
+        <div class="one-line">
+          <div class="left-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Connection Name *</label>
+              </div>
+              <label class="input-value">Connection 123</label>
+            </div>
+          </div>
+          <div class="middle-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Partner *</label>
+              </div>
+              <label class="input-value">Hertz</label>
+            </div>
+          </div>
+        </div>
+        <div class="one-line">
+          <div class="one-third-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Description *</label>
+              </div>
+              <label class="input-value"
+                >This is an example description that is exceptionally long and
+                keeps going no matter what you keep typing</label
+              >
+            </div>
+          </div>
+        </div>
+        <div class="one-line">
+          <div class="left-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Connection Type *</label>
+              </div>
+              <label class="input-value">AWS S3</label>
+            </div>
+          </div>
+          <div class="one-third-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">URL *</label>
+              </div>
+              <label class="input-value">s3://abc.com</label>
+            </div>
+          </div>
+        </div>
+        <div class="one-line">
+          <div class="left-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Access Key ID *</label>
+              </div>
+              <label class="input-value">ASIA25ZZONFD2DMRGH5Z</label>
+            </div>
+          </div>
+          <div class="one-third-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Secret Access Key *</label>
+              </div>
+              <label class="input-value"
+                >twTeMQsc6EXSw/qM9wafUTRM7bJDpusLCYtH8G3H</label
+              >
+            </div>
+          </div>
+        </div>
+        <div class="one-line">
+          <div class="left-box">
+            <div class="input-container">
+              <div class="label-container">
+                <label class="input-label">Region *</label>
+              </div>
+              <label class="input-value">Example Region here</label>
+            </div>
+          </div>
+        </div>
+        <div class="encry-wrap">
+          <div class="connection-aws-title">
+            <mat-icon svgIcon="lock"></mat-icon>Encryption
+          </div>
+          <div class="one-line">
+            <div class="left-box">
+              <div class="input-container">
+                <div class="label-container">
+                  <label class="input-label">Encryption Algorithm *</label>
+                </div>
+                <label class="input-value">Algorithm123</label>
+              </div>
+            </div>
+            <div class="one-third-box">
+              <div class="input-container">
+                <div class="label-container">
+                  <label class="input-label">Encryption Key *</label>
+                </div>
+                <label class="input-value">file123</label>
+              </div>
+            </div>
+          </div>
+          <div class="connection-aws-title">
+            <mat-icon svgIcon="compress"></mat-icon>Compression
+          </div>
+          <div class="one-line">
+            <div class="left-box">
+              <div class="input-container">
+                <div class="label-container">
+                  <label class="input-label">Compression Algorithm *</label>
+                </div>
+                <label class="input-value">Algorithm123</label>
+              </div>
+            </div>
+            <div class="one-third-box">
+              <div class="input-container">
+                <div class="label-container">
+                  <label class="input-label">Compression Level *</label>
+                </div>
+                <label class="input-value">3</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-delete-button></app-delete-button>
+  </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="integration-modal">
+  <div class="modal-title">
+    <div class="title">Create/Edit Parameter</div>
+    <div class="close-icon" mat-dialog-close>
+      <mat-icon svgIcon="close"></mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="modal-content">
+    <form class="integrationcontainer-wrap" [formGroup]="integrationParams">
+      <div class="input-container">
+        <div class="label-container">
+          <label class="input-label">Parameter Name *</label>
+        </div>
+        <mat-form-field appearance="outline">
+          <input
+            formControlName="name"
+            type="text"
+            matInput
+            placeholder="Enter Parameter Name"
+            value="Alert123" />
+          <mat-error
+            *ngIf="integrationParams.get('name').errors?.required && integrationParams.get('name').touched">
+            Please enter parameter name.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="input-container">
+        <div class="label-container">
+          <label class="input-label">Parameter Type *</label>
+        </div>
+        <mat-form-field appearance="outline" class="select-container">
+          <mat-select
+            formControlName="type"
+            (selectionChange)="onParameterTypeChange()"
+            placeholder="Select Parameter Type">
+            <mat-option
+              *ngFor="let option of handlers.getEnumsByType('DataType')"
+              [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="integrationParams.get('type').errors?.required && integrationParams.get('type').touched">
+            Please enter parameter type.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        *ngIf="integrationParams.get('type').value !== 'Date'"
+        class="input-container">
+        <div class="label-container">
+          <label class="input-label">Parameter Value *</label>
+        </div>
+        <mat-form-field appearance="outline">
+          <input
+            formControlName="value"
+            type="text"
+            matInput
+            placeholder="Enter Parameter Value" />
+          <mat-error
+            *ngIf="integrationParams.get('value').errors?.required && integrationParams.get('value').touched">
+            Please enter parameter value.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        *ngIf="integrationParams.get('type').value === 'Date'"
+        class="input-container">
+        <div class="label-container">
+          <label class="input-label">Parameter Value *</label>
+        </div>
+        <mat-form-field appearance="outline">
+          <input
+            readonly
+            formControlName="value"
+            placeholder="Enter Date"
+            matInput
+            [ngxMatDatetimePicker]="picker" />
+          <mat-error
+            *ngIf="integrationParams.get('value').errors?.required && integrationParams.get('value').touched">
+            Please enter parameter value.
+          </mat-error>
+          <mat-datepicker-toggle tabindex="-1" matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon svgIcon="calendar"></mat-icon>
+          </mat-datepicker-toggle>
+          <ngx-mat-datetime-picker
+            tabindex="-1"
+            #picker></ngx-mat-datetime-picker>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div mat-dialog-actions class="modal-buttons">
+    <div class="right-elements">
+      <button class="btn outline-btn" mat-dialog-close>Cancel</button>
+      <button
+        class="btn primary-btn"
+        [disabled]="integrationParams.invalid"
+        (click)="onSave()">
+        Ok
+      </button>
+    </div>
+  </div>
+</div>

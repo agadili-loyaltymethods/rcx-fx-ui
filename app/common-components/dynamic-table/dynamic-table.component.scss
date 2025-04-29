@@ -1,0 +1,95 @@
+.responsive-table {
+  // .mat-mdc-table {
+  //   height: 500px;
+  //   width: 100%;
+  //   overflow: auto;
+  // }
+
+  .one-row-icon {
+    white-space: nowrap;
+    justify-content: space-between;
+  }
+
+  ::ng-deep button:disabled .mat-icon.active-action > svg {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  
+  .custom-table {
+    .mat-column-run_id {
+      border-right: 1px solid var(--gray-200, #eaecf0);
+    }
+    .mat-column-duration {
+      border-right: 1px solid var(--gray-200, #eaecf0);
+    }
+
+    .status-width {
+      width: auto;
+    }
+    .action-width {
+      width: 98px;
+    }
+    .failed-width {
+      width: 60px;
+    }
+    .run-id-width {
+      width: 70px;
+    }
+
+    .mat-column-Integration_Name_Run_Id, .mat-column-Files, .mat-column-Timeframe, .mat-column-Records    {
+      height:20px !important;
+      text-align: center;
+      border-right: 1px solid var(--gray-200, #eaecf0);
+      color: var(--gray-600, #475467);
+      background: var(--gray-25, #FCFCFD);
+    }
+    .mat-column-Records  {
+      border-right: none;
+    }
+    .small-header {
+      height:30px !important;
+    }
+  }
+}
+
+.hosting-row {
+  border-left: 4px solid #0f61b3;
+}
+
+.selected {
+  background: #F6FBFF;
+}
+.selected:hover {
+  background: #F6FBFF !important;
+}
+
+::ng-deep.mdc-checkbox .mdc-checkbox__native-control {
+  &:enabled {
+    &:not(:checked):not(:indeterminate):not([data-indeterminate="true"])
+      ~ .mdc-checkbox__background {
+      border: 2px solid !important;
+      color: #888 !important;
+      // color: #d4d5d9 !important;
+      border-radius: 4px;
+      margin-top: 3px;
+    }
+
+    &:checked ~ .mdc-checkbox__background,
+    &:indeterminate ~ .mdc-checkbox__background {
+      border: 1px solid #0f61b3 !important;
+      background-color: #d3e7fb !important;
+    }
+  }
+
+  &[data-indeterminate="true"]:enabled ~ .mdc-checkbox__background {
+    border: 1px solid #0f61b3 !important;
+    background-color: #d3e7fb !important;
+  }
+
+  &:enabled:checked ~ .mdc-checkbox__background {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    margin-top: 3px;
+  }
+}

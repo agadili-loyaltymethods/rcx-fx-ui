@@ -1,0 +1,141 @@
+<div class="tree-container" #treeContainer>
+  <div class="modal-header">
+    <div class="title">{{title}}</div>
+  </div>
+
+  <div class="modal-body">
+    <div *ngIf="errorMessage" class="error-box">
+      <mat-icon style="font-size: 20px; margin-top: 2px;">error_outline</mat-icon>
+      <span class="error-message">{{ errorMessage }}</span>
+      <button class="close-error-button" (click)="dismissErrorMessage()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-tree 
+      [dataSource]="dataSource" 
+      [treeControl]="treeControl"
+      cdkDropList
+      cdkDropListOrientation="vertical"
+      (cdkDropListDropped)="drop($event)">
+      <mat-tree-node *matTreeNodeDef="let node" [matTreeNodePadding]
+      matTreeNodeToggle>
+        <div *ngIf="node.inputType !== 'reservedNode' && !node.disable" 
+        [class]="data.rowData.transform === 'MappingTransform' ? 'string-mapping-node' : 'node-group'" 
+        cdkDrag style="margin-bottom: 10px;"
+        [cdkDragData]="node"
+        cdkDragBoundary=".width">
+        <mat-icon
+            class="maticon-container vector-icon"
+            svgIcon="Vector">
+        </mat-icon>
+            <div class="string-mapping-container" *ngIf="data.rowData.transform === 'MappingTransform'">
+              <div class="expand-title-map field-title"
+              [matTooltip]="getNodeName(node).length > 15 ? getNodeName(node) : ''" 
+              matTooltipPosition="above">
+                <span class="map-ellipsis-text" [class.ellipsis]="getNodeName(node).length > 20">
+                {{ getNodeName(node) }}
+                </span>
+              </div>
+              <div class="string-mapping-arrow">-></div>
+              <div class="expand-title-map field-title"
+              [matTooltip]="node.mappedValue?.length > 15 ? node.mappedValue : ''" 
+              matTooltipPosition="above">
+                <span class="map-ellipsis-text" [class.ellipsis]="node.mappedValue?.length > 20">
+                  {{ node.mappedValue }}
+                </span>
+              </div>
+            </div>
+            <div class="expand-title field-title" *ngIf="data.rowData.transform !== 'MappingTransform'"
+            [matTooltip]="getNodeName(node).length > 23 ? getNodeName(node) : ''" 
+            matTooltipPosition="above">
+            <span class="ellipsis-text" [class.ellipsis]="getNodeName(node).length > 20"
+              [class.preserve-whitespace]="node.item !== node.item.trim()">
+              {{ getNodeName(node) }}
+            </span>
+            </div>
+            <div  class="expand-edit-button">
+              <mat-icon class="edit-action-icon" style="align-content: center; margin-bottom: 6.4px;"
+                [matTooltip]="toolTip && toolTip.deletefield"
+                svgIcon="edit-white"
+                (click)="editField(node)">
+              </mat-icon>
+            </div>
+            <div class="expand-delete-button">
+              <mat-icon class="delete-action-icon"
+                [matTooltip]="toolTip && toolTip.deletefield"
+                svgIcon="trash"
+                (click)="removeField(node)">
+              </mat-icon>
+            </div>
+        </div>
+        <div *ngIf="node.isAddingNode || (isEdit && editingNode === node)" class="dropdown-button-container">
+            <ng-container *ngIf="data.rowData.transform === 'MappingTransform'; else standardInput">
+              <div class="mapping-input-container">
+                <mat-form-field appearance="outline" class="form-field">
+                  <input matInput autofocus [(ngModel)]="newNodeName" placeholder="Enter Value to Map"
+                  (ngModelChange)="onInputTextChange($event)" style="font-size: 13.7px; height:34px;">
+                </mat-form-field>
+                <div class="string-mapping-arrow">-></div>
+                
+                <mat-form-field appearance="outline" class="form-field">
+                  <input matInput [(ngModel)]="newMappedValue" placeholder="Enter Value to Transform"
+                  (ngModelChange)="onInputTextChange($event)" style="font-size: 13.7px; height:34px;">
+                </mat-form-field>
+              </div>
+            </ng-container>
+            <ng-template #standardInput>
+              <mat-form-field appearance="outline" class="form-field" style="box-sizing: border-box; width: 290px;
+              height: 50px; font-size: medium; align-content: center;">
+                <ng-container *ngIf="!loadCustomText; else customInput">
+                  <mat-select [(ngModel)]="newNodeName" style="align-content: center; margin-top: 3px;"
+                    (ngModelChange)="onDropdownValueChange($event)"
+                    placeholder="Select an option">
+                    <mat-option *ngFor="let option of dropdownOptions" [value]="option"
+                      [matTooltip]="option.label.length >= 30 ? option.label : ''" 
+                      matTooltipPosition="above">
+                        <span class="ellipsis-text">
+                          {{ option.label }}
+                        </span>
+                      </mat-option>
+                    </mat-select>
+                </ng-container>
+                <ng-template #customInput>
+                  <input  style="align-content: center; margin-top: 5px;" matInput autofocus [(ngModel)]="newNodeName?.value || newNodeName" (ngModelChange)="onInputTextChange($event)">
+                </ng-template>
+              </mat-form-field>
+            </ng-template>
+            <button [disabled]="data.rowData.transform === 'MappingTransform' ? (!newNodeName.trim() || !newMappedValue.trim() || newMappedValue.trim() === newNodeName.trim()) : 
+                              (data.rowData.transform === 'JoinTransform' ? (!newNodeName || (loadCustomText && !isTextValid)) : 
+                              (loadCustomText && !isTextValid))"
+            mat-button color="primary"
+            (click)="confirmAddNode(node)"
+            class="preview-button dropdown-button" style="width: 46px !important;" mat-stroked-button>
+            <mat-icon>check</mat-icon>
+          </button>
+          <button mat-button color="warn"
+            (click)="cancelAddNode(node)" style="width: 46px;"
+            class="preview-button dropdown-button">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>  
+        <div *ngIf="node.item === 'Add' && node.inputType === 'reservedNode' && !isAddingNode" class="add-node">
+          <button (click)="onNodeClick(node)"
+            class="preview-button dropdown-button" mat-stroked-button>
+            <mat-icon>
+              add
+            </mat-icon>
+            Add
+          </button>
+        </div>
+      </mat-tree-node>
+    </mat-tree>
+  </div>
+  
+  <div class="modal-footer">
+    <div class="spacer"></div> <!-- This pushes the buttons to the right -->
+    <div class="action-buttons">
+      <button class="btn-cancel-action" mat-dialog-close>Cancel</button>
+      <button [disabled]="isAddingNode" (click)="ok()" class="btn-submit-action">Submit</button>
+    </div>
+  </div>
+</div>

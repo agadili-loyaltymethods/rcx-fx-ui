@@ -1,0 +1,99 @@
+<div class="integration">
+  <mat-card class="header-title">
+    <div class="row">
+      <div class="title">Integrations</div>
+      <div class="create-button">
+        <button
+          *ngIf="utilsService.checkPerms({FX_Integration:['create']})"
+          class="theme-button active-btn"
+          mat-flat-button
+          aria-label="Create Template"
+          routerLink="/integrations/create">
+          <mat-icon svgIcon="plus" class="icon-small"></mat-icon>Create New
+        </button>
+      </div>
+    </div>
+  </mat-card>
+
+  <div class="panel">
+    <mat-card>
+      <div class="table-filter-section">
+        <div class="row search-section">
+          <!-- <app-status-filter></app-status-filter> -->
+          <div class="right-elements">
+            <mat-form-field appearance="outline">
+              <mat-icon
+                matPrefix
+                svgIcon="magnifier"
+                class="icon-small"></mat-icon>
+              <input
+                matInput
+                type="search"
+                placeholder="Search by Integration Name or Description"
+                (input)="onChange({ input: $event.target.value })"
+                [(ngModel)]="searchValue" />
+            </mat-form-field>
+            <div class="tab-wrap list-grid-wrap">
+              <mat-button-toggle-group>
+                <mat-button-toggle
+                  class="toggles"
+                  checked="{{showListView}}"
+                  (click)="viewList()">
+                  <mat-icon
+                    svgIcon="listactive"
+                    class="pointer myIcon"></mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle
+                  class="toggles"
+                  checked="{{!showListView}}"
+                  (click)="viewGrid()">
+                  <mat-icon svgIcon="grid" class="pointer myIcon"></mat-icon>
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
+        </div>
+        <div class="row filter-section">
+          <div class="filter-options">
+            <app-drop-down-with-search
+              *ngFor="let item of cfgOpt | keyvalue: originalOrder"
+              [placeHolder]="item.value.placeholder"
+              [placeHolderSearchBox]="item.value.searchplaceholder"
+              [label]="item.value.label"
+              [multiple]="true"
+              [selectBoxOptions]="config[item.value.label]"
+              [selectedValue]="getSelectedValue(config[item.value.label], item.value.field)"
+              [fieldName]="item.value.field"
+              (valueChange)="onChange($event, item.value.field)">
+            </app-drop-down-with-search>
+          </div>
+          <div class="filter-reset">
+            <button
+              mat-stroked-button
+              *ngIf="refresh"
+              class="refresh"
+              (click)="getRefreshData()">
+              <mat-icon svgIcon="refresh" class="refresh-icon"></mat-icon>
+            </button>
+            <button mat-stroked-button (click)="resetFilters()">
+              Reset Filters
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pannel-section">
+        <app-integration-grid
+          [data]="data"
+          [config]="config"
+          [handler]="getDataHandler"
+          *ngIf="!showListView"></app-integration-grid>
+        <app-integration-list
+          [data]="data"
+          [config]="config"
+          [handler]="getDataHandler"
+          *ngIf="showListView"></app-integration-list>
+      </div>
+    </mat-card>
+  </div>
+</div>

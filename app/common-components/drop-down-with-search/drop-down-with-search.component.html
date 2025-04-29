@@ -1,0 +1,57 @@
+<mat-form-field appearance="outline" floatLabel="always" class="mb-10">
+  <mat-label *ngIf="label.length">{{ label }}</mat-label>
+  <mat-select
+    [formControl]="selectCtrl"
+    [placeholder]="placeHolder"
+    [multiple]="multiple"
+    #multiSelect
+    (selectionChange)="onInputValueChange()">
+    <mat-select-trigger style="display: flex; flex-direction: row">
+      <span
+        *ngIf="selectCtrl?.value?.length > 0"
+        IsEllipsisActive
+        matTooltip="{{ellipsisData}}"
+        matTooltipPosition="above"
+        matTooltipClass="custom-tooltip"
+        ellipsisMaxLength="{{calculateEllipsisMaxLength()}}"
+        [ellipsisData]="getEllipsisData()"
+        ellipsisIgnoreFields="['All Selected']"
+        [matTooltipShowDelay]="dropDownEllipsis?.matTooltipShowDelay"></span>
+      <span
+        *ngIf="selectCtrl?.value?.length > 1 && selectCtrl?.value?.length !== selectBoxOptions.length"
+        class="example-additional-selection">
+        (+{{ (selectCtrl?.value?.length || 0) - 1 }} {{
+        selectCtrl?.value?.length === 2 ? 'other' : 'others' }})
+      </span>
+    </mat-select-trigger>
+
+    <mat-option>
+      <ngx-mat-select-search
+        class="dropdown-search"
+        [placeholderLabel]="placeHolderSearchBox"
+        noEntriesFoundLabel="No Search Result Found"
+        [showToggleAllCheckbox]="true"
+        [toggleAllCheckboxIndeterminate]="isIndeterminate"
+        [toggleAllCheckboxChecked]="isChecked"
+        (toggleAll)="toggleSelectAll($event)"
+        [formControl]="selectFilterCtrl"></ngx-mat-select-search>
+    </mat-option>
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+      <div
+        IsEllipsisActive
+        matTooltip="{{option.name}}"
+        matTooltipPosition="above"
+        matTooltipClass="custom-tooltip"
+        ellipsisMaxLength="{{dropDownEllipsis && dropDownEllipsis.dropDownMaxLength}}"
+        ellipsisData="{{option.name}}"
+        [matTooltipShowDelay]="dropDownEllipsis && dropDownEllipsis.matTooltipShowDelay">
+        {{ option.name }}
+      </div>
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<!-- <div>
+  <ul *ngFor="let bank of selectCtrl?.value">
+    <li>{{bank.name}}</li>
+  </ul>
+</div> -->

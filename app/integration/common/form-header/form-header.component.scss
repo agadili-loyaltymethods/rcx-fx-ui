@@ -1,0 +1,79 @@
+.inner-headerContainer {
+  border: 1px solid #EAECF0;
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+  // border-top:  1px solid  #EAECF0;
+  height: 32px;
+  padding: 24px 20px;
+  display: flex;
+  justify-content: space-between;
+  // margin-top: 2%;
+  background: #ffffff;
+  .left-elements {
+    display: flex;
+    align-items: center;
+    .right-child {
+      display: flex;
+      gap: 15px;
+      .temp-properties-name {
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .buttonBorder {
+        .mat-raised-button-rev {
+          height: 25px;
+          width: 75px;
+          background-color: white;
+          border-radius: 3px;
+          &.Revision {
+            font-weight: 400;
+            font-size: 12;
+            border: 1px solid rgba(243, 118, 49);
+            color: #7b2f05;
+          }
+          &.Published {
+            font-weight: 400;
+            font-size: 12;
+            border: 1px solid #12b76a;
+            color: #065032;
+          }
+        }
+      }
+    }
+  }
+  .right-elements {
+    .rightText {
+      display: flex;
+      flex-direction: column;
+      .updatestatus {
+        display: flex;
+        justify-content: flex-end;
+        .uname {
+          font-size: 16px;
+          font-weight: 500;
+          color: #1d2939;
+          margin-bottom: 2px;
+        }
+      }
+      .rightBottomText {
+        display: flex;
+        gap: 3px;
+        .name {
+          font-size: 12px;
+          font-weight: 600;
+          color: #667085;
+        }
+        mat-icon {
+          height: 14px;
+          width: 14px;
+        }
+        .date,
+        .time {
+          font-size: 12px;
+          font-weight: 400;
+          color: #667085;
+        }
+      }
+    }
+  }
+}

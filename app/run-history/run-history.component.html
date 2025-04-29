@@ -1,0 +1,36 @@
+<div class="run-history">
+  <mat-card class="header-title">
+    <div class="row">
+      <div class="title">Run History</div>
+    </div>
+  </mat-card>
+
+  <div class="panel">
+    <mat-card>
+      <app-table-filter
+        [config]="config"
+        (filterChange)="filterChange($event)"
+        (startTimeChange)="onStartDateChange($event)"
+        (endTimeChange)="onEndDateChange($event)"
+        (statusChange)="onStatusChange($event)"
+        (inputChange)="onInputChange($event)"
+        (searchValueChange)="onSearchValueChange($event)"
+        [statusFilter]="status"
+        [tableData]="data"
+        [handlers]="handlers"
+        [searchValue]="searchValue"
+        [startDate]="startDate"
+        [endDate]="endDate"
+        [pageName]="pageName">
+      </app-table-filter>
+      <div class="row pannel-section">
+        <app-dynamic-table
+          *ngIf="config"
+          [config]="config"
+          [data]="data"
+          [handlers]="handlers">
+        </app-dynamic-table>
+      </div>
+    </mat-card>
+  </div>
+</div>

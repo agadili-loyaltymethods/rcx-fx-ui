@@ -1,0 +1,63 @@
+::ng-deep.mdc-checkbox .mdc-checkbox__native-control {
+  &:enabled {
+    &:not(:checked):not(:indeterminate):not([data-indeterminate="true"])
+      ~ .mdc-checkbox__background {
+      border: 1px solid !important;
+      color: #d4d5d9 !important;
+      border-radius: 4px;
+      margin-top: 3px;
+    }
+
+    &:checked ~ .mdc-checkbox__background,
+    &:indeterminate ~ .mdc-checkbox__background {
+      border: 1px solid #0f61b3 !important;
+      background-color: #d3e7fb !important;
+    }
+  }
+
+  &[data-indeterminate="true"]:enabled ~ .mdc-checkbox__background {
+    border: 1px solid #0f61b3 !important;
+    background-color: #d3e7fb !important;
+  }
+
+  &:enabled:checked ~ .mdc-checkbox__background {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    margin-top: 3px;
+  }
+}
+
+::ng-deep.mdc-checkbox__checkmark-path {
+  stroke-width: 4.12px !important;
+}
+
+::ng-deep.mdc-checkbox .mdc-checkbox__native-control {
+  &:focus ~ .mdc-checkbox__ripple {
+    opacity: 0 !important;
+    background-color: transparent !important;
+  }
+
+  &:enabled ~ .mdc-checkbox__background .mdc-checkbox__checkmark {
+    color: #0f61b3 !important;
+    width: 12px;
+    height: 15px;
+    margin-left: 2px;
+  }
+}
+
+.dropdown-search {
+  .mat-ripple {
+    overflow: hidden;
+    display: none;
+  }
+
+  .mdc-checkbox__ripple {
+    overflow: hidden;
+    display: none;
+  }
+}
+
+.mat-mdc-option[aria-disabled=true].contains-mat-select-search {
+  background-color: #f6fbff;
+}

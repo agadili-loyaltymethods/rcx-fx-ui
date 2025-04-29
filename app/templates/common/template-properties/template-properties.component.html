@@ -1,0 +1,11 @@
+<div class="form">
+  <app-dynamic-form
+    *ngIf="config"
+    [requiredData]="enumData"
+    [properties]="properties"
+    [data]="properties"
+    [config]="config"
+    [title]="'templateProperties'"
+    (formStatus)="updateFormGroup($event)">
+  </app-dynamic-form>
+</div>

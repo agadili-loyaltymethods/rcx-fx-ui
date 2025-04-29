@@ -1,0 +1,34 @@
+<mat-card class="header-title">
+  <div class="row">
+    <div class="title">My Profile</div>
+  </div>
+</mat-card>
+
+<div class="panel">
+  <mat-card>
+    <div class="row pannel-section pannel-wrap">
+      <div class="profile-logo-wrap">
+        <div class="profile-logo">{{profileImgText}}</div>
+      </div>
+      <div class="general-info-wrap">
+        <div *ngFor="let item of uiCfg">
+          <div class="title-wrap">{{item.title}}</div>
+          <div class="details-wrap">
+            <div class="one-line" *ngFor="let f of item.fields">
+              <div *ngFor="let g of f.field" [class]="g.position">
+                <div class="input-container">
+                  <div class="label-container">
+                    <label class="input-label">{{g.name}}</label>
+                  </div>
+                  <label class="input-value text-ellipsis" *ngIf="userProfile"
+                    >{{userProfile[g.value] || '-'}}</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

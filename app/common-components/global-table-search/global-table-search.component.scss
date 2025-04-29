@@ -1,0 +1,21 @@
+mat-form-field {
+  &.search-form-field {
+    // margin-right: 16px;
+    width: 250px !important;
+    &.width-300px {
+      width: 300px !important;
+    }
+    &.width-350px {
+      width: 350px !important;
+    }
+    max-width: 400px;
+
+    .mat-mdc-form-field-icon-prefix {
+      padding: 0px;
+      .mat-icon {
+        padding: 9px 7px 9px 12px !important;
+        color: #98a2b3;
+      }
+    }
+  }
+}

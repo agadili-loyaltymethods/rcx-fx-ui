@@ -1,0 +1,74 @@
+<div class="table-filter-section">
+  <div class="row search-section">
+    <app-status-filter
+      (filterChange)="onStatusChange($event)"
+      [statusFilter]="statusFilter">
+    </app-status-filter>
+    <div class="right-elements">
+      <mat-form-field appearance="outline">
+        <mat-icon matPrefix svgIcon="magnifier" class="icon-small"></mat-icon>
+        <input
+          matInput
+          type="search"
+          placeholder="Search by Integration Name or Run Id"
+          [(ngModel)]="searchValue"
+          (input)="onSearchValueChange({ input: $event.target.value })" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row filter-section">
+    <div class="filter-options">
+      <app-drop-down-with-search
+        *ngFor="let item of cfgOpt | keyvalue: originalOrder"
+        [placeHolder]="item.value.placeholder"
+        [placeHolderSearchBox]="item.value.searchplaceholder"
+        [label]="item.value.label"
+        [multiple]="true"
+        [selectBoxOptions]="config[item.value.label]"
+        [selectedValue]="getSelectedValue(config[item.value.label], item.value.field)"
+        [fieldName]="item.value.field"
+        (valueChange)="onChange($event)">
+      </app-drop-down-with-search>
+      <mat-form-field
+        appearance="outline"
+        floatLabel="always"
+        class="date-range-picker"
+        color="primary">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+          <input
+            matStartDate
+            formControlName="start"
+            placeholder="Start date"
+            (dateChange)="onStartDateChange()" />
+          <input
+            readonly
+            matEndDate
+            formControlName="end"
+            placeholder="End date"
+            (dateChange)="onEndDateChange()" />
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon svgIcon="calendar"></mat-icon>
+        </mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')"
+          >Invalid start date</mat-error
+        >
+        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
+          >Invalid end date</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="filter-reset">
+      <button
+        mat-stroked-button
+        *ngIf="refresh"
+        class="refresh"
+        (click)="getRefreshData()">
+        <mat-icon svgIcon="refresh" class="refresh-icon"></mat-icon>
+      </button>
+      <button mat-stroked-button (click)="resetFilters()">Reset Filters</button>
+    </div>
+  </div>
+</div>

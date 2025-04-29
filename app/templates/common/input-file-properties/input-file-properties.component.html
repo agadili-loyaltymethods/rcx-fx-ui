@@ -1,0 +1,11 @@
+<div class="form">
+  <app-dynamic-form
+    *ngIf="config"
+    [data]="data"
+    [config]="config"
+    [properties]="properties"
+    [activeFieldDetails]="activeFieldDetails"
+    [title]="'inputFileProperties'"
+    (formStatus)="updateFormGroup($event)">
+  </app-dynamic-form>
+</div>

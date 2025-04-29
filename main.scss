@@ -1,0 +1,348 @@
+@use "@angular/material" as mat;
+
+html.cdk-global-scrollblock,
+body.cdk-global-scrollblock {
+  overflow-y: hidden;
+}
+
+/* give them width specific class common label like textbox radio and all */
+.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle {
+  transform: scale(0.4) !important;
+}
+
+/* textbox */
+.mdc-text-field:not(.mdc-text-field--disabled, .mdc-text-field--invalid) .mdc-text-field__input {
+  font-weight: 500;
+  font-size: 14px;
+  color: #1d2939 !important;
+}
+
+input {
+  padding-top: 4px !important;
+}
+
+.mat-mdc-text-field-wrapper {
+  background-color: #fcfcfd;
+}
+
+/* radio btn */
+.mdc-radio {
+  padding-left: 0px !important;
+}
+
+.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle {
+  transform: scale(0.4);
+}
+
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle {
+  background: #d3e7fb;
+}
+
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle {
+  border-color: #c3c6cc;
+}
+
+.mat-mdc-radio-button .mdc-form-field>label {
+  position: relative;
+  top: 0px;
+  margin-right: 15px;
+}
+
+/* radio btn side text */
+.mdc-label {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1d2939;
+}
+
+.mat-mdc-radio-group {
+  margin-top: 4px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.mdc-radio__outer-circle {
+  border-width: 1px !important;
+}
+
+/* Dropdown search for date formate */
+.dropdown-search {
+  .mat-select-search-input {
+    height: calc(3.4em - 1px) !important;
+    font-size: 14px !important;
+    font-weight: 500;
+  }
+
+  .mat-select-search-no-entries-found {
+    padding-top: 15px !important;
+    padding-bottom: 15px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .mat-ripple {
+    overflow: hidden;
+    display: none;
+  }
+
+  .mdc-checkbox__ripple {
+    overflow: hidden;
+    display: none;
+  }
+}
+
+/* for All dropdown */
+.mat-mdc-option .mdc-list-item__primary-text {
+  font-size: 14px !important;
+}
+
+/* for all textbox and dropdown border */
+.mdc-text-field--outlined:not(.mdc-text-field--disabled, .mdc-text-field--invalid) .mdc-notched-outline__leading,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled, .mdc-text-field--invalid) .mdc-notched-outline__notch,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled, .mdc-text-field--invalid) .mdc-notched-outline__trailing {
+  border-color: #d0d5dd !important;
+}
+
+/* menu focus color */
+.mat-mdc-list-base {
+  --mdc-list-list-item-focus-state-layer-color: #fef9f5 !important;
+}
+
+/* drawer arrow focus color */
+.mat-mdc-raised-button,
+.mat-mdc-unelevated-button {
+  --mat-mdc-button-persistent-ripple-color: transparent;
+}
+
+/* error */
+.mat-mdc-form-field-error {
+  color: #912018 !important;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.mat-mdc-form-field-error-wrapper {
+  padding: 0px !important;
+}
+
+/* Error border for all textbox and dropdown */
+.mdc-text-field--invalid {
+  background: #fffbfa;
+
+  .mdc-text-field__input {
+    caret-color: #fda29b !important;
+  }
+
+  &.mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #fda29b !important;
+    }
+  }
+}
+
+.mat-form-field-invalid {
+  .mat-mdc-select-trigger {
+    .mat-mdc-select-arrow {
+      color: #fda29b !important;
+    }
+  }
+}
+
+/* drawer */
+.mat-drawer-content,
+.mat-drawer.mat-drawer-side {
+  overflow-x: hidden !important;
+}
+
+/* tooltip */
+.mdc-tooltip__surface {
+  background-color: #1d2939  !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  color: #fff !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+  border: 1px solid #eaecf0 !important;
+  overflow: initial !important;
+  box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.2);
+  max-width: 240px !important;
+}
+
+/*
+.mdc-tooltip__surface::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin-left: -0.5em;
+  bottom: -1em;
+  left: 50%;
+  box-sizing: border-box;
+  border: 6px solid black;
+  border-color: transparent transparent #ffffff #ffffff;
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+  box-shadow: -2px 2px 3px 0 rgba(0, 0, 0, 0.2);
+}
+*/
+
+/* selectbox increase padding for sticky label in dropdown */
+.mat-mdc-select.label-space {
+  padding-top: 2px;
+}
+
+.mdc-floating-label {
+  color: #667085 !important;
+  font-weight: 400;
+}
+
+/* Table Sorting icon remove underline. */
+[mat-sort-header].cdk-keyboard-focused .mat-sort-header-container,
+[mat-sort-header].cdk-program-focused .mat-sort-header-container {
+  border-bottom: 1px solid transparent !important;
+}
+
+/* Multi selection dropdown */
+.mat-mdc-option {
+
+  &:focus.mdc-list-item,
+  &.mat-mdc-option-active.mdc-list-item,
+  &:hover:not(.mdc-list-item--disabled) {
+    background: #f6fbff !important;
+  }
+
+  .mdc-list-item__primary-text {
+    color: #1d2939 !important;
+    font-weight: 500 !important;
+  }
+}
+
+.mat-mdc-option:hover:not(.mdc-list-item--disabled),
+.mat-mdc-option:focus.mdc-list-item,
+.mat-mdc-option.mat-mdc-option-active.mdc-list-item,
+.mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
+  background: #f6fbff !important;
+}
+
+/* All Default focus outline remove*/
+:focus-visible {
+  outline: none !important;
+}
+
+/* icon pointer */
+.mat-mdc-form-field-icon-suffix {
+  cursor: pointer;
+}
+
+/* Dropdown multi select checkbox */
+.mat-primary .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-full,
+.mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-full {
+  background: #d3e7fb !important;
+}
+
+.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked,
+.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate {
+  border-color: #0f61b3 !important;
+  border-radius: 4px;
+}
+
+.mat-primary .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-full::after,
+.mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-full::after {
+  color: #0f61b3 !important;
+}
+
+.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after {
+  width: 8px !important;
+  height: 4px !important;
+}
+
+.mat-pseudo-checkbox-full {
+  border: 1px solid !important;
+  color: #d4d5d9 !important;
+}
+
+/* pagination */
+.mat-mdc-paginator-page-size-label {
+  font-size: 14px;
+  color: #1d2939;
+  font-weight: 400;
+}
+
+.mat-mdc-paginator-range-label {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.pagination {
+  padding: 15px 0px;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+/* Ripple effect remove from icon btn */
+.mat-mdc-icon-button {
+  --mat-mdc-button-ripple-color: transparent !important;
+  --mat-mdc-button-persistent-ripple-color: transparent !important;
+}
+
+.mat-mdc-checkbox {
+  --mdc-checkbox-unselected-hover-state-layer-color: transparent !important;
+  --mdc-checkbox-unselected-hover-state-layer-color: transparent !important;
+}
+
+.info-icon {
+  float: right;
+  cursor: pointer;
+  width: 16px !important;
+}
+
+.my-tooltip {
+  white-space: pre-line;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mdc-data-table__header-cell {
+  padding: 0 14px 0 14px !important;
+}
+
+.filter-section{
+  .filter-reset{
+    .refresh {
+      margin-right: 12px;
+      padding: 0px;
+      min-width: 36px;
+      .refresh-icon{
+        padding: 5px;
+        margin: 1px;
+      }
+    }
+  }
+}
+.icon-small{
+  transform: scale(0.8);
+}
+
+.mdc-text-field--disabled{
+  background-color: #F2F4F7;
+}
+
+.mdc-dialog__container{
+  font-family: "Inter", sans-serif;
+}
+
+.mat-drawer-inner-container{
+  border-right: 1px solid #EAECF0;
+}
+
+.d-flex{
+  display: flex;
+}

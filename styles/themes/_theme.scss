@@ -1,0 +1,85 @@
+// @use '@angular/material' as mat;
+// @import '~saturn-datepicker/bundle.css';
+
+// @include mat-core();
+// $mat-primary: (500 : #10355F, contrast: ( 500 : #ffffff ));
+// $mat-accent: (500 : #F47B20, contrast: ( 500 : #ffffff ));
+// $mat-warn: (500 : #C33A32, contrast: ( 500 : #ffffff ));
+
+// $member-care-portal-primary: mat-palette($mat-primary);
+// $member-care-portal-accent: mat-palette($mat-accent);
+// $member-care-portal-warn: mat-palette($mat-warn);
+
+// $member-care-portal-theme: mat-light-theme(
+//   $member-care-portal-primary,
+//   $member-care-portal-accent,
+//   $member-care-portal-warn
+// );
+
+// @include angular-material-theme($member-care-portal-theme);
+
+// $custom-typography: mat-typography-config(
+//   $font-family: 'Roboto, "Helvetica Neue", sans-serif',
+//   $headline: mat-typography-level(32px, 48px, 700),
+//   $body-1: mat-typography-level(14px, 24px, 500)
+// );
+
+// @include mat-base-typography($custom-typography);
+// @include mat-core($custom-typography);
+
+// ************************************************************
+
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$fx-ui-primary: mat.define-palette(mat.$indigo-palette, 500);
+$fx-ui-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+$fx-ui-theme: mat.define-light-theme((
+ color: (
+   primary: $fx-ui-primary,
+   accent: $fx-ui-accent,
+ ),
+ typography: mat.define-typography-config(),
+ density: 0,
+));
+
+@include mat.all-component-themes($fx-ui-theme);
+
+// *****************************************************************
+
+// @import '~@angular/material/theming';
+
+// $member-care-portal-primary: mat-palette($mat-indigo);
+// $member-care-portal-accent: mat-palette($mat-orange);
+// $member-care-portal-warn: mat-palette($mat-red);
+
+// $member-care-portal-theme: mat-light-theme(
+//   $member-care-portal-primary,
+//   $member-care-portal-accent,
+//   $member-care-portal-warn
+// );
+
+// @include angular-material-theme($member-care-portal-theme);
+
+// $custom-typography: mat-typography-config(
+//   $font-family: 'Roboto, "Helvetica Neue", sans-serif',
+//   $headline: mat-typography-level(32px, 48px, 700),
+//   $body-1: mat-typography-level(14px, 24px, 500)
+// );
+
+// @include mat-base-typography($custom-typography);
+// @include mat-typography-level-to-styles($custom-typography); 
+
+// @import '~@angular/material/theming';
+// @import '~saturn-datepicker/bundle.css';
+
+// @include mat-core();
+// $mat-primary: mat-palette($mat-indigo);
+// $mat-accent:  mat-palette($mat-pink, A200, A100, A400);
+// $mat-warn:    mat-palette($mat-red);
+
+// $my-theme: mat-light-theme($mat-primary, $mat-accent, $mat-warn);
+
+// @include angular-material-theme($my-theme);

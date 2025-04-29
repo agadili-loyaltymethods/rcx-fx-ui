@@ -1,0 +1,10 @@
+<button [disabled]="disableButton" class="delete-button" mat-outline-button>
+  <div class="delete-parent">
+    <div>
+      <mat-icon svgIcon="trash-red"></mat-icon>
+    </div>
+    <div class="delete-text">
+      <p><ng-content></ng-content></p>
+    </div>
+  </div>
+</button>

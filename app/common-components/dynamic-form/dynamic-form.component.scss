@@ -1,0 +1,94 @@
+.responsive-table {
+  // .mat-mdc-table {
+  //   height: 500px;
+  //   width: 100%;
+  //   overflow: auto;
+  // }
+  .custom-table {
+    .mat-column-status {
+      border-right: 1px solid var(--gray-200, #eaecf0);
+    }
+    .mat-column-run_id {
+      border-right: 1px solid var(--gray-200, #eaecf0);
+    }
+    .mat-column-duration {
+      border-right: 1px solid var(--gray-200, #eaecf0);
+    }
+
+    .status-width {
+      width: 100px;
+    }
+    .action-width {
+      width: 98px;
+    }
+    .failed-width {
+      width: 60px;
+    }
+    .run-id-width {
+      width: 70px;
+    }
+
+    .mat-column-Integration_Name_Run_Id, .mat-column-Files, .mat-column-Timeframe, .mat-column-Records    {
+      height:20px !important;
+      text-align: center;
+      border-right: 1px solid var(--gray-200, #eaecf0);
+      color: var(--gray-600, #475467);
+      background: var(--gray-25, #FCFCFD);
+    }
+    .mat-column-Records  {
+      border-right: none;
+    }
+    .small-header {
+      height:30px !important;
+    }
+  }
+}
+.disabledField{ pointer-events: none; opacity: 2.0;}
+.input-value-view {
+  color: dimgrey;
+}
+
+.hosting-row {
+  border-left: 4px solid #0f61b3;
+}
+
+.mat-mdc-option[aria-disabled=true].contains-mat-select-search {
+  background-color: #f6fbff;
+}
+
+.preview-button {
+  padding: 9px 14px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  margin-top: 19px;
+  color: #fff;
+  background: #0b4a87;
+  border: 1px solid #0b4a87;
+  cursor: pointer;
+}
+.preview-button:disabled {
+  background-color: #F2F4F7 !important;
+  border: 0px;
+  color: #9AA4B2 !important;
+  cursor: auto;
+}
+
+.dropdown-button-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;  /* Adjust gap between dropdown and button */
+}
+
+.dropdown-button {
+  min-width: 50px;
+  margin-top: -19px;
+}
+
+.quarter-width-box {
+  width: 25%;
+  padding-right: 16px;
+  box-sizing: border-box;
+}
+

@@ -1,0 +1,556 @@
+@use "@angular/material" as mat;
+// @import url(/src/styles/base.scss);
+/* You can add global styles to this file, and also import other style files */
+
+// @import "@angular/material/prebuilt-themes/indigo-pink.css";
+// @import url("https://fonts.googleapis.com/css?family=Inter");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@include mat.core();
+
+@import 'styles/base';
+
+@import url(main.scss);
+$black-87-opacity: rgba(black, 0.87);
+// define a real custom palette (using http://mcg.mbitson.com)
+$bv-brand: (
+  50: #eef5fb,
+  100: #d4e5f5,
+  200: #b7d4ee,
+  300: #9ac2e7,
+  400: #85b5e1,
+  500: #0b4a87,
+  600: #67a0d8,
+  700: #5c97d3,
+  800: #528dce,
+  900: #407dc5,
+  A100: #ffffff,
+  A200: #e3efff,
+  A400: #b0d3ff,
+  A700: #96c4ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$bv-brandlight: (
+  50: #ffffff,
+  100: #ffffff,
+  200: #b7d4ee,
+  300: #9ac2e7,
+  400: #85b5e1,
+  500: #ffffff,
+  600: #67a0d8,
+  700: #5c97d3,
+  800: #528dce,
+  900: #407dc5,
+  A100: #ffffff,
+  A200: #e3efff,
+  A400: #b0d3ff,
+  A700: #96c4ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$bv-orange: (
+  50: #ffffff,
+  100: #fff7f4,
+  200: #fecdbd,
+  300: #fc9977,
+  400: #fc8259,
+  500: #e28a30,
+  600: #fa551d,
+  700: #f44205,
+  800: #d63a04,
+  900: #b83204,
+  A100: #ffffff,
+  A200: #fff7f4,
+  A400: #fc8259,
+  A700: #f44205,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+// mandatory stuff for theming
+$bv-palette-primary: mat.define-palette($bv-brand);
+$bv-palette-accent: mat.define-palette($bv-orange);
+$bv-palette-light: mat.define-palette($bv-brandlight);
+// include the custom theme components into a theme object
+$bv-theme: mat.define-light-theme(
+  $bv-palette-primary,
+  $bv-palette-accent,
+  $bv-palette-light
+);
+
+@include mat.all-component-themes($bv-theme);
+//font-size
+$font-12px: 12px;
+$font-14px: 14px;
+$font-16px: 16px;
+$font-24px: 24px;
+
+//font-weight
+$font-weight-400: 400;
+$font-weight-500: 500;
+$font-weight-600: 600;
+
+$text-primary: #1d2939;
+// Color
+// $text-primary: #1D2939;
+// $text-secondary: ;
+// $text-orange:;
+// $text-red:;
+// $border-color: ;
+// $primary-bg:;
+// $white-bg:;
+
+// include the custom theme object into the
+body {
+  font-family: "Inter", sans-serif !important;
+  font-style: normal;
+  font-weight: $font-weight-600;
+  font-size: 14px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+$my-custom-level: mat.define-typography-level(
+  $font-family: Roboto,
+  $font-weight: 400,
+  $font-size: 1rem,
+  $line-height: 1,
+  $letter-spacing: normal,
+);
+
+.textarea {
+  width: 100%;
+  height: 100px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #1d2939;
+  font-family: inherit;
+  padding: 10px 14px;
+  border: 1px solid #d0d5dd !important;
+  border-radius: 4px;
+  background: #fcfcfd !important;
+  &:focus-visible {
+    outline: 0px;
+  }
+}
+
+// Sets button density scale to `-3`, i.e. button height to `24px`.
+@include mat.private-form-field-density(
+  (
+    density: -4,
+  )
+);
+
+@include mat.table-density(
+  (
+    density: -4,
+  )
+);
+.pointer {
+  cursor: pointer;
+}
+
+// menu icon when active
+.active-list-item {
+  .menu-name {
+    color: #f36c21 !important;
+  }
+  mat-icon {
+    svg {
+      path {
+        stroke: #f36c21;
+      }
+    }
+  }
+}
+
+.mat-toolbar {
+  background: #ffffff !important;
+  border-bottom: 1px solid #EAECF0;
+}
+
+// hint
+.mat-mdc-form-field-hint-wrapper {
+  padding-left: 0px !important;
+  .input-hint {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    color: #1d2939;
+  }
+}
+
+// tab toggle btn with icon color change
+.mat-button-toggle-group {
+  .mat-button-toggle {
+    .mat-button-toggle-label-content {
+      mat-icon {
+        svg {
+          path {
+            stroke: #475467;
+          }
+        }
+      }
+    }
+  }
+  .mat-button-toggle-checked {
+    .mat-button-toggle-label-content {
+      mat-icon {
+        svg {
+          path {
+            stroke: #0f61b3;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .menu-container,
+  .mat-toolbar {
+    max-width: 1920px;
+    margin: 0 auto;
+    border: 1px solid #eaecf0;
+  }
+}
+
+@media screen and (max-width: 1410px) {
+  .panel-open {
+    .one-line{
+      display: block !important;
+    }
+    .right-box{
+      width: 100% !important;
+    }
+  }
+}
+
+/* disable btn */
+.theme-button.active-btn.disable-btn {
+  background: #f2f4f7 !important;
+  color: #9aa4b2 !important;
+}
+
+/* integrate list icon color chage*/
+.button-active {
+  .mat-icon.integratelist-icon {
+    svg {
+      path {
+        stroke: #0f61b3;
+      }
+    }
+  }
+}
+
+// Btn changes
+.theme-button {
+  font-size: 14px !important;
+  font-weight: 600;
+  margin-left: 8px;
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+  &.active-btn {
+    background-color: #0b4a87 !important;
+    color: #ffffff !important;
+  }
+  &.active-btn:disabled {
+    background-color: #F2F4F7 !important;
+    border: 0px;
+    color: #9AA4B2 !important;
+    mat-icon{
+      svg{
+        path{
+          stroke: #9AA4B2 !important;
+        }
+      }
+    }
+  }
+  &.orange-btn {
+    background-color: #f36c21 !important;
+    color: #ffffff !important;
+  }
+  &.orange-btn:disabled{
+    background-color: #F2F4F7 !important;
+    border: 0px;
+    color: #9AA4B2 !important;
+    mat-icon{
+      svg{
+        path{
+          stroke: #9AA4B2 !important;
+        }
+      }
+    }
+  }
+  &.disable {
+    background: #f2f4f7 !important;
+    color: #9aa4b2 !important;
+    mat-icon {
+      svg {
+        path {
+          stroke: #98a2b3;
+        }
+      }
+    }
+  }
+}
+
+.status {
+  height: 25px;
+  border-radius: 5px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  font-size: 12px;
+  font-weight: 500;
+  width: max-content;
+  &-revision {
+    border: 1px solid #f79009;
+    color: #7a2e0e;
+  }
+  &-publishpending {
+    border: 1px solid #f79009;
+    color: #7a2e0e;
+  }
+  &-paused {
+    border: 1px solid #1278DF;
+    color: #062646;
+  }
+  &-published {
+    border: 1px solid #12b76a;
+    color: #054F31;
+  }
+  &-failed {
+    border: 1px solid #f79009;
+    color: #7a2e0e;
+  }
+  &-publishfailed {
+    border: 1px solid #f79009;
+    color: #7a2e0e;
+  }
+  &-succeeded {
+    border: 1px solid #12B76A;
+    color: #054f31;
+  }
+  &-processing {
+    border: 1px solid #1278DF;
+    color: #062646;
+  }
+}
+
+// Table.scss common css for table component
+.responsive-table {
+  width: 100%;
+  overflow: auto;
+  &.vertical-scroll {
+    height: 316px;
+    overflow: auto;
+  }
+  .custom-table {
+    .mat-mdc-row .mat-mdc-cell {
+      border-bottom: solid 1px #EAECF0 !important;
+    }
+   
+    .mdc-data-table__header-cell {
+      border-bottom-color: #EAECF0 !important;
+    }
+    .mdc-data-table__header-row {
+      height: 48px !important;
+      background-color: #f9fafb;
+      border-top: 1px solid #eaecf0;
+      border-bottom: 1px solid #eaecf0;
+    }
+    .mdc-data-table__row {
+      height: auto;
+    }
+    .mat-mdc-row .mat-mdc-cell {
+      padding: 14px 14px;
+    }
+    .one-row-icon {
+      width: 130px;
+      &.one-icon {
+        width: 30px;
+      }
+      .mat-mdc-icon-button {
+        padding: 0px 8px !important;
+        height: auto !important;
+        width: auto !important;
+        top: 2px;
+      }
+    }
+    .text-icon {
+      display: flex;
+      width: 170px;
+      margin-top: 5px;
+      font-weight: 400;
+      .icon-size {
+        height: 14px;
+        width: 14px;
+        margin-right: 3px;
+        position: relative;
+        top: 1px;
+      }
+    }
+    .name-color {
+      cursor: pointer;
+      color: #0b4a87 !important;
+      .hosting-subtext {
+        font-size: 12px;
+        color: #475467;
+      }
+      .copy-icon {
+        margin-left: 8px;
+        .mat-icon {
+          width: 16px;
+          height: 16px;
+          position: relative;
+          top: 2px;
+        }
+      }
+    }
+    .table-header {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1d2939;
+      &.w-180 {
+        width: 180px;
+      }
+    }
+    .table-row {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1d2939;
+      &.active-row {
+        border-left: 4px solid #0f61b3;
+      }
+      .download-icon {
+        height: 16px;
+        width: 16px;
+        padding-left: 5px;
+      }
+    }
+  }
+}
+// Table.scss common css for table component
+
+// Search Box
+.search-box {
+  .mat-mdc-form-field-icon-prefix {
+    padding: 0px;
+    .mat-icon {
+      padding: 9px 7px 9px 12px !important;
+      color: #98a2b3;
+    }
+  }
+  .mat-mdc-form-field-bottom-align::before {
+    height: 0px;
+    display: block;
+  }
+  &.width-370 {
+    width: 370px;
+    max-width: 370px;
+  }
+}
+
+.custom-tooltip .mdc-tooltip__surface {
+  max-width: 300px !important;
+  max-height: 100em !important;
+}
+
+.modal-buttons .right-elements button.primary-btn {
+  min-width: 85px;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.right-elements {
+  .btn {
+    min-width: 85px;
+    font-size: 12px;
+  }
+}
+
+.modal-title {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 32px;
+  color: #1d2939;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0px 0px 0px;
+  .title{
+    width: 344px;
+  }
+  .close-icon {
+    margin-left: 155px;
+    cursor: pointer;
+    .mat-icon {
+      width: 16px;
+    }
+  }
+}
+.delete-container {
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  border: 1px solid #EAECF0;
+  border-top: none;
+  background: #ffffff;
+  border-radius: 0px 0px 4px 4px;
+}

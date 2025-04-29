@@ -1,0 +1,97 @@
+<div class="integration-modal">
+  <div class="modal-title">
+    <div class="title">Create/Edit Alert</div>
+    <div class="close-icon" mat-dialog-close>
+      <mat-icon svgIcon="close"></mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="modal-content">
+    <form
+      *ngIf="formGroup"
+      class="integrationcontainer-wrap"
+      [formGroup]="formGroup">
+      <div class="input-container">
+        <div class="label-container">
+          <label class="input-label">Alert Name *</label>
+        </div>
+        <mat-form-field appearance="outline">
+          <input
+            type="text"
+            formControlName="name"
+            matInput
+            placeholder="Enter Alert Name"
+            value="Alert123" />
+          <mat-error *ngIf="formGroup.get('name').errors?.required">
+            Please enter alert name.
+          </mat-error>
+          <mat-error *ngIf="formGroup.get('name').errors?.maxlength">
+            Alert name can not exceed
+            {{formGroup.get('name').errors?.maxlength.requiredLength}}
+            characters length.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="input-container">
+        <div class="label-container">
+          <label class="input-label">Alert Type *</label>
+        </div>
+        <mat-form-field appearance="outline" class="select-container">
+          <mat-select formControlName="type" placeholder="Select Alert Type">
+            <mat-option
+              *ngFor="let option of handlers.getEnumsByType('AlertType')"
+              [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('type').errors?.required">
+            Please select alert type.
+          </mat-error>
+          <mat-error *ngIf="formGroup.get('type').errors?.maxlength">
+            Alert type cannot exceed
+            {{formGroup.get('type').errors?.maxlength.requiredLength}}
+            characters length.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="input-container">
+        <div class="label-container">
+          <label class="input-label">Notification Email Address *</label>
+        </div>
+        <mat-form-field appearance="outline">
+          <input
+            formControlName="email"
+            type="text"
+            matInput
+            placeholder="Enter notification email address"
+            value="email@gmail.com" />
+          <mat-error
+            *ngIf="formGroup.get('email').errors?.required && formGroup.get('email').touched">
+            Please enter notification email address.
+          </mat-error>
+          <mat-error
+            *ngIf="formGroup.get('email')?.errors && !formGroup.get('email')?.errors?.required">
+            Please enter valid email.
+          </mat-error>
+          <mat-error *ngIf="formGroup.get('email').errors?.maxlength">
+            Email cannot exceed
+            {{formGroup.get('email').errors?.maxlength.requiredLength}}
+            characters length.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div mat-dialog-actions class="modal-buttons">
+    <div class="right-elements">
+      <button class="btn outline-btn" mat-dialog-close>Cancel</button>
+      <button
+        class="btn primary-btn"
+        [disabled]="formGroup.invalid"
+        (click)="onSave()">
+        Ok
+      </button>
+    </div>
+  </div>
+</div>

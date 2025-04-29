@@ -1,0 +1,64 @@
+confirmation-dialog {
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eaecf0;
+  }
+  
+  .integration-modal {
+    padding: 0px 32px;
+    .mat-mdc-dialog-actions {
+      justify-content: flex-end;
+      padding: 10px 0px 24px 0px;
+    }
+    .modal-content {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 24px;
+      color: #1d2939;
+      padding: 20px 0px 0px 0px;
+    }
+    .right-elements {
+      display: flex;
+      .btn {
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 20px;
+        height: 40px;
+        cursor: pointer;
+        &.primary-btn {
+          background-color: #0b4a87;
+          color: #ffffff;
+          border: 1px solid #0b4a87;
+          &:focus-visible {
+            outline: none !important;
+          }
+        }
+        &.primary-btn:disabled {
+          opacity: 0.5;
+        }
+        &.outline-btn {
+          background-color: #ffffff;
+          color: #344054;
+          border: 1px solid #d0d5dd;
+          margin-right: 12px;
+          &.icon {
+            display: flex;
+            align-items: center;
+          }
+          .mat-icon {
+            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+          }
+          &:focus-visible {
+            outline: none !important;
+          }
+        }
+      }
+    }
+    .integrationcontainer-wrap {
+      margin-top: 24px;
+    }
+  }
+  

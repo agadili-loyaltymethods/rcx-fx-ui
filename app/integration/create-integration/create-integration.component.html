@@ -1,0 +1,194 @@
+<div class="integration-create-template">
+  <div class="headerContainer">
+    <div class="left-elements">
+      <div class="left-child">
+        <div class="back-circle">
+          <div
+            class="circle"
+            (click)="navigate()"
+            routerLinkActive="router-link-active">
+            <mat-icon class="back" svgIcon="back">arrow_back</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="right-child">
+        <div class="bread-crum">Integrations</div>
+        <div
+          class="template-label"
+          matTooltip
+          matTooltipClass="custom-tooltip"
+          IsEllipsisActive
+          ellipsisData="{{properties.name}}">
+          {{properties.name}}
+        </div>
+      </div>
+    </div>
+    <div class="right-elements">
+      <button
+        *ngIf="!isView"
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Create Template"
+        (click)="validate()"
+        [disabled]="!formGroup.valid">
+        <mat-icon svgIcon="check-circle"></mat-icon>Validate
+      </button>
+      <button
+        *ngIf="!isView"
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Create Template"
+        (click)="save(false)"
+        [disabled]="!formGroup.valid">
+        <mat-icon svgIcon="save"></mat-icon>Save
+      </button>
+      <button
+        *ngIf="!isView"
+        class="theme-button orange-btn"
+        mat-flat-button
+        aria-label="Create Template"
+        mat-stroked-button
+        (click)="publish()"
+        [disabled]="!formGroup.valid ||!publishPerm || isModified">
+        <mat-icon svgIcon="share"></mat-icon>Publish
+      </button>
+      <button
+        *ngIf="isView && enableButton"
+        [disabled]="!utilsService.checkPerms({FX_Integration: ['update']})"
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Create Template"
+        mat-stroked-button
+        (click)="edit()">
+        <mat-icon svgIcon="edit-white"></mat-icon>Edit
+      </button>
+    </div>
+  </div>
+  <mat-drawer-container class="drawer-container" autosize>
+    <div class="childContainer">
+      <div class="inner-headerContainer">
+        <div class="left-elements">
+          <div class="right-child">
+            <div class="temp-properties-name">Integration Properties</div>
+            <div class="buttonBorder">
+              <div>
+                <p [class]="getClassName()">{{properties.status}}</p>
+              </div>
+            </div>
+            <div *ngIf="!isView" class="buttonBorder">
+              <div>
+                <p [class]="getClassName()">Edit Mode</p>
+              </div>
+            </div>
+            <div *ngIf="isView" class="buttonBorder">
+              <div>
+                <p [class]="getClassName()">View Mode</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-elements" *ngIf="isEdit">
+          <div class="rightText">
+            <div class="updatestatus">
+              <p class="uname">Last Updated By</p>
+            </div>
+            <div class="rightBottomText">
+              <div>
+                <p class="name">{{properties?.updatedBy?.login}}</p>
+              </div>
+              <div>
+                <mat-icon svgIcon="clock-circle"></mat-icon>
+              </div>
+              <div>
+                <p class="date">{{getFormattedDate(properties?.updatedAt)}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-container bottom-radius-none">
+        <div class="left-panel integrate-left-panel">
+          <app-integration-properties-menu
+            [isView]="isView"
+            [onMenuClick]="menuCallback"
+            [properties]="properties"
+            [isvalidForm]="formGroup.valid"
+            (validateForm)="markAsTouched()"></app-integration-properties-menu>
+        </div>
+        <div
+          class="right-panel integrate-right-panel"
+          [ngClass]="{'panel-open': drawer?.opened}">
+          <app-integration-properties
+            [properties]="properties"
+            [handlers]="handlers"
+            [templates]="templates"
+            [partners]="partners"
+            (formStatus)="updateFormGroup($event)"
+            *ngIf="showProperties === 'integration_properties'"></app-integration-properties>
+          <app-alerts-properties
+            (dataChange)="updateMainDataAlerts($event, 'alerts')"
+            [data]="data"
+            [handlers]="handlers"
+            [isView]="isView"
+            *ngIf="showProperties === 'alerts_properties'"></app-alerts-properties>
+          <app-integration-parameters
+            (dataChange)="updateMainParameters($event)"
+            [data]="data"
+            [handlers]="handlers"
+            [isView]="isView"
+            *ngIf="showProperties === 'integration_parameters'"></app-integration-parameters>
+          <app-scheduling-properties
+            [data]="data"
+            [handlers]="handlers"
+            [properties]="properties"
+            (formStatus)="updateFormGroup($event)"
+            *ngIf="showProperties === 'scheduling_properties'"></app-scheduling-properties>
+          <app-response-properties
+            [data]="data"
+            [handlers]="handlers"
+            [properties]="properties"
+            (formStatus)="updateFormGroup($event)"
+            *ngIf="showProperties === 'response_properties'"></app-response-properties>
+          <app-dependencies-properties
+            (dataChange)="updateMainDataDependencies($event)"
+            [data]="data"
+            [handlers]="handlers"
+            [integrations]="integrations"
+            [isView]="isView"
+            *ngIf="showProperties === 'dependencies_properties'"></app-dependencies-properties>
+          <app-error-code-mapping-properties
+            (dataChange)="updateMainDataECM($event)"
+            [data]="data"
+            [handlers]="handlers"
+            [isView]="isView"
+            *ngIf="showProperties === 'error_code_mapping_properties'"></app-error-code-mapping-properties>
+          <app-input-properties
+            [data]="data"
+            [handlers]="handlers"
+            [properties]="properties"
+            (formStatus)="updateFormGroup($event)"
+            *ngIf="showProperties === 'input_properties'"></app-input-properties>
+        </div>
+      </div>
+      <div class="delete-container">
+        <app-delete-button
+          *ngIf="(isEdit || isView) && enableButton"
+          [disableButton]="isPublished || !deletePermission"
+          (click)="deleteIntegration()">
+          Delete Integration</app-delete-button
+        >
+      </div>
+    </div>
+    <mat-drawer
+      #drawer
+      class="drawer-sidenav"
+      mode="side"
+      position="end"
+      (closed)="onDrawerClosed()">
+      <app-error-side-panel
+        [drawer]="drawer"
+        [errors]="errors"></app-error-side-panel>
+    </mat-drawer>
+  </mat-drawer-container>
+</div>

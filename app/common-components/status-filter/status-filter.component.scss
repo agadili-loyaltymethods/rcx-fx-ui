@@ -1,0 +1,64 @@
+.tab-wrap {
+  .mat-button-toggle-label-content {
+    line-height: 38px !important;
+  }
+  .mat-button-toggle-group-appearance-standard {
+    border-radius: 5px;
+    border: none;
+  }
+  .toggles {
+    font-size: 14px;
+    font-weight: 500;
+    color: #475467;
+    line-height: 38px;
+    border: 1px solid #d0d5dd;
+    ::ng-deep {
+      .mat-button-toggle-label-content {
+        line-height: 38px !important;
+      }
+    }
+  }
+  .mat-button-toggle-checked {
+    background-color: #f6fbff !important;
+    border: 1px solid #99c8f7 !important;
+    color: #0f61b3;
+    &:first-child {
+      border-radius: 4px 0px 0px 4px;
+    }
+    &:last-child {
+      border-radius: 0px 4px 4px 0px;
+    }
+    .mat-button-toggle-label-content {
+      color: #0f61b3;
+    }
+  }
+  .mat-button-toggle {
+    &:first-child {
+      border-radius: 4px 0px 0px 4px;
+      border-right: none;
+    }
+    &:last-child {
+      border-radius: 0px 4px 4px 0px;
+      border-left: none;
+    }
+  }
+  .mat-button-toggle-focus-overlay {
+    opacity: 0;
+    background: transparent;
+  }
+
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+    .mdc-notched-outline__leading,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+    .mdc-notched-outline__notch,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+    .mdc-notched-outline__trailing {
+    border-color: #d0d5dd;
+  }
+
+  .mat-button-toggle-label-content {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #475467;
+  }
+}

@@ -1,0 +1,67 @@
+<mat-card class="header-title">
+  <div class="row">
+    <div class="title">Connections</div>
+    <div class="create-button">
+      <button
+        *ngIf="utilsService.checkPerms({FX_Connection: ['create']})"
+        class="theme-button active-btn"
+        (click)="createConnection()"
+        mat-flat-button
+        color="primary"
+        aria-label="Create Template">
+        <mat-icon svgIcon="plus" class="icon-small"></mat-icon>Create New
+      </button>
+    </div>
+  </div>
+</mat-card>
+
+<mat-drawer-container class="panel">
+  <mat-card>
+    <div class="row search-section">
+      <div class="right-elements">
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix svgIcon="magnifier" class="icon-small"></mat-icon>
+          <input
+            matInput
+            type="search"
+            placeholder="Search by Connection Name or Description"
+            (input)="onChange({ input: $event.target.value })"
+            [(ngModel)]="searchValue" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row filter-section">
+      <div class="filter-options">
+        <app-drop-down-with-search
+          *ngFor="let item of cfgOpt | keyvalue: originalOrder"
+          [placeHolder]="item.value.placeholder"
+          [placeHolderSearchBox]="item.value.searchplaceholder"
+          [label]="item.value.label"
+          [multiple]="true"
+          [selectBoxOptions]="config[item.value.label]"
+          [selectedValue]="getSelectedValue(config[item.value.label], item.value.field)"
+          [fieldName]="item.value.field"
+          (valueChange)="onChange($event, item.value.field)">
+        </app-drop-down-with-search>
+      </div>
+      <div class="filter-reset">
+        <button
+          mat-stroked-button
+          *ngIf="refresh"
+          class="refresh"
+          (click)="getRefreshData()">
+          <mat-icon svgIcon="refresh" class="refresh-icon"></mat-icon>
+        </button>
+        <button mat-stroked-button (click)="resetFilters()">
+          Reset Filters
+        </button>
+      </div>
+    </div>
+    <connection-template-list
+      [data]="data"
+      [config]="config"
+      [handler]="getDataHandlers"
+      [requiredData]="requiredData"></connection-template-list>
+    <!-- <router-outlet></router-outlet> -->
+  </mat-card>
+</mat-drawer-container>

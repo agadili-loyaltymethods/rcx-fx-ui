@@ -1,0 +1,92 @@
+<div class="connection-create-template">
+  <div class="headerContainer">
+    <div class="left-elements">
+      <div class="left-child">
+        <div class="back-circle">
+          <div
+            class="circle"
+            [routerLink]="['/connections/list']"
+            routerLinkActive="router-link-active">
+            <mat-icon class="back" svgIcon="back">arrow_back</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="right-child">
+        <div class="bread-crum">Connections</div>
+        <div
+          class="template-label"
+          matTooltip
+          matTooltipClass="custom-tooltip"
+          IsEllipsisActive
+          ellipsisData="{{data.name}}">
+          {{data.name}}
+        </div>
+      </div>
+    </div>
+
+    <div class="right-elements">
+      <button
+        *ngIf="!isView"
+        class="theme-button orange-btn"
+        mat-flat-button
+        aria-label="Edit Template"
+        [disabled]="!formGroup.valid"
+        (click)="test()">
+        <mat-icon svgIcon="test"></mat-icon>Test
+      </button>
+
+      <button
+        *ngIf="!isView"
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Edit Template"
+        [disabled]="!formGroup.valid"
+        (click)="save()">
+        <mat-icon svgIcon="save"></mat-icon>Save
+      </button>
+
+      <button
+        *ngIf="isView"
+        [disabled]="!utilsService.checkPerms({FX_Connection: ['update']})"
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Edit Template"
+        (click)="edit(data)">
+        <mat-icon svgIcon="edit-white"></mat-icon>Edit
+      </button>
+    </div>
+  </div>
+  <mat-drawer-container class="drawer-container" autosize>
+    <div class="childContainer">
+      <div class="inner-headerContainer">
+        <div class="left-elements">
+          <div class="right-child">
+            <div class="temp-properties-name">Connection Details</div>
+          </div>
+        </div>
+      </div>
+      <div class="main-container">
+        <div class="full-width">
+          <app-dynamic-form
+            *ngIf="config"
+            [handlers]="handlers"
+            [data]="data"
+            [config]="config"
+            [requiredData]="enumData"
+            [title]="'Connectiondata'"
+            (formStatus)="updateFormGroup($event)"
+            (isModifiedChanged)="handleIsModifiedChange($event)">
+          </app-dynamic-form>
+        </div>
+      </div>
+      <div class="delete-container">
+        <app-delete-button 
+          (click)="delete(data)" 
+          *ngIf="isEdit || isView"
+          [disableButton]="!deletePermission">
+          Delete Connection</app-delete-button
+        >
+      </div>
+    </div>
+  </mat-drawer-container>
+</div>

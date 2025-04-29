@@ -1,0 +1,76 @@
+<div class="create-partner">
+  <div class="headerContainer">
+    <div class="left-elements">
+      <div class="left-child">
+        <div class="back-circle">
+          <div
+            class="circle"
+            [routerLink]="['/partners']"
+            routerLinkActive="router-link-active">
+            <mat-icon class="back" svgIcon="back">arrow_back</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="right-child">
+        <div class="bread-crum">User for {{partner?.name}}</div>
+        <div class="template-label">{{formGroup.controls['login']?.value}}</div>
+      </div>
+    </div>
+
+    <div class="right-elements">
+      <button
+        *ngIf="!isView"
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Edit Partner"
+        [disabled]="!formGroup.valid"
+        (click)="saveUser()">
+        <mat-icon svgIcon="save"></mat-icon>Save
+      </button>
+    </div>
+  </div>
+
+  <mat-drawer-container class="drawer-container" autosize>
+    <div class="childContainer">
+      <div class="inner-headerContainer">
+        <div class="left-elements">
+          <div class="right-child">
+            <div class="temp-properties-name">User Details</div>
+          </div>
+        </div>
+      </div>
+      <div class="main-container">
+        <div class="full-width">
+          <app-dynamic-form
+            *ngIf="config"
+            [data]="data"
+            [config]="config"
+            [handlers]="handlers"
+            [requiredData]="requiredData"
+            [title]="'userdata'"
+            (formStatus)="updateFormGroup($event)"></app-dynamic-form>
+          <div class="headerContainer">
+            <div class="right-child">
+              <div class="temp-properties-name">User Permissions</div>
+            </div>
+          </div>
+          <app-dynamic-table
+            *ngIf="permissionListViewConfig"
+            [config]="permissionListViewConfig"
+            [data]="permissionConfigData">
+          </app-dynamic-table>
+        </div>
+      </div>
+    </div>
+    <mat-drawer
+      #drawer
+      class="drawer-sidenav"
+      mode="side"
+      position="end"
+      (closed)="onDrawerClosed()">
+      <app-error-side-panel
+        [drawer]="drawer"
+        [errors]="errors"></app-error-side-panel>
+    </mat-drawer>
+  </mat-drawer-container>
+</div>

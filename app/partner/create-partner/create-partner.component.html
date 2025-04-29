@@ -1,0 +1,79 @@
+<div class="create-partner">
+  <div class="headerContainer">
+    <div class="left-elements">
+      <div class="left-child">
+        <div class="back-circle">
+          <div
+            class="circle"
+            [routerLink]="['/partners']"
+            routerLinkActive="router-link-active">
+            <mat-icon class="back" svgIcon="back">arrow_back</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="right-child">
+        <div class="bread-crum">Partners</div>
+        <div
+          class="template-label"
+          matTooltip
+          matTooltipClass="custom-tooltip"
+          IsEllipsisActive
+          ellipsisData="{{formGroup.controls['name']?.value}}">
+          {{formGroup.controls['name']?.value}}
+        </div>
+      </div>
+    </div>
+
+    <div class="right-elements">
+      <button
+        *ngIf="partnerAction === 'edit' || partnerAction === 'create'"
+        class="theme-button active-btn"
+        mat-flat-button
+        aria-label="Edit Partner"
+        [disabled]="!formGroup.valid"
+        (click)="savePartner()">
+        <mat-icon svgIcon="save"></mat-icon>Save
+      </button>
+      <button
+        *ngIf="partnerAction === 'detail'"
+        [disabled]="!utilService.checkPerms({FX_Partner: ['update']})"
+        class="theme-button active-btn" 
+        mat-flat-button
+        aria-label="Edit Partner"
+        (click)="edit(data)">
+        <mat-icon svgIcon="edit-white"></mat-icon>Edit
+      </button>
+    </div>
+  </div>
+
+  <div class="childContainer">
+    <div class="inner-headerContainer">
+      <div class="left-elements">
+        <div class="right-child">
+          <div class="temp-properties-name">Partner Details</div>
+        </div>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="full-width">
+        <app-dynamic-form
+          *ngIf="config"
+          [config]="config"
+          [data]="data"
+          [title]="'Partnerdata'"
+          [requiredData]="enumData"
+          (formStatus)="updateFormGroup($event)"
+          (isModifiedChanged)="handleIsModifiedChange($event)">
+        </app-dynamic-form>
+      </div>
+    </div>
+    <div class="delete-container">
+      <app-delete-button
+        [disableButton]="!deletePermission"
+        (click)="delete(data)"
+        *ngIf="partnerAction ==='detail' || partnerAction === 'edit'"
+        >Delete Partner</app-delete-button
+      >
+    </div>
+  </div>
+</div>

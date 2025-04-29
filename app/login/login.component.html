@@ -1,0 +1,269 @@
+<div fxLayout="row" fxFlexFill *ngIf="!isLoggedIn()">
+  <div fxLayout="row" fxFlex="60" class="welcome-img position-relative">
+    <div
+      fxLayout="column"
+      fxFlexOffset="10"
+      fxLayoutAlign="flex-end start"
+      class="pr-70">
+      <h1
+        class="font-weight-bolder pb-70 mat-display-1"
+        i18n="Welcome|@@Welcome">
+        WELCOME TO FEEDXCHANGE PORTAL
+      </h1>
+    </div>
+    <div class="bg-accent position-absolute bg-color-wrapper"></div>
+  </div>
+  <div fxLayout="column" fxFlex="40" fxLayoutAlign="center center">
+    <div>
+      <div fxLayout="column" fxFlex="350px" fxLayoutGap="40px">
+        <div fxLayoutAlign="center center">
+          <img
+            fxFlexAlign="center"
+            title="ReactorCX FeedX Portal"
+            src="assets/images/reactor_cx_logo.png" />
+        </div>
+        <div fxFlex *ngIf="showForm==='Login'">
+          <mat-error
+            *ngIf="errorMessage"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            class="mb-20">
+            <small class="mdi mdi-information-outline mdi-18px mr-5"></small>
+            <small>{{errorMessage}}</small>
+          </mat-error>
+          <form
+            fxLayout="column"
+            *ngIf="loginForm"
+            [formGroup]="loginForm"
+            (ngSubmit)="onLoginSubmit()"
+            fxLayoutGap="10px"
+            novalidate>
+            <div fxLayout="column" fxLayoutGap="10px">
+              <mat-form-field
+                floatLabel="never"
+                class="form-field-border mat-form-field rounded-5">
+                <input
+                  matInput
+                  placeholder="Username"
+                  i18n-placeholder="Username!@@username"
+                  formControlName="username" />
+                <mat-error
+                  *ngIf="loginForm?.get('username').errors"
+                  i18n="Username Error|@@usernameError"
+                  >Username is required</mat-error
+                >
+              </mat-form-field>
+              <mat-form-field
+                floatLabel="never"
+                class="form-field-border mat-form-field rounded-5">
+                <input
+                  matInput
+                  type="password"
+                  placeholder="Password"
+                  id="password"
+                  formControlName="password"
+                  i18n-placeholder="User Password!@@userPassword" />
+                <mat-error
+                  *ngIf="loginForm.get('password').errors"
+                  i18n="Password Error|@@passwordError"
+                  >Password is required</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+              <button
+                type="submit"
+                mat-raised-button
+                color="primary"
+                class="btn-lg"
+                [disabled]="!loginForm.valid"
+                fxLayout="row"
+                fxLayoutAlign="center center">
+                <span class="mdi mdi-login-variant mdi-18px"></span>
+                <span
+                  fxFlexOffset="5px"
+                  class="text-uppercase"
+                  i18n="Login|loginButton"
+                  >Login</span
+                >
+              </button>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-checkbox
+                color="primary"
+                i18n="Remember Login|@@rememberLoginLink"
+                >Remember Login
+              </mat-checkbox>
+              <a
+                mat-button
+                disableRipple="true"
+                color="primary"
+                class="no-btn-space"
+                (click)="forgotPassword()"
+                i18n="Forgot Password Link|@@forgotPasswordLink"
+                >Forgot Password?</a
+              >
+            </div>
+          </form>
+        </div>
+        <div *ngIf="showForm==='ForgotPassword'">
+          <mat-error
+            *ngIf="errorMessage"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            class="mb-20">
+            <small class="mdi mdi-information-outline mdi-18px mr-5"></small>
+            <small>{{errorMessage}}</small>
+          </mat-error>
+          <div
+            *ngIf="infoMessage"
+            class="mat-info text-accent p-5 mb-20"
+            fxLayout="row"
+            fxLayoutAlign="start start">
+            <span class="mdi mdi-alert mdi-24px mr-10"></span>
+            <span>{{infoMessage}}</span>
+          </div>
+          <form
+            *ngIf="!infoMessage"
+            fxLayout="column"
+            (ngSubmit)="resetPassword()"
+            [formGroup]="forgotPasswordForm"
+            fxLayoutGap="10px"
+            novalidate>
+            <div fxLayout="column" fxLayoutGap="10px">
+              <mat-form-field
+                floatLabel="never"
+                class="form-field-border rounded-5">
+                <input
+                  matInput
+                  placeholder="Enter UserID"
+                  formControlName="userID"
+                  i18n-placeholder="Forgot Password User ID Input@@forgotUserIDInput" />
+                <mat-error
+                  *ngIf="forgotPasswordForm.get('userID').errors"
+                  i18n="User ID Error|@@userIDError"
+                  >Please enter valid User ID
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+              <button
+                type="submit"
+                mat-raised-button
+                color="primary"
+                class="btn-lg"
+                fxLayout="row"
+                fxLayoutAlign="center center"
+                [disabled]="!forgotPasswordForm.valid">
+                <span class="mdi mdi-lock-reset mdi-18px"></span>
+                <span
+                  fxFlexOffset="5px"
+                  class="text-uppercase"
+                  i18n="User Reset Password Button|@@userResetPasswordBtn"
+                  >Reset Password</span
+                >
+              </button>
+            </div>
+          </form>
+          <div
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+            class="mt-10">
+            <a
+              mat-button
+              disableRipple="true"
+              color="primary"
+              class="no-btn-space"
+              (click)="goToLogin()"
+              i18n="Back to Login Link|@@backtoLoginLink"
+              >Back to Login</a
+            >
+            <a
+              mat-button
+              disableRipple="true"
+              color="primary"
+              class="no-btn-space"
+              (click)="forgotUser()"
+              i18n="Forgot User Link|@@forgotUserLink"
+              >Forgot User</a
+            >
+          </div>
+        </div>
+        <div *ngIf="showForm==='ForgotUser'">
+          <mat-error
+            *ngIf="errorMessage"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            class="mb-20">
+            <small class="mdi mdi-information-outline mdi-18px mr-5"></small>
+            <small>{{errorMessage}}</small>
+          </mat-error>
+          <div
+            *ngIf="infoMessage"
+            class="mat-info text-accent p-5 mb-20"
+            fxLayout="row"
+            fxLayoutAlign="start start">
+            <span class="mdi mdi-alert mdi-24px mr-10"></span>
+            <span>{{infoMessage}}</span>
+          </div>
+          <form
+            *ngIf="!infoMessage"
+            fxLayout="column"
+            (ngSubmit)="getUserId()"
+            [formGroup]="forgotUserForm"
+            fxLayoutGap="10px"
+            novalidate>
+            <div fxLayout="column" fxLayoutGap="10px">
+              <mat-form-field
+                floatLabel="never"
+                class="form-field-border rounded-5">
+                <input
+                  matInput
+                  placeholder="Enter Email"
+                  formControlName="email"
+                  i18n-placeholder="Enter Email|@@enterEmail" />
+                <mat-error
+                  *ngIf="forgotUserForm.get('email').errors"
+                  i18n="Enter Email|@@emailError">
+                  Please enter valid User ID
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+              <button
+                type="submit"
+                mat-raised-button
+                color="primary"
+                class="btn-lg"
+                fxLayout="row"
+                fxLayoutAlign="center center"
+                [disabled]="!forgotUserForm.valid">
+                <span class="mdi mdi-lock-reset mdi-18px"></span>
+                <span
+                  fxFlexOffset="5px"
+                  class="text-uppercase"
+                  i18n="Send User ID Button|@@sendUserIDBtn"
+                  >Send User ID</span
+                >
+              </button>
+            </div>
+          </form>
+          <div
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+            class="mt-10">
+            <a
+              mat-button
+              disableRipple="true"
+              color="primary"
+              class="no-btn-space"
+              (click)="goToLogin()"
+              i18n="Back to Login Button|@@backToLoginButton"
+              >Back to Login</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

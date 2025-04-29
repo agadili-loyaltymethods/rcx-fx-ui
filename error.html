@@ -1,0 +1,10 @@
+<html>
+  <body>
+    <h3 id="error" style="text-align: center">Unknown error</h3>
+    <script lang="javascript">
+      let error = localStorage.getItem('oktaError');
+      localStorage.removeItem('oktaError');
+      document.getElementById('error').innerHTML = error;
+    </script>
+  </body>
+</html>

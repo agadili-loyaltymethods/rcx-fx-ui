@@ -1,0 +1,119 @@
+<div class="button-left-container">
+  <button
+    mat-button-outline
+    [ngClass]="{
+      'leftsingle-btn-active':
+        this.activeFieldDetails.activeFileName === 'Template Properties'
+    }"
+    class="template-properties"
+    (click)="activeTemplateProperties()">
+    <mat-icon matPrefix svgIcon="file"></mat-icon>
+    <mat-label class="label-child">Template Properties</mat-label>
+  </button>
+</div>
+<div class="search-left-container">
+  <div class="search-container">
+    <div class="search-input-container">
+      <mat-form-field appearance="outline">
+        <mat-icon matPrefix svgIcon="magnifier" class="icon-small"></mat-icon>
+        <input
+          matInput
+          type="search"
+          placeholder="Search"
+          [(ngModel)]="searchTerm"
+          (input)="applySearch()" />
+      </mat-form-field>
+    </div>
+    <div class="allexpand-container">
+      <mat-icon
+        [svgIcon]="isTreeExpanded ? 'collapse-all' : 'expand-all'"
+        (click)="toggleAllNodes()"></mat-icon>
+    </div>
+  </div>
+</div>
+<div class="tree-container">
+  <mat-tree
+    [dataSource]="dataSource"
+    [treeControl]="treeControl"
+    cdkDropList
+    cdkDropListOrientation="vertical"
+    (cdkDropListDropped)="drop($event)">
+    <mat-nested-tree-node
+      *matTreeNodeDef="let node; let index; when: hasChildren"
+      [matTreeNodePadding]
+      matTreeNodeToggle>
+      <li
+        class="wrap-tree-container"
+        *ngIf="canShowNode(node) && shouldShowNode(node)">
+        <div
+          class="mat-tree-node template-properties-node"
+          (click)="onNodeClick(node)"
+          matTreeNodeToggle
+          [matTreeNodeToggleRecursive]="recursive"
+          cdkDragHandleDisabled="!node.isLeafNode"
+          cdkDrag
+          [cdkDragData]="node"
+          [cdkDragDisabled]="isView || !node?.isLeafNode || node.item === 'Add'"
+          cdkDragBoundary=".width"
+          [ngClass]="{
+            'field-btn': node?.isLeafNode,
+            'button-active': canButtonActive(node),
+            'child-active': canChildActive(node),
+            'add-btn': node.item === 'Add'
+          }">
+          <div class="expand-button-left-group">
+            <div class="expand-button">
+              <button
+                mat-icon-button
+                [attr.aria-label]="'toggle ' + node?.filename"
+                cdkDragHandle
+                (click)="preventMoveIconClick($event, node)">
+                <mat-icon
+                  class="maticon-container"
+                  *ngIf="node?.isLeafNode"
+                  svgIcon="Vector"></mat-icon>
+                <mat-icon *ngIf="!node?.isLeafNode">
+                  {{ node.item === "Add" ? "add" : treeControl.isExpanded(node)
+                  ? node.item !== "File Properties" ? "expand_more" : "" :
+                  node.item !== "File Properties" ? "chevron_right" : "" }}
+                </mat-icon>
+              </button>
+            </div>
+            <div
+              class="expand-title"
+              [ngClass]="{ 'field-title': node?.isLeafNode }"
+              IsEllipsisActive
+              matTooltip
+              matTooltipClass="custom-tooltip"
+              ellipsisMaxLength="{{toolTip?.ellipsis?.ellipsisMaxLength}}"
+              ellipsisData="{{getNodeName(node)}}">
+              {{ getNodeName(node) }}
+            </div>
+          </div>
+          <div
+            *ngIf="!isView && node?.isLeafNode"
+            class="expand-right-button-group">
+            <div class="expand-copy-button" (click)="duplicate(node)">
+              <mat-icon
+                [matTooltip]="toolTip && toolTip.copyfield"
+                svgIcon="copy"></mat-icon>
+            </div>
+            <div class="expand-delete-button">
+              <mat-icon
+                [matTooltip]="toolTip && toolTip.deletefield"
+                svgIcon="trash"
+                (click)="removeField(node)"></mat-icon>
+            </div>
+          </div>
+        </div>
+        <ul
+          class="wrap-tree-nested-node"
+          [ngClass]="{'left-border-none': node.item === 'Header' || node.item === 'Body'}">
+          <div *ngIf="treeControl.isExpanded(node)" class="width">
+            <ng-container matTreeNodeOutlet></ng-container>
+          </div>
+        </ul>
+      </li>
+    </mat-nested-tree-node>
+  </mat-tree>
+</div>
