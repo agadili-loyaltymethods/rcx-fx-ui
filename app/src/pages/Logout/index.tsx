@@ -16,12 +16,7 @@ const Logout = () => {
   }, [logoutUser, navigate]);
 
   return (
-    <div style={{ 
-      height: '100vh', 
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center' 
-    }}>
+    <div className="h-screen flex items-center justify-center">
       Logging out...
     </div>
   );

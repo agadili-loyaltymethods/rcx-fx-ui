@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../context/AuthContext';
-import styles from './Header.module.css';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -12,12 +11,15 @@ const Header = () => {
   };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.logo}>
-        <img src="/assets/logo.svg" alt="Logo" />
+    <header className="flex items-center justify-between px-8 py-4 bg-white shadow-md">
+      <div className="h-10">
+        <img src="/assets/logo.svg" alt="Logo" className="h-full" />
       </div>
-      <div className={styles.actions}>
-        <button onClick={handleLogout} className={styles.logoutButton}>
+      <div className="flex items-center gap-4">
+        <button 
+          onClick={handleLogout} 
+          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition-colors"
+        >
           Logout
         </button>
       </div>

@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import { useDrawer } from '../../services/drawer/useDrawer';
-import styles from './Sidebar.module.css';
 
 const navigation = [
   { path: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
@@ -15,29 +14,31 @@ const Sidebar = () => {
   const { isDrawerOpen, setDrawerState } = useDrawer();
 
   return (
-    <nav className={`${styles.sidebar} ${isDrawerOpen ? styles.open : ''}`}>
+    <nav className={`bg-primary text-white transition-all duration-300 ${isDrawerOpen ? 'w-64' : 'w-16'} relative`}>
       <button 
-        className={styles.toggleButton}
+        className="absolute -right-3 top-5 w-6 h-6 rounded-full bg-white shadow-md flex items-center justify-center"
         onClick={() => setDrawerState(!isDrawerOpen)}
       >
         {isDrawerOpen ? '←' : '→'}
       </button>
       
-      <div className={styles.links}>
+      <div className="p-4 flex flex-col gap-2">
         {navigation.map((item) => (
           <NavLink
             key={item.path}
             to={item.path}
             className={({ isActive }) => 
-              `${styles.link} ${isActive ? styles.active : ''}`
+              `flex items-center p-3 rounded transition-colors ${isActive ? 'bg-white/20' : 'hover:bg-white/10'}`
             }
           >
             <img 
               src={`/assets/icons/${item.icon}.svg`} 
               alt={item.label} 
-              className={styles.icon} 
+              className="w-5 h-5 mr-3" 
             />
-            <span className={styles.label}>{item.label}</span>
+            <span className={`whitespace-nowrap transition-opacity ${isDrawerOpen ? 'opacity-100' : 'opacity-0 w-0'}`}>
+              {item.label}
+            </span>
           </NavLink>
         ))}
       </div>
