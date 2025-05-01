@@ -11,9 +11,11 @@ const Dashboard = () => {
   }, [isLoggedIn]);
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-      <p>Welcome to your dashboard!</p>
+    <div className="p-8">
+      <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {/* Dashboard content */}
+      </div>
     </div>
   );
 };
