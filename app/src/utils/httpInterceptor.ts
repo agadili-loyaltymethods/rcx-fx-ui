@@ -1,4 +1,11 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+// import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { getAppConfig } from '@/services/configService';
+import axios from 'axios';
+type AxiosInstance = ReturnType<typeof axios.create>;
+// type AxiosRequestConfig = Parameters<typeof axios.request>[0];
+// type AxiosResponse = ReturnType<typeof axios.get>;
+
+const { config } = getAppConfig() || {};
 
 export class HttpInterceptor {
   private static instance: AxiosInstance;
@@ -6,7 +13,12 @@ export class HttpInterceptor {
 
   static getInstance(): AxiosInstance {
     if (!this.instance) {
-      this.instance = axios.create();
+      this.instance = axios.create({
+        baseURL: config?.REST_URL,
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+      });
       this.setupInterceptors();
     }
     return this.instance;
@@ -14,7 +26,7 @@ export class HttpInterceptor {
 
   private static setupInterceptors() {
     this.instance.interceptors.request.use(
-      (config: AxiosRequestConfig) => {
+      (config: any) => {
         this.pendingRequests++;
         if (this.pendingRequests === 1) {
           // Trigger loading state
@@ -42,7 +54,7 @@ export class HttpInterceptor {
     );
 
     this.instance.interceptors.response.use(
-      (response: AxiosResponse) => {
+      (response: any) => {
         this.handleRequestCompletion();
         return response;
       },

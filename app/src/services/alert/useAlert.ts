@@ -1,52 +1,123 @@
-import { useCallback } from 'react';
-import { SnackbarProvider, useSnackbar } from 'notistack';
+import { useState } from 'react';
+
+interface SnackbarRef {
+  close: () => void;
+}
+
+interface AlertOptions {
+  horizontalPosition?: 'center' | 'left' | 'right';
+  verticalPosition?: 'top' | 'bottom';
+  duration?: number;
+}
 
 export const useAlert = () => {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [snackbarRef, setSnackbarRef] = useState<SnackbarRef | null>(null);
 
-  const successAlert = useCallback((message: string, action?: string, duration?: number) => {
-    return enqueueSnackbar(message, {
-      variant: 'success',
-      anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
-      autoHideDuration: duration || 1500,
-      action: action || 'Dismiss',
-    });
-  }, [enqueueSnackbar]);
+  /**
+   * Display a success alert message
+   * @param message The message to display
+   * @param action Optional action text (defaults to "Dismiss")
+   * @param duration Optional duration in milliseconds (defaults to 1500ms)
+   * @returns The snackbar reference
+   */
+  const successAlert = (
+    message: string,
+    action: string = 'Dismiss',
+    duration: number = 1500
+  ): SnackbarRef => {
+    // In a real implementation, this would use a UI library like Material-UI's Snackbar
+    console.log(`SUCCESS: ${message}`);
+    
+    const ref = {
+      close: () => {
+        console.log('Closing success alert');
+        setSnackbarRef(null);
+      }
+    };
+    
+    setSnackbarRef(ref);
+    
+    if (duration) {
+      setTimeout(() => {
+        ref.close();
+      }, duration);
+    }
+    
+    return ref;
+  };
 
-  const errorAlert = useCallback((message: string, action?: string, duration?: number) => {
-    return enqueueSnackbar(message, {
-      variant: 'error',
-      anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
-      autoHideDuration: duration || null,
-      action: action || 'Dismiss',
-    });
-  }, [enqueueSnackbar]);
+  /**
+   * Display an error alert message
+   * @param message The message to display
+   * @param action Optional action text (defaults to "Dismiss")
+   * @param duration Optional duration in milliseconds (defaults to 0 - no auto-dismiss)
+   * @returns The snackbar reference
+   */
+  const errorAlert = (
+    message: string,
+    action: string = 'Dismiss',
+    duration?: number
+  ): SnackbarRef => {
+    // In a real implementation, this would use a UI library like Material-UI's Snackbar
+    console.log(`ERROR: ${message}`);
+    
+    const ref = {
+      close: () => {
+        console.log('Closing error alert');
+        setSnackbarRef(null);
+      }
+    };
+    
+    setSnackbarRef(ref);
+    
+    if (duration) {
+      setTimeout(() => {
+        ref.close();
+      }, duration);
+    }
+    
+    return ref;
+  };
 
-  const infoAlert = useCallback((message: string, action?: string) => {
-    return enqueueSnackbar(message, {
-      variant: 'info',
-      anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
-      action: action || 'Dismiss',
-    });
-  }, [enqueueSnackbar]);
+  /**
+   * Display an info alert message
+   * @param message The message to display
+   * @param action Optional action text (defaults to "Dismiss")
+   * @returns The snackbar reference
+   */
+  const infoAlert = (
+    message: string,
+    action: string = 'Dismiss'
+  ): SnackbarRef => {
+    // In a real implementation, this would use a UI library like Material-UI's Snackbar
+    console.log(`INFO: ${message}`);
+    
+    const ref = {
+      close: () => {
+        console.log('Closing info alert');
+        setSnackbarRef(null);
+      }
+    };
+    
+    setSnackbarRef(ref);
+    
+    return ref;
+  };
 
-  const closeAlert = useCallback(() => {
-    closeSnackbar();
-  }, [closeSnackbar]);
+  /**
+   * Close the currently displayed alert
+   */
+  const closeAlert = (): void => {
+    if (snackbarRef) {
+      snackbarRef.close();
+    }
+  };
 
   return {
     successAlert,
     errorAlert,
     infoAlert,
     closeAlert,
+    snackbarRef
   };
-};
-
-// Wrap your app with this provider
-export const AlertProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return (
-    <SnackbarProvider maxSnack={3}>
-      {children}
-    </SnackbarProvider>
-  );
 };

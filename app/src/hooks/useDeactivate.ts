@@ -7,7 +7,7 @@ export interface CanComponentDeactivate {
 
 export const useDeactivate = (component: CanComponentDeactivate) => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const location: any = useLocation();
 
   const handleBeforeUnload = useCallback(async (e: BeforeUnloadEvent) => {
     const finalUrl = location.pathname;

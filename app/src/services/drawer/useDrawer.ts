@@ -5,9 +5,9 @@ interface DrawerStore {
   setDrawerState: (isOpen: boolean) => void;
 }
 
-export const useDrawerStore = create<DrawerStore>((set) => ({
+export const useDrawerStore = create<DrawerStore>((set: any) => ({
   isDrawerOpen: false,
-  setDrawerState: (isOpen) => set({ isDrawerOpen: isOpen }),
+  setDrawerState: (isOpen: any) => set({ isDrawerOpen: isOpen }),
 }));
 
 export const useDrawer = () => {

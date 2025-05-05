@@ -1,10 +1,10 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
-import Layout from '../components/Layout';
-import Login from '../pages/Login';
-import Logout from '../pages/Logout';
-import Dashboard from '../pages/Dashboard';
-import NotFound from '../pages/NotFound';
+import Dashboard from '@/pages/Dashboard';
+import Login from '@/pages/Login';
+import Logout from '@/pages/Logout';
+import Layout from '@/components/Layout';
+import NotFound from '@/pages/NotFound';
 
 const AppRoutes = () => {
   const { isLoggedIn } = useAuthContext();

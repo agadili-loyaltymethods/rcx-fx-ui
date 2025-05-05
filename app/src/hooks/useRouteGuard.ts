@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
-import { useUtils } from './useUtils';
+import { useUtils } from '@/services/utils/useUtils';
 
 export const useRouteGuard = () => {
   const { isLoggedIn, pathPermissionMap } = useAuthContext();

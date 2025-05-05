@@ -1,8 +1,11 @@
 import { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { API_CONFIG } from '../../config/api.config';
-import { LoginModel } from '../../models/login.model';
+import { LoginModel } from '@/models/login-model';
+import { getAppConfig } from '../configService';
+import axiosInstance from '../http/axiosInstance';
+// import { API_CONFIG } from '../../config/api.config';
+// import { LoginModel } from '../../models/login.model';
 
 interface UserPermissions {
   [key: string]: {
@@ -62,19 +65,21 @@ export const useAuth = () => {
     orgName: '',
     serverInfo: undefined,
   });
+  const { config } = getAppConfig();
 
   const getToken = useCallback(() => {
     return sessionStorage.getItem('token');
   }, []);
 
   const loginUser = useCallback(async (user: LoginModel) => {
-    const response = await axios.post<LoginModel>(`${API_CONFIG.REST_URL}/login`, user);
+    const response: any = await axiosInstance.post<LoginModel>(`${config.REST_URL}/login`, user);
+    localStorage.setItem('token',response.data?.token)
     return response.data;
   }, []);
 
   const fetchUserPermissions = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseUrl}acl/permissions`);
+      const response: any = await axiosInstance.get(`${config.RC_REST_URL}acl/permissions`);
       const permissions = response.data?.permissions || {};
       setState(prev => ({ ...prev, permissions }));
       return permissions;
@@ -88,8 +93,8 @@ export const useAuth = () => {
 
   const setUser = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseUrl}myaccount`);
-      const user = response.data || {};
+      const response = await axiosInstance.get(`${config.RC_REST_URL}myaccount`);
+      const user: any = response.data || {};
       const userDetails = {
         login: user.login,
         email: user.email,
@@ -154,7 +159,7 @@ export const useAuth = () => {
     }
 
     try {
-      const response = await axios.get(`${API_CONFIG.baseUrl}logout`);
+      const response = await axios.get(`${config.RC_REST_URL}logout`);
       sessionStorage.removeItem('token');
       goToLogin(response.data);
     } catch (error) {
@@ -164,7 +169,7 @@ export const useAuth = () => {
   }, [isLoggedIn, goToLogin]);
 
   const fetchServerInfo = useCallback(async () => {
-    const response = await axios.get(`${API_CONFIG.REST_URL}/serverinfo`);
+    const response = await axiosInstance.get(`${config.REST_URL}/serverinfo`);
     const serverInfo = response.data;
     setState(prev => ({ ...prev, serverInfo }));
     return serverInfo;
@@ -178,12 +183,12 @@ export const useAuth = () => {
   }, [state.serverInfo, fetchServerInfo]);
 
   const resetPassword = useCallback(async (params: any) => {
-    const response = await axios.post(`${API_CONFIG.REST_URL}/reset-password?client=fxui`, params);
+    const response = await axiosInstance.post(`${config.REST_URL}/reset-password?client=fxui`, params);
     return response.data;
   }, []);
 
   const sendUserId = useCallback(async (params: any) => {
-    const response = await axios.post(`${API_CONFIG.REST_URL}/send-userid?locale=en`, params);
+    const response = await axiosInstance.post(`${config.REST_URL}/send-userid?locale=en`, params);
     return response.data;
   }, []);
 

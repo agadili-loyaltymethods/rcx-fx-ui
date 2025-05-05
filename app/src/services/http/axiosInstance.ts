@@ -1,23 +1,27 @@
 import axios from 'axios';
-import { API_CONFIG, DEFAULT_HEADERS } from '../../config/api.config';
+// import { API_CONFIG, DEFAULT_HEADERS } from '../../config/api.config';
 import { useLoaderStore } from '../loader/useLoader';
 import { useAlert } from '../alert/useAlert';
+import { getAppConfig, loadAppConfig } from '../configService';
 
 let pendingRequests = 0;
-
+await loadAppConfig();
+const { config: configValue } = getAppConfig() || {};
 const axiosInstance = axios.create({
-  baseURL: API_CONFIG.baseUrl,
-  headers: DEFAULT_HEADERS,
+  baseURL: configValue?.REST_URL,
+  headers: {
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
+  },
 });
 
 axiosInstance.interceptors.request.use(
-  (config) => {
+  (config: any) => {
     pendingRequests++;
     if (pendingRequests === 1) {
       useLoaderStore.getState().setIsLoading(true);
     }
 
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
