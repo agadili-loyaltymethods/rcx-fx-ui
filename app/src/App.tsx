@@ -1,4 +1,3 @@
-
 import React, { createContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
@@ -6,6 +5,7 @@ import { useRef } from 'react';
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import Connections from './pages/connections';
 
 export const App: React.FC = () => {
   const isAuthenticated$ = useSelector((state: any) => state.auth?.isAuthenticated);
@@ -19,6 +19,7 @@ export const App: React.FC = () => {
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/connections/*" element={<Connections />} />
           {/* <Route path="/purchase" element={<Purchase />} />
           <Route path="/rewards" element={<Rewards />} />
           <Route path="/purchase-history" element={<PurchaseHistory />} />
@@ -32,24 +33,3 @@ export const App: React.FC = () => {
     </>
   );
 };
-
-
-
-// import { BrowserRouter } from 'react-router-dom';
-// import { AuthProvider } from './context/AuthContext';
-// import AppRoutes from './routes';
-// import { AlertProvider } from './components/Alert';
-
-// function App() {
-//   return (
-//     <BrowserRouter>
-//       <AuthProvider>
-//         <AlertProvider>
-//           <AppRoutes />
-//         </AlertProvider>
-//       </AuthProvider>
-//     </BrowserRouter>
-//   );
-// }
-
-// export default App;

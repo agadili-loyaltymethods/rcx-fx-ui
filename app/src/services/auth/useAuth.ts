@@ -1,11 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { LoginModel } from '@/models/login-model';
+import { LoginModel } from '../../models/login.model';
 import { getAppConfig } from '../configService';
 import axiosInstance from '../http/axiosInstance';
-// import { API_CONFIG } from '../../config/api.config';
-// import { LoginModel } from '../../models/login.model';
 
 interface UserPermissions {
   [key: string]: {

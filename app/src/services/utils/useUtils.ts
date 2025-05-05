@@ -289,9 +289,10 @@ export const useUtils = () => {
 
   const onChange = useCallback((_self: any, options: any, updateData = true) => {
     if (!options || typeof options !== 'object') {
-      return;
+      return; 
     }
     const { input, fieldName } = options;
+
     _self.config.filters['searchValue'] = _self.searchValue;
     addFiletrs(input, fieldName, _self.config);
     
@@ -317,16 +318,15 @@ export const useUtils = () => {
   }, []);
 
   const filterData = useCallback((data: any[], cfg: any) => {
-    const cfgStartDate = cfg.startDate || cfg.filters.startDate;
+        const cfgStartDate = cfg.startDate || cfg.filters.startDate;
     const cfgEndDate = cfg.endDate || cfg.filters.endDate;
-    
     if (cfgStartDate && cfgEndDate) {
       const dateRangeFilter = data.filter((row) => {
         const startTime = new Date(row.startTime).getTime();
         const endTime = row.endTime ? new Date(row.endTime).getTime() : null;
         const startDate = new Date(cfgStartDate).getTime();
         const endDate = new Date(cfgEndDate).getTime();
-        
+
         if (
           (endTime && endTime <= endDate &&
             startTime >= startDate &&
@@ -334,7 +334,6 @@ export const useUtils = () => {
           (!endTime && startTime >= startDate && startTime < endDate)
         )
           return row;
-        return false;
       });
       data = dateRangeFilter;
     }
