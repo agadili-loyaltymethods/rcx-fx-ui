@@ -1,0 +1,32 @@
+# Ignore asset/config folders
+assets/**
+environments/**
+styles/**
+styles.scss
+main.scss
+main.ts
+stub.html
+error.html
+
+# Ignore Angular app folders
+app/common-components/**
+app/connections/**
+app/core/**
+app/dashboard/**
+app/integration/**
+app/login/**
+app/logout/**
+app/models/**
+app/partner/**
+app/reset-password/**
+app/run-history/**
+app/sidebar/**
+app/templates/**
+app/toolbar/**
+app/user-profile/**
+
+# Ignore app root files
+app/app-routing.module.ts
+app/app.component.*
+app/app.material.module.ts
+app/app.module.ts
