@@ -5,7 +5,7 @@ import { store } from './redux/store';
 import { AppConfigProvider } from './AppConfig';
 import { loadAppConfig } from './services/configService';
 import { App } from './App';
-import '@/index.css';
+// import '@/index.css';
 
 await loadAppConfig();
 
