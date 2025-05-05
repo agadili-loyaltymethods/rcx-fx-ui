@@ -30,3 +30,29 @@ app/app-routing.module.ts
 app/app.component.*
 app/app.material.module.ts
 app/app.module.ts
+
+# Ignore node modules and package lock
+node_modules
+package-lock.json
+
+# Ignore Bolt and Git config
+.bolt
+.git
+.gitignore
+
+# Ignore environment files
+.env*
+!.env.development
+
+# Ignore build output (if using dist or build folder)
+dist
+build
+
+# Ignore test and coverage outputs
+coverage
+*.test.*
+*.spec.*
+
+# Ignore log files
+*.log
+
