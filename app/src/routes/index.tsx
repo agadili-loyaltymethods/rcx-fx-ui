@@ -3,8 +3,10 @@ import { useAuthContext } from '../context/AuthContext';
 import Dashboard from '@/pages/Dashboard';
 import Login from '@/pages/Login';
 import Logout from '@/pages/Logout';
+import ResetPassword from '@/pages/ResetPassword';
 import Layout from '@/components/Layout';
 import NotFound from '@/pages/NotFound';
+import Connections from '@/pages/connections';
 
 const AppRoutes = () => {
   const { isLoggedIn } = useAuthContext();
@@ -13,6 +15,7 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/login" element={!isLoggedIn() ? <Login /> : <Navigate to="/" />} />
       <Route path="/logout" element={<Logout />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       
       <Route element={<Layout />}>
         <Route path="/" element={
@@ -23,6 +26,11 @@ const AppRoutes = () => {
         <Route path="/dashboard" element={
           <RequireAuth>
             <Dashboard />
+          </RequireAuth>
+        } />
+        <Route path="/connections/*" element={
+          <RequireAuth>
+            <Connections />
           </RequireAuth>
         } />
       </Route>
