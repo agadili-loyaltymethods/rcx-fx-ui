@@ -108,7 +108,7 @@ const Dashboard: React.FC = () => {
         },
       });
 
-      const fetchedTotalData = response.data;
+      const fetchedTotalData:any = response.data;
       setTotalData(fetchedTotalData);
 
       const newRunsCount = {
