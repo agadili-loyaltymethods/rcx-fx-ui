@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
-import { useAlert } from '@/hooks/useAlert';
+import { useAlert } from '@/services/alert/useAlert';
 import StatusCards from './StatusCards';
 import IntegrationOperationsChart from './IntegrationOperationsChart';
 import { sharedConstants } from '@/shared';
