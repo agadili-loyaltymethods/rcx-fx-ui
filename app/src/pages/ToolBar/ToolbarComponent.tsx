@@ -1,4 +1,3 @@
-// ToolbarComponent.tsx
 import React from 'react';
 
 interface ToolbarProps {
