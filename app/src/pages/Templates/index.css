@@ -166,3 +166,247 @@ confirmation-dialog {
       padding-left: 0px !important;
     }
   }
+
+  .right-panel-main-content {
+    padding: 14px 14px;
+  }
+  
+  .right-panel-main-content .one-line {
+    display: flex;
+    width: 100%;
+  }
+  
+  .right-panel-main-content .one-line .left-box {
+    width: 30%;
+  }
+  
+  .right-panel-main-content .one-line .middle-box {
+    width: 35%;
+  }
+  
+  .right-panel-main-content .one-line .end-box {
+    width: 35%;
+  }
+  
+  .right-panel-main-content .one-line .right-box {
+    width: 70%;
+  }
+  
+  @media screen and (max-width: 1410px) {
+    .right-panel-main-content .one-line .middle-box {
+      width: 31% !important;
+    }
+  
+    .right-panel-main-content .one-line .end-box {
+      width: 39% !important;
+    }
+  
+    .right-panel-main-content .one-line .end-box .input-container {
+      padding-right: 0px !important;
+      padding-left: 0px !important;
+    }
+  }
+
+  /* TemplateGridComponent.css */
+.card-container {
+  margin: 24px 0px;
+}
+
+.card-container .mat-icon {
+  height: 28px;
+  width: 24px;
+}
+
+.card-container .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-container .title {
+  font-weight: bold;
+}
+
+.card-container button {
+  margin-left: auto;
+}
+
+.card-container .mat-mdc-card {
+  width: calc(31.68%);
+  height: calc(33.33% - 10px);
+  margin-bottom: 20px;
+  padding: 10px 10px 0px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.card-container .mat-mdc-card:hover {
+  border: 1px solid #99c8f7;
+}
+
+.card-container .status-button {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 5px;
+  text-align: center;
+  padding: 10px 10px;
+  height: auto;
+}
+
+.card-container .status-button-Published {
+  border: 1px solid #054f31;
+  color: #054f31;
+}
+
+.card-container .status-button-Revision {
+  border: 1px solid #f79009;
+  color: #7a2e0e;
+}
+
+.card-container .content {
+  height: 150px;
+}
+
+.card-container .mat-mdc-card-header {
+  display: block;
+  padding: 0px;
+}
+
+.card-container button {
+  margin-left: 15px;
+}
+
+.card-container .template-name {
+  margin: 0px 15px;
+  line-height: 25px;
+  color: #0b4a87;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  word-wrap: break-word;
+}
+
+.card-container .timing {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  color: #667085;
+  display: flex;
+  align-items: center;
+}
+
+.card-container .timing .mat-icon {
+  height: 14px;
+  width: 14px;
+}
+
+.card-container .timing .clock-style {
+  position: relative;
+  top: 2px;
+  margin-right: 5px;
+}
+
+.card-container .divider {
+  margin-top: 16px;
+  margin-left: 14px;
+  margin-right: 14px;
+  border-top: 1px solid #eaecf0;
+}
+
+.card-container .divider-second {
+  margin-top: 10px;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.card-container .row {
+  margin-top: 10px;
+  white-space: nowrap;
+}
+
+.card-container .textStyle {
+  font-size: 12px;
+  font-weight: 700;
+  color: #475467;
+}
+
+.card-container .textStyleDetail {
+  font-size: 13px;
+}
+
+.card-container .description {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #1d2939;
+  margin-top: 16px;
+}
+
+.card-container .one-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.card-container .one-row .info-wraper {
+  margin-right: 30px;
+}
+
+.card-container .one-row .info-wraper .info-title {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 18px;
+  color: #475467;
+  margin-bottom: 3px;
+}
+
+.card-container .one-row .info-wraper .info-value {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1d2939;
+}
+
+.card-container .updated {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #475467;
+  margin: 10px 0px 5px 0px;
+}
+
+.card-container .updated span {
+  color: #1d2939;
+}
+
+.card-container .card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.card-container .paginator-container {
+  align-items: center;
+}
+
+.card-container .page-number {
+  margin: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.card-container .pagination {
+  width: 100%;
+}
+
+.grid-menu {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1d2939;
+}
+
+.grid-menu .mat-icon {
+  width: 20px;
+}
