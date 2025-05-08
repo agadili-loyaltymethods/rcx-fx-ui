@@ -1,9 +1,13 @@
 import { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { LoginModel } from '../../models/login.model';
+import { LoginModel } from '@/models/login-model';
 import { getAppConfig } from '../configService';
 import axiosInstance from '../http/axiosInstance';
+import { setAuthenticated } from '@/redux/slices/authSlice';
+import { useDispatch } from 'react-redux';
+// import { API_CONFIG } from '../../config/api.config';
+// import { LoginModel } from '../../models/login.model';
 
 interface UserPermissions {
   [key: string]: {
@@ -56,6 +60,7 @@ export const pathPermissionMap = {
 
 export const useAuth = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [state, setState] = useState<AuthState>({
     user: {},
     permissions: {},
@@ -71,7 +76,8 @@ export const useAuth = () => {
 
   const loginUser = useCallback(async (user: LoginModel) => {
     const response: any = await axiosInstance.post<LoginModel>(`${config.REST_URL}/login`, user);
-    localStorage.setItem('token',response.data?.token)
+    localStorage.setItem('token',response.data?.token);
+    dispatch(setAuthenticated({token: response.data?.token}));
     return response.data;
   }, []);
 

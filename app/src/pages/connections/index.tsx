@@ -1,18 +1,14 @@
+// pages/connections/index.tsx
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import ConnectionsTable from './ConnectionsTable';
-import ConnectionCreateTemplate from './ConnectionCreateTemplate';
-import ConnectionDetail from './ConnectionDetail';
+import { Outlet } from 'react-router-dom';
 
 const Connections: React.FC = () => {
   return (
-    <Routes>
-      <Route path="/" element={<ConnectionsTable />} />
-      <Route path="/list" element={<ConnectionsTable />} />
-      <Route path="/create" element={<ConnectionCreateTemplate />} />
-      <Route path="/edit/:id" element={<ConnectionCreateTemplate />} />
-      <Route path="/detail/:id" element={<ConnectionDetail />} />
-    </Routes>
+    <div className="connections-container">
+      <h1 className="text-2xl font-bold mb-4">Connections</h1>
+      {/* The Outlet will render the nested routes */}
+      <Outlet />
+    </div>
   );
 };
 

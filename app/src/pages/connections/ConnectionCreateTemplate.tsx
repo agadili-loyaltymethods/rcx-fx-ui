@@ -14,9 +14,9 @@ import { DynamicForm, DeleteButton, ErrorSidePanel } from '../../components/comm
 import { useConnectionUtils } from '../../services/connection-utils/useConnectionUtils';
 import { useConnections } from '../../services/connections/useConnections';
 import { useAlert } from '../../services/alert/useAlert';
-import { useDialog } from '../../services/dialog/useDialog';
 import { useUtils } from '../../services/utils/useUtils';
 import { Connection } from '../../models/connection';
+import { useDialog } from '@/components/Dialog/useDialog';
 
 interface FormGroup {
   controls: {
@@ -51,7 +51,7 @@ const ConnectionCreateTemplate: React.FC = () => {
   const drawerRef = useRef<any>(null);
   
   const { successAlert, errorAlert } = useAlert();
-  const { openDialog } = useDialog();
+  const { open } = useDialog();
   const { checkPerms, parseError } = useUtils();
   const { getConnections, postConnections, connectionsValidate } = useConnections();
   const { navigate: navigateBack } = useConnectionUtils();
@@ -256,7 +256,7 @@ const ConnectionCreateTemplate: React.FC = () => {
       const testResult = await connectionsValidate(formData);
       
       if (testResult) {
-        openDialog({
+        open({
           schema: 'Connection Established',
           message: 'Test Successful',
           disableCancelButton: true,
@@ -279,7 +279,7 @@ const ConnectionCreateTemplate: React.FC = () => {
         }));
       }
       
-      openDialog({
+      open({
         schema: 'Connection Failed',
         disableCancelButton: true,
         confirmButton: 'Ok',
@@ -296,7 +296,7 @@ const ConnectionCreateTemplate: React.FC = () => {
   const deleteConnection = () => {
     if (!deletePermission) return;
     
-    openDialog({
+    open({
       schema: 'Delete Connection',
       content: `Are you sure that you want to delete <strong>${data.name}</strong>?`,
       confirmButton: 'Yes, Delete',

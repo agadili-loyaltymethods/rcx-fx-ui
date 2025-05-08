@@ -5,16 +5,19 @@ import { store } from './redux/store';
 import { AppConfigProvider } from './AppConfig';
 import { loadAppConfig } from './services/configService';
 import { App } from './App';
-import './index.css';
+import '@/index.css';
+import { BrowserRouter } from 'react-router-dom';
 
 await loadAppConfig();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
+  <BrowserRouter>
   <AppConfigProvider>
     <Provider store={store}>
-      <React.StrictMode>
-        <App />
+      <React.StrictMode>      
+        <App />        
       </React.StrictMode>
     </Provider>
   </AppConfigProvider>
+  </BrowserRouter>
 );

@@ -1,35 +1,25 @@
-import React, { createContext, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { useRef } from 'react';
-import NotFound from './pages/NotFound';
-import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
-import Connections from './pages/connections';
+
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import AppLayout from './components/AppLayout/AppLayout';
 
 export const App: React.FC = () => {
+  // const location = useLocation();
+  const navigate = useNavigate();
   const isAuthenticated$ = useSelector((state: any) => state.auth?.isAuthenticated);
+  const isLoggedInUser = !!localStorage.getItem("token");
+  useEffect(() => {
+    if (!isLoggedInUser && !isAuthenticated$ && location.pathname !== '/login') {
+      navigate('/login');
+    }
+  }, [isLoggedInUser, isAuthenticated$, navigate])
 
   return (
     <>
-    <Router>
-      {/* {isAuthenticated$ && <Header />} */}
       <main className={isAuthenticated$ ? 'adjust-header-height' : ''}>
-        <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/connections/*" element={<Connections />} />
-          {/* <Route path="/purchase" element={<Purchase />} />
-          <Route path="/rewards" element={<Rewards />} />
-          <Route path="/purchase-history" element={<PurchaseHistory />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/purchase-confirmation" element={<PurchaseConfirmation />} /> */}
-          <Route path="/page-not-found" element={<NotFound />} />
-          <Route path="*" element={<Navigate to="/page-not-found" replace />} />
-        </Routes>
+        <AppLayout></AppLayout>
       </main>
-      </Router>
     </>
   );
 };

@@ -1,7 +1,10 @@
 import { useCallback } from 'react';
 import axiosInstance from '../http/axiosInstance';
+// import { API_CONFIG } from '../../config/api.config';
+// import { getAppConfig } from '../configService';
 
 export const useConnections = () => {
+//   const { config } = getAppConfig();
   const getConnections = useCallback(async (type: string, params: any) => {
     const response = await axiosInstance.get(`${type}connections`, { params });
     return response.data;

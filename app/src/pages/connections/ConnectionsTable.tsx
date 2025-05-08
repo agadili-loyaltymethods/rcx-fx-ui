@@ -1,193 +1,123 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Typography, 
-  Button, 
-  Card, 
-  CardContent,
-  TextField,
-  InputAdornment,
-  Drawer
-} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import SearchIcon from '@mui/icons-material/Search';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import { useNavigate } from 'react-router-dom';
-import { DropDownWithSearch } from '../../components/common';
-import ConnectionList from './ConnectionList';
+import { Dialog } from '@mui/material';
+import { MdAdd, MdSearch, MdRefresh } from 'react-icons/md';
 import { useUtils } from '../../services/utils/useUtils';
 import { useConnections } from '../../services/connections/useConnections';
+import { usePartners } from '../../services/partners/usePartners';
+import { usePrograms } from '../../services/programs/usePrograms';
+import { useAuth } from '../../services/auth/useAuth';
 import { useAlert } from '../../services/alert/useAlert';
-import { useDialog } from '../../services/dialog/useDialog';
+import { useDialog } from '@/components/Dialog/useDialog';
+import { firstValueFrom } from 'rxjs';
+import DynamicTable from '@/components/common/DynamicTable/DynamicTable';
+import DropDownWithSearch from '@/components/common/DropDownWithSearch/DropDownWithSearch';
+import { useUiConfig } from '@/services/ui-config/useUiConfig';
+import ConfirmationDialog from '@/components/common/ConfirmationDialog/ConfirmationDialog';
+import { sharedConstants } from '@/constants/shared-constants';
+
+interface Options {
+  id: string;
+  name: string;
+}
 
 const ConnectionsTable: React.FC = () => {
+  // State variables
   const [data, setData] = useState<any[]>([]);
   const [config, setConfig] = useState<any>({});
   const [cfgOpt, setCfgOpt] = useState<any>({});
   const [dataCollection, setDataCollection] = useState<any[]>([]);
   const [searchValue, setSearchValue] = useState('');
+  const [selectedData, setSelectedData] = useState<any[]>([]);
+  const [inputFieldValue, setInputFieldValue] = useState<any[]>([]);
+  const [requiredData, setRequiredData] = useState<any>({ selectedData: [] });
   const [refresh, setRefresh] = useState(false);
-  const [requiredData, setRequiredData] = useState<any>({});
-  const [partnerNameOptions, setPartnerNameOptions] = useState<any[]>([]);
-  const [connectionTypeOptions, setConnectionTypeOptions] = useState<any[]>([]);
-  const [connectionNameOptions, setConnectionNameOptions] = useState<any[]>([]);
-  const [lastUpdatedByOptions, setLastUpdatedByOptions] = useState<any[]>([]);
-  const [connectionTestOptions] = useState<any[]>([
+  const [errors, setErrors] = useState<any[]>([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogData, setDialogData] = useState<any>(null);
+
+  // Dropdown options
+  const [partnerNameOptions, setPartnerNameOptions] = useState<Options[]>([]);
+  const [connectionTypeOptions, setConnectionTypeOptions] = useState<Options[]>([]);
+  const [connectionNameOptions, setConnectionNameOptions] = useState<Options[]>([]);
+  const [lastUpdatedByOptions, setLastUpdatedByOptions] = useState<Options[]>([]);
+  const [connectionTestOptions] = useState<Options[]>([
     { id: '1', name: 'Valid' },
     { id: '2', name: 'Invalid' }
   ]);
-  
+
+  // Hooks
   const navigate = useNavigate();
-  const { checkPerms, onChange, resetFilters, filterListData } = useUtils();
-  const { getConnections, connectionsValidate } = useConnections();
+  const { checkPerms, filterListData } = useUtils();
+  const { getConnections, deleteConnections, connectionsValidate } = useConnections();
+  const { getPartners } = usePartners();
+  const { getEnums } = usePrograms();
+  const { getUser } = useAuth();
   const { successAlert, errorAlert } = useAlert();
-  const { openDialog } = useDialog();
-  
+  const { getListViewConfig } = useUiConfig();
+  const { open } = useDialog();
+
+  // Constants
   const pageName = 'connections';
 
+  // Data handlers
+  const getDataHandlers = {
+    delete: (row: any) => deleteHandler(row),
+    edit: (row: any) => editHandler(row),
+    test: (row: any) => testHandler(row)
+  };
+
+  // Initialize component
   useEffect(() => {
-    // Initialize config
-    const initConfig = async () => {
-      // In a real implementation, this would fetch from a config service
-      setConfig({
-        data: [
-          {
-            name: 'name',
-            label: 'Connection Name',
-            type: 'text',
-            routerLink: '/connections/detail'
-          },
-          {
-            name: 'partner.name',
-            label: 'Partner',
-            type: 'text'
-          },
-          {
-            name: 'connectionType',
-            label: 'Connection Type',
-            type: 'text'
-          },
-          {
-            name: 'tested',
-            label: 'Test Status',
-            type: 'boolean'
-          },
-          {
-            name: 'encAndComp',
-            label: 'Encryption/Compression',
-            type: 'text'
-          },
-          {
-            name: 'updatedBy.login',
-            label: 'Last Updated By',
-            type: 'text'
-          },
-          {
-            name: 'updatedAt',
-            label: 'Last Updated',
-            type: 'date',
-            pipe: 'dateTimeFormat'
-          },
-          {
-            name: 'actions',
-            label: 'Actions',
-            type: 'actions'
+    const initComponent = async () => {
+      try {
+        // Get config
+        const connectionsConfig = await getListViewConfig('connections') || {};
+        let integrationsConfig = await getListViewConfig('integrations') || {};
+        
+        // Process integrations config
+        integrationsConfig.data = (integrationsConfig.data || []).filter((i: any) => {
+          if (i.modifySource) {
+            i.source = 'connections';
           }
-        ],
-        actions: [
-          {
-            name: 'Edit',
-            iconname: 'edit',
-            clickHandler: 'edit'
-          },
-          {
-            name: 'Test',
-            iconname: 'check_circle',
-            clickHandler: 'test'
-          },
-          {
-            name: 'Delete',
-            iconname: 'delete',
-            clickHandler: 'delete'
+          if (!i?.displayPages) {
+            return true;
+          } else {
+            return i.displayPages.includes("connections");
           }
-        ],
-        filterOptions: {
-          partner: {
-            placeholder: 'Partner',
-            searchplaceholder: 'Search Partner',
-            label: 'Partner',
-            field: 'partner'
-          },
-          connectionType: {
-            placeholder: 'Connection Type',
-            searchplaceholder: 'Search Connection Type',
-            label: 'Connection Type',
-            field: 'connectionType'
-          },
-          connectionName: {
-            placeholder: 'Connection Name',
-            searchplaceholder: 'Search Connection Name',
-            label: 'Connection Name',
-            field: 'name'
-          },
-          connectionTest: {
-            placeholder: 'Connection Test Status',
-            searchplaceholder: 'Search Connection Test Status',
-            label: 'Connection Test Status',
-            field: 'tested'
-          },
-          lastUpdatedBy: {
-            placeholder: 'Last Updated By',
-            searchplaceholder: 'Search Last Updated By',
-            label: 'Last Updated By',
-            field: 'updatedBy'
-          }
-        },
-        filters: {}
-      });
-      
-      setCfgOpt({
-        partner: {
-          placeholder: 'Partner',
-          searchplaceholder: 'Search Partner',
-          label: 'Partner',
-          field: 'partner'
-        },
-        connectionType: {
-          placeholder: 'Connection Type',
-          searchplaceholder: 'Search Connection Type',
-          label: 'Connection Type',
-          field: 'connectionType'
-        },
-        connectionName: {
-          placeholder: 'Connection Name',
-          searchplaceholder: 'Search Connection Name',
-          label: 'Connection Name',
-          field: 'name'
-        },
-        connectionTest: {
-          placeholder: 'Connection Test Status',
-          searchplaceholder: 'Search Connection Test Status',
-          label: 'Connection Test Status',
-          field: 'tested'
-        },
-        lastUpdatedBy: {
-          placeholder: 'Last Updated By',
-          searchplaceholder: 'Search Last Updated By',
-          label: 'Last Updated By',
-          field: 'updatedBy'
-        }
-      });
-      
-      setRefresh(true);
+        });
+        
+        // Set config
+        const fullConfig = {
+          ...connectionsConfig,
+          integrations: integrationsConfig,
+          filters: {}
+        };
+        
+        setConfig(fullConfig);
+        setCfgOpt(connectionsConfig.filterOptions || {});
+        setRefresh(connectionsConfig?.refresh ?? false);
+        
+        // Get data
+        await getData();
+        setRequiredData({ selectedData: selectedData || [] });
+      } catch (error) {
+        console.error('Failed to initialize ConnectionsTable', error);
+        errorAlert('Failed to initialize connections table');
+      }
     };
-    
-    initConfig();
-    getData();
+
+    initComponent();
   }, []);
 
+  // Data fetching methods
   const getData = async () => {
-    await getFilterData();
-    await getListData();
+    try {
+      await getFilterData();
+      await getListData();
+    } catch (error) {
+      console.error('Error getting data', error);
+    }
   };
 
   const getRefreshData = async () => {
@@ -196,71 +126,58 @@ const ConnectionsTable: React.FC = () => {
 
   const getFilterData = async () => {
     try {
-      // This would fetch enum data from an API
-      // For now, we'll just set some dummy data
-      const connectionTypes = [
-        { name: 'S3', id: 's3' },
-        { name: 'SFTP', id: 'sftp' }
-      ];
+      // Get connection types from enums
+      const enumsQuery = {
+        query: JSON.stringify({
+          type: 'ConnectionType',
+          lang: 'en',
+        }),
+        select: 'label,value',
+      };
       
-      setConnectionTypeOptions(connectionTypes);
-      config['Connection Type'] = connectionTypes;
-      config['Connection Test Status'] = connectionTestOptions;
+      const configCopy = { ...config };
+      configCopy['Connection Test Status'] = connectionTestOptions;
       
-      // This would fetch partners from an API
-      const partners = [
-        { name: 'Partner 1', id: '1' },
-        { name: 'Partner 2', id: '2' }
-      ];
+      const enums = await getEnums(enumsQuery);
+      getDropDownEnums(enums);
       
-      setPartnerNameOptions(partners.map(p => ({ name: p.name, id: p.id })));
-      config['Partner'] = partnerNameOptions;
+      // Get partners
+      const partners = await getPartners({});
+      getPartnerNameOptions(partners);
+      
+      setConfig(configCopy);
     } catch (err: any) {
-      errorAlert(err.errorMessage || 'Something went wrong. Please try again later.');
+      errorAlert(err.errorMessage || sharedConstants.defaultErrorMessage);
     }
   };
 
   const getListData = async () => {
     try {
-      // This would fetch connections from an API
-      // For now, we'll just set some dummy data
-      const s3Data = [
-        { 
-          _id: '1', 
-          name: 'S3 Connection 1', 
-          connectionType: 'S3',
-          partner: { name: 'Partner 1', _id: '1' },
-          tested: true,
-          encryptionEnabled: true,
-          compressionEnabled: false,
-          updatedBy: { login: 'user1', _id: 'u1' },
-          updatedAt: new Date().toISOString(),
-          createdAt: new Date().toISOString()
-        }
-      ];
+      const userDetail = await getUser();
+      const partner = userDetail?.partner || '';
       
-      const sftpData = [
-        { 
-          _id: '2', 
-          name: 'SFTP Connection 1', 
-          connectionType: 'SFTP',
-          partner: { name: 'Partner 2', _id: '2' },
-          tested: false,
-          encryptionEnabled: false,
-          compressionEnabled: true,
-          updatedBy: { login: 'user2', _id: 'u2' },
-          updatedAt: new Date().toISOString(),
-          createdAt: new Date().toISOString()
-        }
-      ];
+      const partnerQuery: any = {
+        populate: JSON.stringify([
+          { path: 'partner', select: 'name' },
+          { path: 'updatedBy', select: 'login' },
+        ]),
+      };
+      
+      if (partner) {
+        partnerQuery.query = JSON.stringify({ partner });
+      }
+      
+      // Get connections data
+      const s3Data = await getConnections('s3', partnerQuery);
+      const sftpData = await getConnections('sftp', partnerQuery);
       
       const combinedData = [...s3Data, ...sftpData];
       
-      // Add encryption/compression status
-      combinedData.forEach(connection => {
-        connection.encAndComp = 
-          (connection.encryptionEnabled ? 'Y' : 'N') + 
-          '/' + 
+      // Process data for display
+      combinedData.forEach((connection) => {
+        connection.encAndComp =
+          (connection.encryptionEnabled ? 'Y' : 'N') +
+          '/' +
           (connection.compressionEnabled ? 'Y' : 'N');
       });
       
@@ -270,80 +187,202 @@ const ConnectionsTable: React.FC = () => {
       getConnectionNameOptions(combinedData);
       getUpdatedByOptions(combinedData);
       
-      // Apply any existing filters
-      filterListData({ 
-        data: combinedData, 
-        dataCollection: combinedData, 
-        config, 
-        pageName 
+      filterListData({
+        data: combinedData,
+        dataCollection: combinedData,
+        config,
+        searchValue,
+        inputFieldValue,
+        pageName
       });
     } catch (err: any) {
-      errorAlert(err.errorMessage || 'Something went wrong. Please try again later.');
+      errorAlert(err.errorMessage || sharedConstants.defaultErrorMessage);
     }
   };
 
-  const getConnectionNameOptions = (connections: any[]) => {
-    const options: any[] = [];
+  // Options processing methods
+  const getPartnerNameOptions = (partners: any[]) => {
+    const options = partners.map((p) => ({ name: p.name, id: p._id }));
+    setPartnerNameOptions(options);
     
-    for (const connection of connections) {
-      const connectionNames = options.map(opt => opt.name);
-      const uniqueNames = new Set(connectionNames);
-      
-      if (!uniqueNames.has(connection.name)) {
-        options.push({
-          name: connection.name,
-          id: connection._id
-        });
-      }
-    }
-    
-    setConnectionNameOptions(options);
-    config['Connection Name'] = options;
+    const configCopy = { ...config };
+    configCopy['Partner'] = options;
+    setConfig(configCopy);
   };
 
-  const getUpdatedByOptions = (connections: any[]) => {
-    const options: any[] = [];
+  const getDropDownEnums = (enums: any[]) => {
+    const options = enums.map((e)=> ({ name: e.value, id: e._id }));
+    setConnectionTypeOptions(options);
     
-    for (const connection of connections) {
-      const updatedByNames = options.map(opt => opt.name);
-      const uniqueNames = new Set(updatedByNames);
+    const configCopy = { ...config };
+    configCopy['Connection Type'] = options;
+    setConfig(configCopy);
+  };
+
+  const getUpdatedByOptions = (data: any[]) => {
+    const options: Options[] = [];
+    
+    for (const item of data) {
+      const updatedByArray = options.map((obj) => obj.name);
+      const uniqueUpdatedBySet = new Set(updatedByArray);
+      const uniqueUpdatedByArray = Array.from(uniqueUpdatedBySet);
       
-      if (connection.updatedBy?.login && !uniqueNames.has(connection.updatedBy.login)) {
+      if (item.updatedBy?.login && !uniqueUpdatedByArray.includes(item.updatedBy?.login)) {
         options.push({
-          name: connection.updatedBy.login,
-          id: connection.updatedBy._id
+          name: item.updatedBy?.login,
+          id: item.updatedBy?._id,
         });
       }
     }
     
     setLastUpdatedByOptions(options);
-    config['Last Updated By'] = options;
+    
+    const configCopy = { ...config };
+    configCopy['Last Updated By'] = options;
+    setConfig(configCopy);
   };
 
+  const getConnectionNameOptions = (data: any[]) => {
+    const options: Options[] = [];
+    
+    for (const item of data) {
+      const connectionNameArray = options.map((obj) => obj.name);
+      const connectionNameSet = new Set(connectionNameArray);
+      const uniqueConnectionNameArray = Array.from(connectionNameSet);
+      
+      if (item.name && !uniqueConnectionNameArray.includes(item.name)) {
+        options.push({
+          name: item.name,
+          id: item._id,
+        });
+      }
+    }
+    
+    setConnectionNameOptions(options);
+    
+    const configCopy = { ...config };
+    configCopy['Connection Name'] = options;
+    setConfig(configCopy);
+  };
+
+  // Action handlers
+  const editHandler = (row: any) => {
+    navigate(`/connections/edit/${row._id}`, { state: row });
+  };
+
+  const deleteHandler = (row: any) => {
+    setDialogData({
+      data: row,
+      schema: 'Delete Connection',
+      content: `Are you sure that you want to delete <strong>${row.name}</strong>?`,
+      confirmButton: 'Yes, Delete',
+      cancelButton: 'No',
+    });
+    setDialogOpen(true);
+  };
+
+  const confirmationDialog = async (row: any) => {
+    try {
+      await deleteConnections(row);
+      successAlert('Connection deleted successfully');
+      getListData();
+    } catch (err: any) {
+      errorAlert(err.errorMessage || 'Cannot delete connection');
+    }
+    setDialogOpen(false);
+  };
+
+  const testHandler = async (row: any) => {
+    try {
+      let dataCopy: any = JSON.stringify(row);
+      const formData = new FormData();
+      formData.append('data', dataCopy);
+      
+      let data = await connectionsValidate(formData);
+      
+      if (data) {
+        open({
+          type: 'successDialog',
+          schema: 'Connection Established',
+          message: 'Test Successful',
+          disableCancelButton: true,
+          confirmButton: 'Ok',
+        });
+      }
+    } catch (err: any) {
+      let error: any = '';
+      const errorMessage = err.errorMessage || sharedConstants.defaultErrorMessage;
+      
+      if (err.errorCode === 1508) {
+        const errKeys = Object.keys(err.errors || {});
+        error = errKeys.map((key) => ({
+          key: key,
+          value: err.errors[key]
+        }));
+      }
+      
+      open({
+        schema: 'Connection Failed',
+        disableCancelButton: true,
+        confirmButton: 'Ok',
+        content: error || errorMessage,
+        type: error ? 'errorDialog' : undefined
+      });
+    }
+    
+    await getListData();
+  };
+
+  // UI event handlers
   const createConnection = () => {
     navigate('/connections/create');
   };
 
   const handleChange = (options: any) => {
-    onChange({
-      config,
+    const newConfig = { ...config };
+    
+    if (options.input !== undefined) {
+      setSearchValue(options.input);
+    }
+    
+    if (options.field && options.value) {
+      if (!newConfig.filters[options.field]) {
+        newConfig.filters[options.field] = [];
+      }
+      
+      if (options.value.length > 0) {
+        newConfig.filters[options.field] = options.value;
+      } else {
+        delete newConfig.filters[options.field];
+      }
+      
+      setConfig(newConfig);
+    }
+    
+    filterListData({
       data,
       dataCollection,
-      searchValue,
-      pageName
-    }, options);
-  };
-
-  const handleResetFilters = () => {
-    resetFilters({
-      searchValue: '',
-      inputFieldValue: [],
-      config,
-      data: dataCollection,
+      config: newConfig,
+      searchValue: options.input !== undefined ? options.input : searchValue,
+      inputFieldValue,
       pageName
     });
-    
+  };
+
+  const resetFilters = () => {
+    const newConfig = { ...config };
+    newConfig.filters = {};
+    setConfig(newConfig);
     setSearchValue('');
+    
+    filterListData({
+      data: dataCollection,
+      dataCollection,
+      config: newConfig,
+      searchValue: '',
+      inputFieldValue: [],
+      pageName
+    });
   };
 
   const getSelectedValue = (list: any[] = [], fieldName: string) => {
@@ -351,165 +390,118 @@ const ConnectionsTable: React.FC = () => {
     return list.filter((l: any) => filters.includes(l.name));
   };
 
-  const getDataHandler = {
-    delete: (row: any) => {
-      openDialog({
-        schema: 'Delete Connection',
-        content: `Are you sure that you want to delete <strong>${row.name}</strong>?`,
-        confirmButton: 'Yes, Delete',
-        cancelButton: 'No',
-        onConfirm: async () => {
-          try {
-            // This would delete the connection
-            // await deleteConnections(row);
-            successAlert('Connection deleted successfully');
-            getListData();
-          } catch (err: any) {
-            errorAlert(err.errorMessage || 'Cannot delete connection');
-          }
-        }
-      });
-    },
-    edit: (row: any) => {
-      navigate(`/connections/edit/${row._id}`, { state: row });
-    },
-    test: async (row: any) => {
-      try {
-        const formData = new FormData();
-        formData.append('data', JSON.stringify(row));
-        
-        const data = await connectionsValidate(formData);
-        
-        if (data) {
-          openDialog({
-            schema: 'Connection Established',
-            message: 'Test Successful',
-            disableCancelButton: true,
-            confirmButton: 'Ok',
-            type: 'successDialog'
-          });
-        }
-      } catch (err: any) {
-        let error: any = '';
-        const errorMessage = err.errorMessage || 'Something went wrong. Please try again later.';
-        
-        if (err.errorCode === 1508) {
-          const errKeys = Object.keys(err.errors || {});
-          error = errKeys.map(key => ({
-            key,
-            value: err.errors[key]
-          }));
-        }
-        
-        openDialog({
-          schema: 'Connection Failed',
-          disableCancelButton: true,
-          confirmButton: 'Ok',
-          content: error || errorMessage,
-          type: error ? 'errorDialog' : undefined
-        });
-      }
-      
-      await getListData();
-    }
-  };
-
   // Helper function to maintain original order
   const originalOrder = () => 0;
 
   return (
     <div>
-      <Card className="shadow-none border-b border-gray-200">
-        <CardContent className="flex justify-between items-center p-7">
-          <Typography variant="h5" className="font-semibold text-gray-900">
+      {/* Header */}
+      <div className="shadow-none border-b border-gray-200">
+        <div className="flex justify-between">
+          <h1 className="float-left text-2xl font-semibold py-7 px-6 text-gray-900">
             Connections
-          </Typography>
+          </h1>
           
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={createConnection}
-            disabled={!checkPerms({ FX_Connection: ['create'] })}
-            className="bg-blue-800 hover:bg-blue-900"
-          >
-            Create New
-          </Button>
-        </CardContent>
-      </Card>
-      
-      <div className="p-8 bg-gray-50">
-        <Card className="shadow-none border border-gray-200">
-          <CardContent className="p-0">
-            {/* Search Section */}
-            <div className="p-5 flex justify-end">
-              <TextField
-                placeholder="Search by Connection Name or Description"
-                variant="outlined"
-                size="small"
-                value={searchValue}
-                onChange={(e) => {
-                  setSearchValue(e.target.value);
-                  handleChange({ input: e.target.value });
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon className="text-gray-400" />
-                    </InputAdornment>
-                  ),
-                }}
-                className="w-96"
-              />
+          {checkPerms({FX_Connection: ['create']}) && (
+            <div className="float-right p-6">
+              <button
+                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                onClick={createConnection}
+              >
+                <MdAdd className="mr-2" />
+                Create New
+              </button>
             </div>
-            
-            {/* Filter Section */}
-            <div className="p-5 border-t border-b border-gray-200 flex justify-between items-center">
-              <div className="flex flex-wrap gap-4 flex-grow">
-                {Object.entries(cfgOpt).map(([key, value]: [string, any]) => (
-                  <DropDownWithSearch
-                    key={key}
-                    placeHolder={value.placeholder}
-                    placeHolderSearchBox={value.searchplaceholder}
-                    label={value.label}
-                    multiple={true}
-                    selectBoxOptions={config[value.label] || []}
-                    selectedValue={getSelectedValue(config[value.label], value.field)}
-                    fieldName={value.field}
-                    valueChange={(options) => handleChange(options)}
-                  />
-                ))}
-              </div>
-              
-              <div className="flex gap-2">
-                {refresh && (
-                  <Button
-                    variant="outlined"
-                    startIcon={<RefreshIcon />}
-                    onClick={getRefreshData}
-                  >
-                    Refresh
-                  </Button>
-                )}
-                
-                <Button
-                  variant="outlined"
-                  onClick={handleResetFilters}
-                >
-                  Reset Filters
-                </Button>
-              </div>
-            </div>
-            
-            {/* Connection List */}
-            <ConnectionList
-              data={data}
-              config={config}
-              handler={getDataHandler}
-              requiredData={requiredData}
-            />
-          </CardContent>
-        </Card>
+          )}
+        </div>
       </div>
+      
+      {/* Main Content */}
+      <div className="p-8 bg-gray-50">
+        <div className="shadow-none border border-gray-200">
+          {/* Search Bar */}
+          <div className="p-4 flex items-center justify-between">
+            <div className="right-elements flex w-full justify-end">
+              <div className="relative max-w-[370px]">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <MdSearch className="text-gray-400" />
+                </div>
+                <input
+                  type="search"
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  placeholder="Search by Connection Name or Description"
+                  value={searchValue}
+                  onChange={(e) => handleChange({ input: e.target.value })}
+                />
+              </div>
+            </div>
+          </div>
+          
+          {/* Filters */}
+          <div className="clear-both p-5 border-t border-b border-gray-200 flex flex-row items-center justify-between">
+            <div className="filter-options flex-[0.9]">
+              {Object.entries(cfgOpt).map(([key, item]: [string, any]) => (
+                <DropDownWithSearch
+                  key={key}
+                  placeHolder={item.placeholder}
+                  placeHolderSearch={item.searchplaceholder}
+                  label={item.label}
+                  multiple={true}
+                  selectBoxOptions={config[item.label] || []}
+                  selectedValue={getSelectedValue(config[item.label], item.field)}
+                  fieldName={item.field}
+                  valueChange={(event) => handleChange(event)}
+                  className="w-1/5 mr-4 inline-block"
+                />
+              ))}
+            </div>
+            
+            <div className="filter-reset">
+              {refresh && (
+                <button 
+                  className="mr-2 inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+                  onClick={getRefreshData}
+                >
+                  <MdRefresh className="refresh-icon" />
+                </button>
+              )}
+              
+              <button 
+                className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+                onClick={resetFilters}
+              >
+                Reset Filters
+              </button>
+            </div>
+          </div>
+          
+          {/* Table */}
+          <DynamicTable
+            data={data}
+            config={config}
+            handlers={getDataHandlers}
+            requiredData={requiredData}
+            showPagination={true}
+            isView={false}
+          />
+        </div>
+      </div>
+      
+      {/* Confirmation Dialog */}
+      {dialogData && (
+        <Dialog 
+          open={dialogOpen} 
+          onClose={() => setDialogOpen(false)}
+          maxWidth="sm"
+          fullWidth
+        >
+          <ConfirmationDialog
+            data={dialogData}
+            onConfirm={() => confirmationDialog(dialogData.data)}
+            onCancel={() => setDialogOpen(false)}
+          />
+        </Dialog>
+      )}
     </div>
   );
 };
