@@ -1,0 +1,87 @@
+.toolbar {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    height: 64px;
+    background-color: white;
+    box-shadow: 0px 2px 0px -3px rgba(0, 0, 0, 0.2), 
+                0px 1px 3px 0px rgba(0, 0, 0, 0.14), 
+                0px 1px 3px 0px #EAECF0;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+  }
+  
+  .pointer {
+    cursor: pointer;
+    border: 1px solid #eaecf0;
+    border-radius: 50%;
+    padding: 4px;
+    color: #98a2b3;
+  }
+  
+  .logo {
+    margin-left: 15px;
+    position: relative;
+    top: -2px;
+    height: 30px;
+  }
+  
+  .flexExpand {
+    flex: 1 1 auto;
+  }
+  
+  .profile-wrap {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .profile-img-text {
+    border-radius: 50%;
+    background: #F2F4F7;
+    font-size: 14px;
+    color: #1D2939;
+    text-transform: capitalize;
+    line-height: 38px;
+    padding: 0px 10px;
+    margin-right: 8px;
+    display: inline-block;
+    text-align: center;
+    width: 36px;
+    height: 36px;
+  }
+  
+  .profile-name {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+    color: #1d2939;
+    margin: 0px 10px;
+  }
+  
+  .profile-order {
+    font-weight: 400;
+    font-size: 14px;
+    color: #1d2939;
+  }
+  
+  .icon {
+    height: 12px;
+    width: 15px;
+    border-radius: 0px;
+    margin-left: 5px;
+  }
+  
+  .profile-menu-list {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #1d2939;
+    padding-right: 86px;
+  }
+  
+  .profile-menu-list .icon {
+    width: 20px;
+    margin-right: 8px;
+  }

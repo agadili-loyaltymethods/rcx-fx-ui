@@ -1,0 +1,118 @@
+/* App container */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  /* Menu container */
+  .menu-container {
+    margin-top: 64px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+  }
+  
+  /* Sidebar styles */
+  .sidebar {
+    width: 240px;
+    transition: width 0.3s;
+    overflow: hidden;
+    background-color: white;
+    border-right: 1px solid #eaecf0;
+  }
+  
+  .sidebar.collapsed {
+    width: 64px;
+  }
+  
+  /* Menu item styles */
+  .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    margin: 15px 0;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+  }
+  
+  .menu-item.active {
+    border-left: 4px solid #e28a30;
+    color: #e28a30;
+    background-color: #fef9f5;
+  }
+  
+  .menu-item:hover {
+    background-color: #fef9f5;
+  }
+  
+  .menu-icon {
+    min-width: 40px;
+  }
+  
+  .menu-text {
+    opacity: 1;
+    transition: opacity 0.1s ease-in 0.2s;
+  }
+  
+  .sidebar.collapsed .menu-text {
+    opacity: 0;
+    display: none;
+  }
+  
+  /* Main content area */
+  .content {
+    flex-grow: 1;
+    padding: 24px;
+    /* margin-left: 240px; */
+    transition: margin-left 0.3s;
+  }
+  
+  .content.sidebar-collapsed {
+    margin-left: 64px;
+  }
+  
+  /* Spinner for loading state */
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #10355F;
+    animation: spin 1s ease-in-out infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Loading overlay */
+  .data-load-backdrop-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  
+  .data-load-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .data-loader {
+    z-index: 2;
+  }

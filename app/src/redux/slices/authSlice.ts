@@ -4,12 +4,14 @@ interface AuthState {
   isAuthenticated: boolean;
   token: string | null;
   isLoading: boolean;
+  isSideBarOpened?: boolean;
 }
 
 const initialState: AuthState = {
   isAuthenticated: false,
   token: null,
   isLoading: true,
+  isSideBarOpened: true
 };
 
 export const authSlice = createSlice({
@@ -38,9 +40,16 @@ export const authSlice = createSlice({
         isLoading: action.payload,
       };
     },
+    setSideBar:(state, action: PayloadAction<{ isSideBarOpened: boolean }>)=>{
+      // state.isSideBarOpened = action.payload;
+      return {
+        ...state,
+        isSideBarOpened: action.payload.isSideBarOpened,
+      };
+    }
   },
 });
 
-export const { setAuthenticated, setUnauthenticated, setLoading } = authSlice.actions;
+export const { setAuthenticated, setUnauthenticated, setLoading, setSideBar } = authSlice.actions;
 
 export default authSlice.reducer;
